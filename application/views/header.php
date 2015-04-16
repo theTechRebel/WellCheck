@@ -31,4 +31,56 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+.calendar {
+  font-family: Arial, Verdana, Sans-serif;
+  width: auto;
+  border-collapse: collapse;
+}
+
+.calendar tbody tr:first-child th {
+  color: #505050;
+  margin: 0 0 10px 0;
+}
+
+.day_header {
+  font-weight: normal;
+  text-align: center;
+  color: #757575;
+  font-size: 10px;
+}
+
+.calendar td {
+  width: 14%; /* Force all cells to be about the same width regardless of content */
+  border:1px solid #CCC;
+  height: 70px;
+  vertical-align: top;
+  font-size: 10px;
+  padding: 0;
+}
+
+.day_listing {
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+  color: #2C2C2C;
+  padding: 0 0 0 0;
+}
+
+div.today {
+  background: #E9EFF7;
+  height: 70%;
+}
+
+.selected{
+  background: #8FBC8F;
+}
+
+
+.this-day{
+  height: 90%;
+}
+</style>
   </head>

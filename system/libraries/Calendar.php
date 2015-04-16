@@ -406,7 +406,7 @@ class CI_Calendar {
 	function default_template()
 	{
 		return  array (
-						'table_open'				=> '<table border="0" cellpadding="4" cellspacing="0">',
+						'table_open'				=> '<table border="0" cellpadding="4" cellspacing="0" class="table table-striped table-hover">',
 						'heading_row_start'			=> '<tr>',
 						'heading_previous_cell'		=> '<th><a href="{previous_url}">&lt;&lt;</a></th>',
 						'heading_title_cell'		=> '<th colspan="{colspan}">{heading}</th>',
@@ -416,7 +416,7 @@ class CI_Calendar {
 						'week_day_cell'				=> '<td>{week_day}</td>',
 						'week_row_end'				=> '</tr>',
 						'cal_row_start'				=> '<tr>',
-						'cal_cell_start'			=> '<td>',
+						'cal_cell_start'			=> '<td class="day">',
 						'cal_cell_start_today'		=> '<td>',
 						'cal_cell_content'			=> '<a href="{content}">{day}</a>',
 						'cal_cell_content_today'	=> '<a href="{content}"><strong>{day}</strong></a>',

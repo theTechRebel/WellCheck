@@ -1,9 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Home extends CI_Controller {
+    public function __construct() {
+    parent::__construct();
+  }
 
 	public function index(){
-		$this->_isLoggedIn();
+		isLoggedOut();
 		$this->form_validation->set_rules(
 		 	'userid',
 		 	'User ID',
@@ -29,9 +32,9 @@ class Home extends CI_Controller {
 								   if($row->status == "active"){
 								   	$data = array('companyID'=> $row->companyID,
                  						'loggedin'=>TRUE,
-		   																		'page' => "dashboard",
-		   																		'rights' => $row->accesslevel,
-		   																		'location' => $row->location);
+														'page' => "dashboard",
+														'rights' => $row->accesslevel,
+														'location' => $row->location);
 						   			$this->session->set_userdata($data);
 						   			redirect('dashboard');
 								   }else{
@@ -39,34 +42,17 @@ class Home extends CI_Controller {
         				$this->load->view('login',$data);
 								   }
 
-						   
         	}else{
         		$data = array('no_user'=>"Please correct your login credentials and try again");
         		$this->load->view('login',$data);
         	}
-
         }
-		
 	}
 
 
-
-		private function _isLoggedIn() {
-       $isLoggedIn = $this->session->userdata('loggedin');
-        
-       if($isLoggedIn == TRUE)
-       {
-           redirect('dashboard');
-       }
-    }
-
- 	public function logout() {
-        $this->session->unset_userdata('loggedin');
-		$this->session->sess_destroy();
-        redirect('home');
-    }
-
-
+  public function logout(){
+    logout();
+  }
 }
 
 /* End of file welcome.php */
