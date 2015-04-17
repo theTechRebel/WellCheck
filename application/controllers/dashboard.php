@@ -43,10 +43,22 @@ class Dashboard extends CI_Controller {
 			}
 		}
 
-		public function bookClient($thedate,$status,$clientnumber){
+		public function bookClient(){
+
+			$table_name = "patientrecord";
+			$condition 	= array('idnumber'=>$_POST['idnumber']);
+			$query 					= $this->app_model->get_all_where($table_name, $condition);
+
+			$clientNumber = $query->row()->clientnumber;
+			if(strlen($_POST['day']) < 2){
+				$_POST['day'] = "0".$_POST['day']; 
+			}
+			$thedate = $_POST['date'].'/'.$_POST['day'];
+			$status = $_POST['status'];
+
 			$table_name = "calendar";
-			$data = array(
-					'clientnumber'=>$clientnumber,
+			$condition = array(
+					'clientnumber'=>$clientNumber,
 					'thedate' => $thedate,
 					'status' => $status
 					);
@@ -54,11 +66,32 @@ class Dashboard extends CI_Controller {
 			$query = $this->app_model->get_all_where($table_name, $condition);
 
 			if($query->num_rows > 0){
-				echo "<script type='text/javascript'>alert('You cannot book a client twice with the same status.');</script>";
+				//the client is already booked so we cant book them twice
+				//var_dump($condition);
+				echo 'you cannot book a client twice sorry select another date.';
+				die();
 			}else{
-					$this->app_model->insert($table_name, $data);
+				//the client is not booked, book them
+				//var_dump($condition);
+				//echo 'we are about to book you';
+
+				$this->app_model->insert($table_name, $condition);
+				$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>$thedate));
+
+				if($query->num_rows() > 0){
+					//if there are other bookings already for that date
+						$qued = intval($query->row()->qued);
+						$qued ++;
+				}else{
+					//there are no bookings for that date
+						$qued = 1;
+				}
+
+				$this->app_model->insert("calendarcount", array('thedate'=>$thedate,'qued'=>$qued));
+				echo 'succesfully booked client.';
+				die();
+			}
 			}	
-		}
 
 		public function javascript_functions(){
 
@@ -71,25 +104,51 @@ class Dashboard extends CI_Controller {
 						$(this).addClass('selected');
 				";
 
-				$bookClient = "
-					var selectedDay = $('.selected').text().trim();
-					
+				$bookRequest = "
+					var selectedDay = $('.selected .d').text().trim();
+		
+					console.log(selectedDay)
+
 					if(selectedDay == ''){	
 						alert('Please select a valid day.')
 						$('.day_listing').removeClass('selected')
 					}else{
-						selectedDay = $('#dates').text().toString()+'/'+selectedDay
-						alert(selectedDay)
-					}
-					
-					";
+
+						var data = {
+						'idnumber' : $(this).attr('id'),
+						'status'			:	'qued',
+						'day'						:	selectedDay,
+						'date'					: $('#dates').text().toString()}
+
+						//provide full domain URL because we are using controllers and url mapping
+						//request could get lost in space
+						$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/bookClient/',
+        crossDomain: true,
+        data: data,
+        success: function (data) {
+            alert(data)
+            location.reload(true)
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    });
+
+						//$.post('dashboard/bookClient/',data,function(data){
+							//console.log(data)
+						//})
+
+						//alert('client booked.')
+					};";
 
 
 			
 
 			$this->javascript->output($hideForm);
 			$this->javascript->click('.day',$getDay);
-			$this->javascript->click('.clickBook',$bookClient);	
+			$this->javascript->click('.clickBook',$bookRequest);	
 			$this->javascript->compile();
 		}
 
