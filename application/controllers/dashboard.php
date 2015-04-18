@@ -43,6 +43,46 @@ class Dashboard extends CI_Controller {
 			}
 		}
 
+		public function booking($id=null){
+				if($id==null){
+					//no id specified
+				}else{
+						$table_name = "calendar";
+				$condition = array(
+						'clientnumber'=>$id,
+						'thedate' => getCalendarDateTodayFull(),
+						'status' => 'qued'
+						);
+
+				$query = $this->app_model->get_all_where($table_name, $condition);
+
+				if($query->num_rows > 0){
+					//the client is already booked so we cant book them twice
+					//var_dump($condition);
+						$this->clients('You cannot book a client twice sorry select another date or another client.');
+				}else{
+					//the client is not booked, book them
+					//var_dump($condition);
+					//echo 'we are about to book you';
+
+					$this->app_model->insert($table_name, $condition);
+					$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>getCalendarDateTodayFull()));
+
+					if($query->num_rows() > 0){
+						//if there are other bookings already for that date
+							$qued = intval($query->row()->qued);
+							$qued ++;
+							$this->app_model->update("calendarcount", array('qued'=>$qued), array('thedate'=>getCalendarDateTodayFull()));
+					}else{
+						//there are no bookings for that date
+							$qued = 1;
+							$this->app_model->insert("calendarcount", array('thedate'=>getCalendarDateTodayFull(),'qued'=>$qued));
+					}
+					$this->clients('Succesfully booked client with assigned WellCheck ID: '.$id);
+				}
+		}
+	}
+
 		public function bookClient(){
 
 			$table_name = "patientrecord";
@@ -95,7 +135,7 @@ class Dashboard extends CI_Controller {
 			}
 			}	
 
-		public function walkInClient(){
+		public function walkInClient($type=null){
 
 			$this->form_validation->set_rules(
 		 	'clientname',
@@ -138,7 +178,7 @@ class Dashboard extends CI_Controller {
 		 	'trim|required');
 
 			if($this->form_validation->run()==FALSE){
-								$this->load->view('dashboard_walkinclient');
+								$this->load->view('dashboard_walkinclient',array('type'=>$type));
         }else{
 
         	$query = $this->app_model->get_all_where("patientdetails", array('idnumber'=>$_POST['idnumber']));
@@ -176,15 +216,32 @@ class Dashboard extends CI_Controller {
         		'clientnumber'=>$clientID,
         		'company'=>$_POST['employer']));
 
-        	redirect('dashboard/clients/');
+        	if($_POST['type'] == 1){
+        		//book client
+        				redirect('dashboard/booking/'.$clientID);
+	        	}else{
+	        			redirect('dashboard/clients/');
+	        	}
         	}
         	//send notification to nurse of new client
         }
 
 		}
 
-		public function clients(){
-			$this->load->view('dashboard_clients');
+		public function clients($report=null){
+
+			$this->db->select('*');
+			$this->db->from('patientrecord');
+			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+			$this->db->order_by('patientrecord.id', 'DESC'); 
+			$query = $this->db->get();
+
+			if($report != null){
+				$this->load->view('dashboard_clients',array('patientrecords'=>$query,'report'=>$report));
+			}else{
+				$this->load->view('dashboard_clients',array('patientrecords'=>$query));
+			}
+			
 		}
 
 		public function javascript_functions(){

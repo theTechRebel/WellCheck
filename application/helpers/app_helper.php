@@ -15,6 +15,13 @@
   return $time;
   }
 
+    function getCalendarDateTodayFull(){
+  $currenttime = time();
+  $mysql_date_time = strftime("%Y/%m/%d", $currenttime);
+  $time = $mysql_date_time;
+  return $time;
+  }
+
 
 	 function isLoggedIn() {
 	 	 $ci=& get_instance();

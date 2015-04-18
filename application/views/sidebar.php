@@ -22,7 +22,7 @@
                         <a href="#"><i class="fa fa-calendar fa-fw"></i>Bookings<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $url?>dashboard/walkInClient/">Walk in Client</a>   
+                                <a href="<?php echo $url?>dashboard/walkInClient/1">Walk in Client</a>   
                             </li>
                         </ul>
                         </li>
@@ -30,7 +30,7 @@
                             <a href="#"><i class="fa fa-user fa-fw"></i> Client Records<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<?php echo $url?>dashboard/walkInClient/">Add New Client</a>
+                                    <a href="<?php echo $url?>dashboard/walkInClient/2">Add New Client</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo $url?>dashboard/clients/">View All Clients</a>
