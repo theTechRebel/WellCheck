@@ -19,16 +19,21 @@
                             <a href="<?php echo $url?>dashboard/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                        <a href="<?php echo $url?>dashboard/"><i class="fa fa-calendar fa-fw"></i>Bookings</a>
+                        <a href="#"><i class="fa fa-calendar fa-fw"></i>Bookings<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo $url?>dashboard/walkInClient/">Walk in Client</a>   
+                            </li>
+                        </ul>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Client Records<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Add New Client</a>
+                                    <a href="<?php echo $url?>dashboard/walkInClient/">Add New Client</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">View All Clients</a>
+                                    <a href="<?php echo $url?>dashboard/clients/">View All Clients</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

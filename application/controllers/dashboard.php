@@ -82,16 +82,110 @@ class Dashboard extends CI_Controller {
 					//if there are other bookings already for that date
 						$qued = intval($query->row()->qued);
 						$qued ++;
+						$this->app_model->update("calendarcount", array('qued'=>$qued), array('thedate'=>$thedate));
 				}else{
 					//there are no bookings for that date
 						$qued = 1;
+						$this->app_model->insert("calendarcount", array('thedate'=>$thedate,'qued'=>$qued));
 				}
 
-				$this->app_model->insert("calendarcount", array('thedate'=>$thedate,'qued'=>$qued));
+				
 				echo 'succesfully booked client.';
 				die();
 			}
 			}	
+
+		public function walkInClient(){
+
+			$this->form_validation->set_rules(
+		 	'clientname',
+		 	'Client Name',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'clientsurname',
+		 	'Client Surname',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'address',
+		 	'Client Address',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'occupation',
+		 	'Client Occupation',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'employer',
+		 	'Client Employer',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'dob',
+		 	'Client Date of birth',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'phone',
+		 	'Client Phone Number',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'idnumber',
+		 	'Client ID Number',
+		 	'trim|required');
+
+			if($this->form_validation->run()==FALSE){
+								$this->load->view('dashboard_walkinclient');
+        }else{
+
+        	$query = $this->app_model->get_all_where("patientdetails", array('idnumber'=>$_POST['idnumber']));
+
+        	if($query->num_rows() > 0){
+        		//we already have the client
+        		$this->load->view('dashboard_walkinclient',array('problem'=>"The Client is already in the system, please select the clients record from the clients tab and que them for check up."));
+        	}else{
+        		//we dont have the client
+        		$data = array(
+        			'idnumber' => $_POST['idnumber'],
+        			'names'	   => $_POST['clientname'],
+        			'surname'	=> $_POST['clientsurname'],
+        			'salutation' => $_POST['salutation'],
+        			'marital' => $_POST['marital'],
+        			'address' => $_POST['address'],
+        			'gender' => $_POST['gender'],
+        			'occupation' => $_POST['occupation'],
+        			'employer' => $_POST['employer'],
+        			'dob' => $_POST['dob'],
+        			'email' => $_POST['email'],
+        			'phone' => $_POST['phone'],
+        			'location' => ""
+        		 );
+        	//add the client to the system
+        	$this->app_model->insert('patientdetails',$data);
+
+        	//generate client ID
+        	$query = $this->app_model->get_all("patientrecord");
+
+        	$int = (int)$query->row($query->num_rows())->id + 1;
+        	$clientID = "J0".$int;
+
+        	$this->app_model->insert('patientrecord',array('idnumber'=>$_POST['idnumber'],
+        		'clientnumber'=>$clientID,
+        		'company'=>$_POST['employer']));
+
+        	redirect('dashboard/clients/');
+        	}
+        	//send notification to nurse of new client
+        }
+
+		}
+
+		public function clients(){
+			$this->load->view('dashboard_clients');
+		}
 
 		public function javascript_functions(){
 

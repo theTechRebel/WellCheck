@@ -15,7 +15,7 @@ class Calendar_model extends CI_Model{
 																{cal_cell_content_today}<div class="today"><span class="day_listing"><span class="d">{day}</span><br/> 
                                 {content}&nbsp;</span></div>{/cal_cell_content_today}
 																{cal_cell_no_content}<span class="day_listing"><span class="d">{day}</span></span>&nbsp;{/cal_cell_no_content}
-																{cal_cell_no_content_today}<div class="today"><span class="day_listing">{day}</span></div>{/cal_cell_no_content_today}'
+																{cal_cell_no_content_today}<div class="today"><span class="day_listing"><span class="d">{day}</span></span></div>{/cal_cell_no_content_today}'
              );
 			$this->load->library('calendar', $prefs);
     }
