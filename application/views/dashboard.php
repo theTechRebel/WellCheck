@@ -34,7 +34,7 @@ require_once('header.php');
                 <?php include_once('calendar.php');?>                   
                 </div>
                 <div class="col-lg-4">
-                <?php include_once('rightsidepanel.php');?>
+                <?php include_once('rightpatientstable.php');?>
                 </div>
             </div>
 <!-- -->

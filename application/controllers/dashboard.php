@@ -244,6 +244,39 @@ class Dashboard extends CI_Controller {
 			
 		}
 
+
+		public function getBookings(){
+			$this->db->select('*');
+			$this->db->from('calendar');
+			$this->db->where(array('thedate'=>$_POST['date']));
+			$this->db->join('patientrecord', 'patientrecord.clientnumber = calendar.clientnumber');
+				$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+			$this->db->order_by('patientrecord.id', 'DESC'); 
+			$query = $this->db->get();
+
+			if($query->num_rows() > 0){
+				echo "<table class='table small' id='table-generated'>";
+				echo "<td>Clients</td><td>Cancel</td><td>Processed</td><td>In Que</td>";
+				echo "<tbody>";
+				foreach ($query->result() as $row){
+				echo "<tr>";
+				echo "<td>$row->clientnumber $row->names $row->surname</td>";
+				echo "<td><a href='http://localhost/wellness/dashboard/change/cancel/$row->clientnumber/$row->thedate'>Cancel</a></td>";
+				echo "<td><a href='http://localhost/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
+				echo "<td><a href='http://localhost/wellness/dashboard/change/que/$row->clientnumber/$row->thedate'>In Que</a></td>";
+
+				echo "</tr>";
+				}
+				echo "</tbody>";
+			echo "</table>";
+			}
+		}
+
+
+		public function change($state,$id,$year,$month,$day){
+				
+		}
+
 		public function javascript_functions(){
 
 			$hideForm = "$('#hidden-form').hide();";
@@ -294,11 +327,39 @@ class Dashboard extends CI_Controller {
 						//alert('client booked.')
 					};";
 
+					$showClients = "
+						var selectedDay = $('.selected .d').text().trim();
+
+						if(selectedDay.length < 2){
+							selectedDay = '0'+selectedDay;
+						}
+
+						if(selectedDay != ''){
+							var fullDate = $('#dates').text().toString();
+							fullDate = fullDate + '/' + selectedDay;
+							
+							var data = {'date' : fullDate};
+
+							$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/getBookings/',
+        crossDomain: true,
+        data: data,
+        success: function (data) {
+        $('#table-generated').remove();
+								$('#dynamic-table').append(data);
+        },
+        error: function (err) {
+            console.log(err)
+        }});
+							}";
+
 
 			
 
 			$this->javascript->output($hideForm);
 			$this->javascript->click('.day',$getDay);
+			$this->javascript->click('.day',$showClients);
 			$this->javascript->click('.clickBook',$bookRequest);	
 			$this->javascript->compile();
 		}
