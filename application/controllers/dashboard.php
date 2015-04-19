@@ -260,10 +260,10 @@ class Dashboard extends CI_Controller {
 				echo "<tbody>";
 				foreach ($query->result() as $row){
 				echo "<tr>";
-				echo "<td>$row->clientnumber $row->names $row->surname</td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/cancel/$row->clientnumber/$row->thedate'>Cancel</a></td>";
+				echo "<td>$row->clientnumber $row->names $row->surname [$row->status]</td>";
+				echo "<td><a href='http://localhost/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
 				echo "<td><a href='http://localhost/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/que/$row->clientnumber/$row->thedate'>In Que</a></td>";
+				echo "<td><a href='http://localhost/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
 
 				echo "</tr>";
 				}
@@ -274,8 +274,29 @@ class Dashboard extends CI_Controller {
 
 
 		public function change($state,$id,$year,$month,$day){
-				
-		}
+
+				$query = $this->app_model->get_all_where("calendar",array('thedate'=>$year."/".$month."/".$day,'clientnumber'=>$id));
+
+				$oldStatus = ($query->row()->status);
+
+				if($oldStatus != $state){
+					$data = array('status'=>$state);
+				$condition = array('clientnumber'=>$id,'thedate'=>$year."/".$month."/".$day);
+				$this->app_model->update("calendar", $data, $condition);
+
+				$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>$year."/".$month."/".$day));
+
+				if($query->num_rows() > 0){
+					//if there are other bookings already for that date
+						$oldVal = intval($query->row()->$oldStatus);
+						$oldVal --;
+						$status = intval($query->row()->$state);
+						$status ++;
+						$this->app_model->update("calendarcount", array($oldStatus=>$oldVal,$state => $status), array('thedate'=>$year."/".$month."/".$day));
+						}
+				}
+				redirect('dashboard/');
+	}
 
 		public function javascript_functions(){
 
