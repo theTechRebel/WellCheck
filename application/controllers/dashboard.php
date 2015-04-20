@@ -329,12 +329,58 @@ class Dashboard extends CI_Controller {
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname </td>";
 				echo "<td>$row->time</td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Attend</a></td>";
+				echo "<td><a class='openAttend' id='$row->clientnumber' href='#' val='$row->names $row->surname'>Attend</a></td>";
 				echo "</tr>";
 				}
 				echo "</tbody>";
 			echo "</table>";
 			}
+		}
+
+		public function getClientDetails(){
+				$this->db->select('*');
+			$this->db->from('patientrecord');
+			$this->db->where(array('clientnumber'=>$_POST['clientNumber']));
+			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+			$query = $this->db->get();
+
+			if($query->num_rows() > 0){
+				echo "<table class='table table-bordered table-hover table-condensed'>";
+				echo "<tbody>";
+
+				foreach ($query->result() as $row){
+					echo "<tr>";
+					echo "<td>wellcheck ID:</td><td>$row->clientnumber</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>client name: </td><td>$row->salutation $row->names $row->surname</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>gender:</td><td>$row->gender</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>d.o.b:</td><td>$row->dob</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>mrital status:</td><td>$row->marital</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>occupation:</td><td>$row->occupation</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>employer:</td><td>$row->employer</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>address:</td><td>$row->address</td>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>contacts:</td><td>$row->email $row->phone</td>";
+					echo "</tr>";
+				}
+				echo "</tbody>";
+				echo "</table>";
+			}
+
 		}
 
 
@@ -344,7 +390,8 @@ class Dashboard extends CI_Controller {
 
 				$oldStatus = ($query->row()->status);
 
-				if($oldStatus != $state){
+				if($oldStatus != 
+					$state){
 					$data = array('status'=>$state);
 				$condition = array('clientnumber'=>$id,'thedate'=>$year."/".$month."/".$day);
 				$this->app_model->update("calendar", $data, $condition);
@@ -365,7 +412,9 @@ class Dashboard extends CI_Controller {
 
 		public function javascript_functions(){
 
-			$hideForm = "$('#hidden-form').hide();";
+			$hideForm = "
+			$('#hidden-form').hide(); 
+			$('#attend').hide();";
 
 			$click_function ="alert('ok');";
 
@@ -449,18 +498,42 @@ class Dashboard extends CI_Controller {
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming').remove();
-								$('#dynamic-table-incoming').append(data);
+								$('#dynamic-table-incoming').html(data);
         },
         error: function (err) {
             console.log(err);
         }});
 							},2500);";
 
+						$attachStaticEventHandlers = "
+							$('#dynamic-table-incoming').on('click', '.openAttend', function(){
+
+       	var clientNumber = $(this).attr('id');
+       	var clientName = $(this).attr('val');
+								var data = {'clientNumber' : clientNumber};
+								$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/getClientDetails/',
+        data : data,
+        crossDomain: true,
+        success: function (data) {
+        	$('#client-name').empty();
+        $('#client-name').append(clientName);
+       	$('#clendar-hide').hide();
+       	$('#attend').show();
+       	$('#client-records').html(data);
+								//$('#hidden-client-id').html(data);
+        },
+        error: function (err) {
+            console.log(err);
+        }});
+   			});";
 
 			
 
 			$this->javascript->output($hideForm);
 			$this->javascript->output($showIncomingClients);
+			$this->javascript->output($attachStaticEventHandlers);
 			$this->javascript->click('.day',$getDay);
 			$this->javascript->click('.day',$showClients);
 			$this->javascript->click('.clickBook',$bookRequest);	
