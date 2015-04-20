@@ -14,7 +14,7 @@ require_once('header.php');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">WellCheck App: <?php echo $this->session->userdata('rights');?> dashboard</a>
+                <a class="navbar-brand" href="<?php echo $url?>">WellCheck App: <?php echo $this->session->userdata('rights');?> dashboard</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -39,7 +39,7 @@ require_once('header.php');
             </div>
 <!-- -->
 <!-- Bottom Page Row -->
-            <?php include_once('appsegments.php');?>
+            <?php //include_once('appsegments.php');?>
 <!-- -->
         </div>
         <!-- /#page-wrapper -->

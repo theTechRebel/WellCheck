@@ -6,7 +6,7 @@ class Home extends CI_Controller {
   }
 
 	public function index(){
-		isLoggedOut();
+    isLoggedOut();
 		$this->form_validation->set_rules(
 		 	'userid',
 		 	'User ID',
@@ -36,7 +36,8 @@ class Home extends CI_Controller {
 														'rights' => $row->accesslevel,
 														'location' => $row->location);
 						   			$this->session->set_userdata($data);
-						   			redirect('dashboard');
+
+                    redirect('dashboard');
 								   }else{
 								   	$data = array('no_user'=>"You have been deactivated from accessing the system, please contact the administrator.");
         				$this->load->view('login',$data);

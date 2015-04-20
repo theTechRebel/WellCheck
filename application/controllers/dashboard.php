@@ -14,7 +14,6 @@ class Dashboard extends CI_Controller {
 
 
 		public function calendar($year=null, $month=null){
-			
 			if($year != null && $month != null){
 
 					$query 	= $this->calendar_model->getBookings($year,$month);
@@ -25,8 +24,22 @@ class Dashboard extends CI_Controller {
 						             'patients'	=>$query2,
 						             'dates'		  =>	$query3);
 
-					$this->load->view('js');
-					$this->load->view('dashboard',$data);
+
+					switch($this->session->userdata('rights')){
+
+		   case "clinician":
+		    $this->load->view('js');
+						$this->load->view('header');		
+						$this->load->view('clinician/dashboard',$data);
+						$this->load->view('footer');
+		   break;
+
+		   case "reception":
+							$this->load->view('js');
+							$this->load->view('dashboard',$data);
+		   break;
+
+		  }
 			}else{
 
 				$dates = explode("/", getCalendarDateToday());
@@ -38,8 +51,21 @@ class Dashboard extends CI_Controller {
 						             'patients'	=>$query2,
 						             'dates'		  =>	$query3);
 
-				$this->load->view('js');		
-				$this->load->view('dashboard',$data);
+						switch($this->session->userdata('rights')){
+
+			   case "clinician":
+			    $this->load->view('js');
+							$this->load->view('header');		
+							$this->load->view('clinician/dashboard',$data);
+							$this->load->view('footer');
+			   break;
+
+			   case "reception":
+			   	$this->load->view('js');		
+							$this->load->view('dashboard',$data);
+			   break;
+
+			  }
 			}
 		}
 
@@ -136,6 +162,10 @@ class Dashboard extends CI_Controller {
 			}	
 
 		public function walkInClient($type=null){
+
+			if($this->session->userdata('rights') != 'reception'){
+				redirect('dashboard/');
+			}
 
 			$this->form_validation->set_rules(
 		 	'clientname',

@@ -1,4 +1,6 @@
-
+<?php
+   $url = $this->config->item('base_url');
+?>
 <script type="text/javascript" src="<?php echo $url?>uiux/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $url?>uiux/bootstrap/js/bootstrap.min.js"></script>
    <!-- Metis Menu Plugin JavaScript -->
