@@ -90,6 +90,12 @@ class Dashboard extends CI_Controller {
 					//the client is not booked, book them
 					//var_dump($condition);
 					//echo 'we are about to book you';
+					$condition = array(
+						'clientnumber'=>$id,
+						'thedate' => getCalendarDateTodayFull(),
+						'status' => 'qued',
+						'time' => date('H:i:s')
+						);
 
 					$this->app_model->insert($table_name, $condition);
 					$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>getCalendarDateTodayFull()));
@@ -161,6 +167,7 @@ class Dashboard extends CI_Controller {
 			}
 			}	
 
+			//just for reception
 		public function walkInClient($type=null){
 
 			if($this->session->userdata('rights') != 'reception'){
@@ -302,6 +309,34 @@ class Dashboard extends CI_Controller {
 			}
 		}
 
+		public function getIncomingClients(){
+
+
+			$this->db->select('*');
+			$this->db->from('calendar');
+			$this->db->where(array('thedate'=>getCalendarDateTodayFull(),'status'=>'qued'));
+			$this->db->join('patientrecord', 'patientrecord.clientnumber = calendar.clientnumber');
+			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+			$this->db->order_by('calendar.time', 'DESC'); 
+			$query = $this->db->get();
+
+				if($query->num_rows() > 0){
+
+				echo "<table class='table small' id='table-generated-incoming'>";
+				echo "<td>Client details</td><td>Time In</td><td>Attend</td>";
+				echo "<tbody>";
+				foreach ($query->result() as $row){
+				echo "<tr>";
+				echo "<td>$row->clientnumber $row->names $row->surname </td>";
+				echo "<td>$row->time</td>";
+				echo "<td><a href='http://localhost/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Attend</a></td>";
+				echo "</tr>";
+				}
+				echo "</tbody>";
+			echo "</table>";
+			}
+		}
+
 
 		public function change($state,$id,$year,$month,$day){
 
@@ -405,10 +440,27 @@ class Dashboard extends CI_Controller {
         }});
 							}";
 
+							$showIncomingClients = "
+
+							setInterval(function(){
+								$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/getIncomingClients/',
+        crossDomain: true,
+        success: function (data) {
+        $('#table-generated-incoming').remove();
+								$('#dynamic-table-incoming').append(data);
+        },
+        error: function (err) {
+            console.log(err);
+        }});
+							},2500);";
+
 
 			
 
 			$this->javascript->output($hideForm);
+			$this->javascript->output($showIncomingClients);
 			$this->javascript->click('.day',$getDay);
 			$this->javascript->click('.day',$showClients);
 			$this->javascript->click('.clickBook',$bookRequest);	
