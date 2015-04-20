@@ -82,5 +82,9 @@ div.today {
 .this-day{
   height: 90%;
 }
+
+.disabled{
+  pointer-events: none;
+}
 </style>
   </head>

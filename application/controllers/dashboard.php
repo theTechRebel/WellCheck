@@ -349,6 +349,7 @@ class Dashboard extends CI_Controller {
 				echo "<tbody>";
 
 				foreach ($query->result() as $row){
+					$id = $row->clientnumber;
 					echo "<tr>";
 					echo "<td>wellcheck ID:</td><td>$row->clientnumber</td>";
 					echo "</tr>";
@@ -379,6 +380,7 @@ class Dashboard extends CI_Controller {
 				}
 				echo "</tbody>";
 				echo "</table>";
+				echo "<form action='loaclhost/wellness/dashboard/stage/' method='POST' name='packages'><input type='hidden' name='clientID' value='$id'/><input type='hidden' name='stage' value='packages'/></form>";
 			}
 
 		}
@@ -410,11 +412,20 @@ class Dashboard extends CI_Controller {
 				redirect('dashboard/');
 	}
 
+	public function stage(){
+		die(var_dump($_POST));
+	}
+
 		public function javascript_functions(){
 
 			$hideForm = "
 			$('#hidden-form').hide(); 
-			$('#attend').hide();";
+			$('#attend').hide();
+		 $('.nav .disabled>a').on('click', function(e) {
+		 	e.preventDefault(); 
+		 	return false; 
+		 });
+			";
 
 			$click_function ="alert('ok');";
 
@@ -522,6 +533,10 @@ class Dashboard extends CI_Controller {
        	$('#clendar-hide').hide();
        	$('#attend').show();
        	$('#client-records').html(data);
+       	$('#clinician-tabs  a:first').tab('show');
+       	$('#questionaire-tab').addClass('disabled');
+       	$('#tests-tab').addClass('disabled');
+       	$('#results-tab').addClass('disabled');
 								//$('#hidden-client-id').html(data);
         },
         error: function (err) {
