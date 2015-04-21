@@ -380,8 +380,14 @@ class Dashboard extends CI_Controller {
 				}
 				echo "</tbody>";
 				echo "</table>";
-				echo "<form action='loaclhost/wellness/dashboard/stage/' method='POST' name='packages'><input type='hidden' name='clientID' value='$id'/><input type='hidden' name='stage' value='packages'/></form>";
+
+					$this->session->set_userdata('attend',$id);
+					$this->session->set_userdata('stage','package');
 			}
+
+		}
+
+		public function getPackages(){
 
 		}
 
@@ -413,7 +419,96 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function stage(){
-		die(var_dump($_POST));
+			$keys = array_keys($_POST);
+
+		if(!isset($keys[0])){
+			/*
+			if($this->session->userdata('stage') == 'questionaire'){
+					$this->questionaire();
+				}else if($this->session->userdata('stage') == 'tests'){
+					$this->tests();
+				}else{
+					echo "Please select packages to proceed. You have not selected anything yet.";
+				}
+				*/
+			echo "Please select packages to proceed. You have not selected anything yet.";
+		}else{
+
+			$cost = 0;
+			$i = 0;
+			foreach ($_POST[$keys[0]] as $key => $value) {
+				$package = explode("_",$value);
+				$cost += (double)$package[1];
+				$test[$i] =$package[0];
+				$i++;
+			}
+
+			$tests = implode(',',$test);
+
+			$query = $this->app_model->get_all_where("patienthistory",array('checkupdate'=>getCalendarDateTodayFull(),'clientnumber'=>$this->session->userdata('attend')));
+
+			if($query->num_rows()>0){
+				$data = array('checkupdate'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'test'=>$tests,
+				         'charge'=>$cost);
+				$condition =  array('checkupdate'=>getCalendarDateTodayFull(),
+					                   'clientnumber'=>$this->session->userdata('attend'));
+					$this->app_model->update("patienthistory", $data, $condition);
+
+					if($keys[0]=="basic"){
+						$this->session->set_userdata('stage','tests');
+						echo "tests";
+					}else if($keys[0] == "corporate"){
+						$this->session->set_userdata('stage','tests');
+						echo "tests";
+					}else{
+						$this->session->set_userdata('stage','questionaire');
+						echo "questionaire";
+					}
+			}else{
+				$data = array('checkupdate'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'test'=>$tests,
+				         'charge'=>$cost);
+				$this->app_model->insert("patienthistory",$data);
+
+				if($keys[0]=="basic"){
+						$this->session->set_userdata('stage','tests');
+						echo "tests";
+					}else if($keys[0] == "corporate"){
+						$this->session->set_userdata('stage','tests');
+						echo "tests";
+					}else{
+						$this->session->set_userdata('stage','questionaire');
+						echo "questionaire";
+					}
+				
+			}
+		}
+	}
+
+
+	public function questionaire(){
+		 if($this->session->userdata('stage') == 'questionaire'){
+		 			$this->load->view('js');
+						$this->load->view('header');		
+						$this->load->view('clinician/dashboard_questionaire');
+						$this->load->view('footer');
+		 }else{
+		 	redirect('dashboard/');
+		 }
+	}
+
+	public function tests(){
+			if($this->session->userdata('stage') == 'tests'){
+						$this->load->view('js');
+						$this->load->view('header');		
+						$this->load->view('clinician/dashboard_tests');
+						$this->load->view('footer');
+			}else{
+				redirect('dashboard/');
+			}
 	}
 
 		public function javascript_functions(){
@@ -522,6 +617,7 @@ class Dashboard extends CI_Controller {
        	var clientNumber = $(this).attr('id');
        	var clientName = $(this).attr('val');
 								var data = {'clientNumber' : clientNumber};
+
 								$.ajax({
         type: 'POST',
         url: 'http://localhost/wellness/dashboard/getClientDetails/',
@@ -537,12 +633,64 @@ class Dashboard extends CI_Controller {
        	$('#questionaire-tab').addClass('disabled');
        	$('#tests-tab').addClass('disabled');
        	$('#results-tab').addClass('disabled');
-								//$('#hidden-client-id').html(data);
         },
         error: function (err) {
             console.log(err);
         }});
-   			});";
+
+									$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/getPackages/',
+        crossDomain: true,
+        success: function (data) {
+        	//$('#packages').empty();
+       	//$('#packages').html(data);
+        },
+        error: function (err) {
+            console.log(err);
+        }});
+
+
+   			});
+       
+       //form for packages
+       $('form.form-packages').on('submit',function(e){
+								
+       	var data = $(this).serialize();
+
+       			$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/stage/',
+        crossDomain: true,
+        data: data,
+        success: function (data) {
+
+        	if(data == 'Please select packages to proceed. You have not selected anything yet.'){
+        		alert(data);
+        	}else if(data=='tests'){
+        		$('#questionaire-tab').addClass('disabled');
+										$('#tests-tab').removeClass('disabled');
+										$('#clinician-tabs li:eq(3) a').tab('show')
+        		console.log(data);
+        	}else if(data=='questionaire'){
+        			$('#tests-tab').addClass('disabled');
+        		$('#questionaire-tab').removeClass('disabled');
+        			$('#clinician-tabs li:eq(2) a').tab('show')
+        		console.log(data);
+        	}else{
+        		console.log(data);
+        	}
+        	
+        },
+        error: function (err) {
+            console.log(err);
+        }});
+
+								e.preventDefault();
+
+								
+
+								});";
 
 			
 
