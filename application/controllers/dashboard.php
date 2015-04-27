@@ -24,7 +24,6 @@ class Dashboard extends CI_Controller {
 						             'patients'	=>$query2,
 						             'dates'		  =>	$query3);
 
-
 					switch($this->session->userdata('rights')){
 
 		   case "clinician":
@@ -37,6 +36,13 @@ class Dashboard extends CI_Controller {
 		   case "reception":
 							$this->load->view('js');
 							$this->load->view('dashboard',$data);
+		   break;
+
+		   case "scientist":
+		    $this->load->view('js');
+						$this->load->view('header');		
+						$this->load->view('scientist/dashboard',$data);
+						$this->load->view('footer');	   	
 		   break;
 
 		  }
@@ -64,6 +70,13 @@ class Dashboard extends CI_Controller {
 			   	$this->load->view('js');		
 							$this->load->view('dashboard',$data);
 			   break;
+
+			   case "scientist":
+			    $this->load->view('js');
+							$this->load->view('header');		
+							$this->load->view('scientist/dashboard',$data);
+							$this->load->view('footer');	   	
+		   break;
 
 			  }
 			}
@@ -146,6 +159,12 @@ class Dashboard extends CI_Controller {
 				//the client is not booked, book them
 				//var_dump($condition);
 				//echo 'we are about to book you';
+					$condition = array(
+					'clientnumber'=>$clientNumber,
+					'thedate' => $thedate,
+					'status' => $status,
+					'time' => date('H:i:s')
+					);
 
 				$this->app_model->insert($table_name, $condition);
 				$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>$thedate));
@@ -329,7 +348,7 @@ class Dashboard extends CI_Controller {
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname </td>";
 				echo "<td>$row->time</td>";
-				echo "<td><a class='openAttend' id='$row->clientnumber' href='#' val='$row->names $row->surname'>Attend</a></td>";
+				echo "<td><a class='openAttend' id='$row->clientnumber' href='#' val='$row->names $row->surname' time='$row->time'>Attend</a></td>";
 				echo "</tr>";
 				}
 				echo "</tbody>";
@@ -337,8 +356,48 @@ class Dashboard extends CI_Controller {
 			}
 		}
 
+		public function getIncomingTestClients(){
+			$this->db->select('*');
+			$this->db->from('patienthistory');
+			$this->db->where(array('checkupdate'=>getCalendarDateTodayFull(),'timeout'=>0));
+			$this->db->join('patientrecord', 'patientrecord.clientnumber = patienthistory.clientnumber');
+			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+			$this->db->order_by('patienthistory.timein', 'DESC'); 
+			$query = $this->db->get();
+
+			$needles = array('bp','weight','bmi','O2saturation','height','sugar','hemoglobin','visualscreen');
+			$clients = array();
+			$counter = 0;
+				if($query->num_rows() > 0){
+					$counter = 0;
+					for ($i=0; $i < $query->num_rows(); $i++) { 
+						$testsArray = explode(',', $query->row($i)->test);
+						$tests = array_diff($testsArray, $needles);
+						if(count($tests)>0){
+							$clients[$counter] = $query->row($i);
+							$counter++;
+						}
+					}
+
+				if(count($clients)>0){
+				echo "<table class='table small' id='table-generated-incoming-tests'>";
+				echo "<td>Client details</td><td>Time In</td><td>Attend</td>";
+				echo "<tbody>";
+				foreach ($clients as $row){
+				echo "<tr>";
+				echo "<td>$row->clientnumber $row->names $row->surname </td>";
+				echo "<td>$row->timein</td>";
+				echo "<td><a class='openTest' id='$row->clientnumber' href='#' time='$row->timein' val='$row->names $row->surname'>Attend</a></td>";
+				echo "</tr>";
+				}
+				echo "</tbody>";
+			echo "</table>";
+				}
+			}		
+		}
+
 		public function getClientDetails(){
-				$this->db->select('*');
+			$this->db->select('*');
 			$this->db->from('patientrecord');
 			$this->db->where(array('clientnumber'=>$_POST['clientNumber']));
 			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
@@ -382,13 +441,26 @@ class Dashboard extends CI_Controller {
 				echo "</table>";
 
 					$this->session->set_userdata('attend',$id);
-					$this->session->set_userdata('stage','package');
+					$this->session->set_userdata('time',$_POST['timein']);
 			}
 
 		}
 
-		public function getPackages(){
 
+		public function getClientTestDetails(){
+			$this->db->select('*');
+			$this->db->from('patienthistory');
+			$this->db->where(array('clientnumber'=>$_POST['clientNumber'],'checkupdate'=>getCalendarDateTodayFull()));
+			$query = $this->db->get();
+
+			$row = $query->row();
+
+			$needles = array('bp','weight','bmi','O2saturation','height','sugar','hemoglobin','visualscreen');
+			$counter = 0;
+			$testsArray = explode(',', $row->test);
+			$tests = array_diff($testsArray, $needles);
+			$data = array('package'=>$row->package,'tests'=>$tests);
+			die(print json_encode($data));
 		}
 
 
@@ -421,6 +493,8 @@ class Dashboard extends CI_Controller {
 	public function stage(){
 			$keys = array_keys($_POST);
 
+ //die(var_dump($keys[0]));
+
 		if(!isset($keys[0])){
 			/*
 			if($this->session->userdata('stage') == 'questionaire'){
@@ -432,7 +506,35 @@ class Dashboard extends CI_Controller {
 				}
 				*/
 			echo "Please select packages to proceed. You have not selected anything yet.";
+			
 		}else{
+
+			switch($keys[0]){
+					case 'basic':
+
+					break;
+
+					case 'standard':
+
+					break;
+
+					case 'comprehensive':
+
+					break;
+
+					case 'corporate':
+
+					break;
+
+					case 'quick':
+
+					break;
+
+					default:
+							echo "Please select a different package test, these tests are not available yet.";
+							die();
+					break;
+			}
 
 			$cost = 0;
 			$i = 0;
@@ -444,6 +546,16 @@ class Dashboard extends CI_Controller {
 			}
 
 			$tests = implode(',',$test);
+			switch($keys[0]){
+					case 'standard':
+			$tests = "height,bmi,sugar,hemoglobin,".$tests;
+					break;
+
+					case 'comprehensive':
+			$tests = "height,bmi,sugar,hemoglobin,hiv,hdltcholesterol,urine,".$tests;
+					break;
+			}
+
 
 			$query = $this->app_model->get_all_where("patienthistory",array('checkupdate'=>getCalendarDateTodayFull(),'clientnumber'=>$this->session->userdata('attend')));
 
@@ -451,65 +563,80 @@ class Dashboard extends CI_Controller {
 				$data = array('checkupdate'=>getCalendarDateTodayFull(),
 				         'clientnumber'=>$this->session->userdata('attend'),
 				         'test'=>$tests,
+				         'package'=>$keys[0],
+				         'timeout'=>0,
+				         'timein'=>$this->session->userdata('time'),
 				         'charge'=>$cost);
 				$condition =  array('checkupdate'=>getCalendarDateTodayFull(),
 					                   'clientnumber'=>$this->session->userdata('attend'));
 					$this->app_model->update("patienthistory", $data, $condition);
 
-					if($keys[0]=="basic"){
-						$this->session->set_userdata('stage','tests');
-						echo "tests";
-					}else if($keys[0] == "corporate"){
-						$this->session->set_userdata('stage','tests');
-						echo "tests";
-					}else{
-						$this->session->set_userdata('stage','questionaire');
-						echo "questionaire";
-					}
 			}else{
 				$data = array('checkupdate'=>getCalendarDateTodayFull(),
 				         'clientnumber'=>$this->session->userdata('attend'),
 				         'test'=>$tests,
+				         'timeout'=>0,
+				         'package'=>$keys[0],
+				         'timein'=>$this->session->userdata('time'),
 				         'charge'=>$cost);
-				$this->app_model->insert("patienthistory",$data);
-
-				if($keys[0]=="basic"){
-						$this->session->set_userdata('stage','tests');
-						echo "tests";
-					}else if($keys[0] == "corporate"){
-						$this->session->set_userdata('stage','tests');
-						echo "tests";
-					}else{
-						$this->session->set_userdata('stage','questionaire');
-						echo "questionaire";
-					}
-				
+				$this->app_model->insert("patienthistory",$data);				
 			}
+				switch($keys[0]){
+						case 'basic':
+							echo 'tests';
+						break;
+
+						case 'standard':
+							echo 'questionaire';
+						break;
+
+						case 'comprehensive':
+							echo 'questionaire';
+						break;
+
+						case 'corporate':
+							echo 'tests '.$tests;
+						break;
+
+						case 'quick':
+							echo 'tests';
+						break;
+
+						default:
+								echo "Please select a different package test, these tests are not available yet.";
+								die();
+						break;
+				}
 		}
 	}
 
 
-	public function questionaire(){
-		 if($this->session->userdata('stage') == 'questionaire'){
-		 			$this->load->view('js');
-						$this->load->view('header');		
-						$this->load->view('clinician/dashboard_questionaire');
-						$this->load->view('footer');
-		 }else{
-		 	redirect('dashboard/');
-		 }
-	}
+public function getTests(){
+				$condition = array('checkupdate'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'));
+				$query = $this->app_model->get_all_where("patienthistory", $condition, $limit=1);
+				$data = $query->row();
+				$arrayOfTests = explode(',', $data->test,5);
 
-	public function tests(){
-			if($this->session->userdata('stage') == 'tests'){
-						$this->load->view('js');
-						$this->load->view('header');		
-						$this->load->view('clinician/dashboard_tests');
-						$this->load->view('footer');
-			}else{
-				redirect('dashboard/');
-			}
-	}
+				echo "<form class='form'>";
+				echo "<table class='table table-striped table-bordered table-hover'>";
+				echo "<tr><th>Test</th><th>Results</th></tr>";
+
+				if(count($arrayOfTests)<4){
+						foreach ($arrayOfTests as $value) {
+						echo "<tr><td>$value</td><td><input type='text' class='form' name='$value'></td></tr>";
+						}
+				}else{
+						for ($i=0; $i < 4; $i++) { 
+						echo "<tr><td>$arrayOfTests[$i]</td><td><input type='text' class='form' name='$arrayOfTests[$i]'></td></tr>";
+					}
+				}
+				
+
+				echo "</table>";
+				echo "<input type='submit' class='btn btn-success' value='Save Tets'>";
+				echo "</form>";
+}
 
 		public function javascript_functions(){
 
@@ -611,12 +738,30 @@ class Dashboard extends CI_Controller {
         }});
 							},2500);";
 
+							$showIncomingTestClients = "
+
+							setInterval(function(){
+								$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/getIncomingTestClients/',
+        crossDomain: true,
+        success: function (data) {
+        $('#table-generated-incoming-tests').remove();
+								$('#dynamic-table-incoming-tests').html(data);
+        },
+        error: function (err) {
+            console.log(err);
+        }});
+							},2500);";
+
 						$attachStaticEventHandlers = "
 							$('#dynamic-table-incoming').on('click', '.openAttend', function(){
 
        	var clientNumber = $(this).attr('id');
        	var clientName = $(this).attr('val');
-								var data = {'clientNumber' : clientNumber};
+       	var timein = $(this).attr('time');
+								var data = {'clientNumber' : clientNumber,
+							             'timein':timein};
 
 								$.ajax({
         type: 'POST',
@@ -628,7 +773,7 @@ class Dashboard extends CI_Controller {
         $('#client-name').append(clientName);
        	$('#clendar-hide').hide();
        	$('#attend').show();
-       	$('#client-records').html(data);
+       	$('#records').html(data);
        	$('#clinician-tabs  a:first').tab('show');
        	$('#questionaire-tab').addClass('disabled');
        	$('#tests-tab').addClass('disabled');
@@ -637,21 +782,98 @@ class Dashboard extends CI_Controller {
         error: function (err) {
             console.log(err);
         }});
-
-									$.ajax({
-        type: 'POST',
-        url: 'http://localhost/wellness/dashboard/getPackages/',
-        crossDomain: true,
-        success: function (data) {
-        	//$('#packages').empty();
-       	//$('#packages').html(data);
-        },
-        error: function (err) {
-            console.log(err);
-        }});
-
-
    			});
+
+						$('#dynamic-table-incoming-tests').on('click','.openTest',function(){
+							 var clientNumber = $(this).attr('id');
+       	var clientName = $(this).attr('val');
+       	var timein = $(this).attr('time');
+								var data = {'clientNumber' : clientNumber,
+							             'timein':timein};
+							 var data1 = data;
+								console.log(data);
+							 $.ajax({
+							 	type:'POST',
+							 	url:'http://localhost/wellness/dashboard/getClientDetails/',
+							 	data:data,
+							 	success: function(data){
+				       $('#client-name').empty();
+				       $('#client-name').append(clientName);
+				      	$('#clendar-hide').hide();
+				      	$('#attend').show();
+				      	$('#records').html(data);
+				      	$('#clinician-tabs  a:first').tab('show');
+				      	$('#results-tab').addClass('disabled');
+
+												$.ajax({
+													type:'POST',
+													dataType:'json',
+													url:'http://localhost/wellness/dashboard/getClientTestDetails/',
+													data:data1,
+													success: function(data){
+
+															switch(data['package']){
+																case 'standard':
+	                 $('#comprehensive-tab').removeClass('active').addClass('disabled');
+	                 $('#comprehensive').removeClass('active');
+	                 $('#standard-tab').addClass('active');
+	                 $('#standard').addClass('active');
+
+	               var selected = [];
+																for (var prop in data['tests']) {
+																    selected.push(data['tests'][prop]);
+																}
+
+								        var tests = ['hiv','hdltcholesterol','urine'];
+	               var notSelected =$(tests).not(selected).get();
+	               
+	               tests.forEach(function(entry){
+	               	$('#'+entry).removeProp('disabled');
+	               });
+
+	               if(notSelected.length > 0){
+	               	notSelected.forEach(function(entry) {
+	               					$('#'+entry).attr('disabled', 'true');
+																		});
+	               	}
+
+																break;
+
+																case 'comprehensive':
+	                 $('#comprehensive-tab').removeClass('disabled').addClass('active');
+	                 $('#standard-tab').removeClass('active').addClass('disabled');
+	                 $('#standard').removeClass('active');
+	                 $('#comprehensive').addClass('active');
+
+			               var selected = [];
+																		for (var prop in data['tests']) {
+																		    selected.push(data['tests'][prop]);
+																		}
+
+	                 var tests = ['ldl','trigs','hba1c','ecg','hepatitisscreen','psaviac','bloodgroup'];
+	                 var notSelected =$(tests).not(selected).get();
+
+	                 tests.forEach(function(entry){
+	               	$('#'+entry).removeProp('disabled');
+	               });
+
+	               if(notSelected.length > 0){
+	               	notSelected.forEach(function(entry) {
+	               					$('#'+entry).attr('disabled', 'true');
+																		});
+	               	}
+																break;
+															}
+														},
+														error: function(err){
+															console.log(err)
+													}
+												});
+
+
+				      }
+							 });
+						});
        
        //form for packages
        $('form.form-packages').on('submit',function(e){
@@ -667,15 +889,59 @@ class Dashboard extends CI_Controller {
 
         	if(data == 'Please select packages to proceed. You have not selected anything yet.'){
         		alert(data);
+        	}else if(data == 'Please select a different package test, these tests are not available yet.'){
+										alert(data);
+
+										//basic & quick wellcheck tests
         	}else if(data=='tests'){
         		$('#questionaire-tab').addClass('disabled');
 										$('#tests-tab').removeClass('disabled');
 										$('#clinician-tabs li:eq(3) a').tab('show')
-        		console.log(data);
+											
+											$.ajax({
+											type: 'POST',
+											url: 'http://localhost/wellness/dashboard/getTests/',
+											success: function(data){
+												$('#tests').html(data);
+        				console.log(tests);
+											}
+											});
+
+        		//visual screen
+        	}else if(data == 'tests visualscreen'){
+        			$('#questionaire-tab').addClass('disabled');
+										$('#tests-tab').removeClass('disabled');
+										$('#clinician-tabs li:eq(3) a').tab('show')
+
+											$.ajax({
+											type: 'POST',
+											url: 'http://localhost/wellness/dashboard/getTests/',
+											success: function(data){
+												var tests = data.split(',');
+												$('#tests').html('http://localhost/wellness/application/views/clinician/tests/wellness.html')
+        				console.log(tests);
+											}
+											});
+
+
+
+        		//wellcheck tests with questionaire
         	}else if(data=='questionaire'){
-        			$('#tests-tab').addClass('disabled');
+        		$('#tests-tab').removeClass('disabled');
         		$('#questionaire-tab').removeClass('disabled');
         			$('#clinician-tabs li:eq(2) a').tab('show')
+        			//append questionaire interface
+        			//append tests interface
+
+        			$.ajax({
+											type: 'POST',
+											url: 'http://localhost/wellness/dashboard/getTests/',
+											success: function(data){
+												$('#tests').html(data);
+        				console.log(tests);
+											}
+											});
+
         		console.log(data);
         	}else{
         		console.log(data);
@@ -696,6 +962,7 @@ class Dashboard extends CI_Controller {
 
 			$this->javascript->output($hideForm);
 			$this->javascript->output($showIncomingClients);
+			$this->javascript->output($showIncomingTestClients);
 			$this->javascript->output($attachStaticEventHandlers);
 			$this->javascript->click('.day',$getDay);
 			$this->javascript->click('.day',$showClients);
