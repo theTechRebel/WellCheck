@@ -24,7 +24,7 @@
         </ul>
         <div id="tab-content-tests" class="tab-content">
             <div class="tab-pane" id="standard">
-                  <form class="form-horizontal" role="form">
+                  <form class="form-horizontal form-tests" role="form">
 
                     <fieldset id="hiv">
                     <legend>HIV/ AIDS Test</legend>
@@ -115,7 +115,7 @@
             </div>
 
             <div class="tab-pane" id="comprehensive">
-                  <form class="form-horizontal" role="form">
+                  <form class="form-horizontal form-tests" role="form">
 
                     <fieldset id="hiv">
                     <legend>HIV/ AIDS Test</legend>
@@ -278,7 +278,13 @@
         </div>
     </div>
     <div class="tab-pane" id="results">
+      <table class="table small">
+        <tr>
+            <th>Test</th><th>Results</th>
+        </tr>
+        <tbody id="items"></tbody>
 
+        </table>
     </div>
 </div>
 

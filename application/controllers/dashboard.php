@@ -396,6 +396,31 @@ class Dashboard extends CI_Controller {
 			}		
 		}
 
+
+		public function getIncomingBloodResults(){
+   $this->db->select('*');
+			$this->db->from('patienthistory');
+			$this->db->where(array('checkupdate'=>getCalendarDateTodayFull(),'timeout'=>1));
+			$this->db->join('patientrecord', 'patientrecord.clientnumber = patienthistory.clientnumber');
+			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+			$this->db->order_by('patienthistory.timein', 'DESC'); 
+			$query = $this->db->get();
+
+				if($query->num_rows()>0){
+				echo "<table class='table small' id='table-generated-incoming-tests-bloods'>";
+				echo "<td>Client details</td><td>View Results</td>";
+				echo "<tbody>";
+				foreach ($query->result() as $row){
+				echo "<tr>";
+				echo "<td>$row->clientnumber $row->names $row->surname </td>";
+				echo "<td><a class='openResults' id='$row->clientnumber' href='#' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
+				echo "</tr>";
+				}
+				echo "</tbody>";
+				echo "</table>";
+				}
+		}
+
 		public function getClientDetails(){
 			$this->db->select('*');
 			$this->db->from('patientrecord');
@@ -638,6 +663,43 @@ public function getTests(){
 				echo "</form>";
 }
 
+
+public function saveTests(){
+	   $condition = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'));
+				$query = $this->app_model->get_all_where("patientresults", $condition, $limit=1);
+
+				if($query->num_rows() > 0){
+								$data = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'results' => json_encode($_POST));
+				$condition =  array('date'=>getCalendarDateTodayFull(),
+					                   'clientnumber'=>$this->session->userdata('attend'));
+					$this->app_model->update("patientresults", $data, $condition);
+				}else{
+				$data = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'results'=> json_encode($_POST));
+				$this->app_model->insert("patientresults",$data);	
+				}
+
+	   $condition = array('checkupdate'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'));
+				$this->app_model->update("patienthistory",array('timeout'=>1),$condition);
+
+//update calendar table set person to processed
+//update calendarcount and decrement que, increment processed
+
+				print json_encode($_POST);
+}
+
+public function getSavedTests(){
+    $condition = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$_POST['clientNumber']);
+				$query = $this->app_model->get_all_where("patientresults", $condition, $limit=1);
+					print $query->row()->results;
+}
+
 		public function javascript_functions(){
 
 			$hideForm = "
@@ -754,7 +816,71 @@ public function getTests(){
         }});
 							},2500);";
 
+       $showInComingBloodResults = "
+        setInterval(function(){
+								$.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/getIncomingBloodResults/',
+        crossDomain: true,
+        success: function (data) {
+        $('#table-generated-incoming-tests-bloods').remove();
+								$('#dynamic-table-incoming-bloods').html(data);
+        },
+        error: function (err) {
+            console.log(err);
+        }});
+							},2500);";
+
 						$attachStaticEventHandlers = "
+
+						$('#dynamic-table-incoming-bloods').on('click','.openResults',function(){
+
+							 var clientName = $(this).attr('val');
+       	var timein = $(this).attr('time');
+							 var clientNumber = $(this).attr('id');
+								var data = {'clientNumber' : clientNumber}; 
+          
+          $.ajax({
+         type:'POST',
+									data:data,
+									url:'http://localhost/wellness/dashboard/getSavedTests/',
+									dataType:'json',
+									success: function(data){
+										$('#client-name').empty();
+	        $('#client-name').append(clientName);
+	       	$('#clendar-hide').hide();
+	       	$('#attend').show();
+
+	       	//$('#clinician-tabs').find('li').each(function(){
+         //   $(this).removeClass('active')
+	       	//});
+
+          $('#records-tab').removeClass('active');
+          $('#records').removeClass('active');
+          $('#tests-tab').removeClass('active').addClass('disabled');
+	    	  		$('#tests').removeClass('active').addClass('disabled');
+	    	  		$('#results-tab').removeClass('disabled').addClass('active');
+	    	  		$('#results').removeClass('disabled').addClass('active');
+	         //$('#questionaire-tab').addClass('disabled');
+									 //$('#tests-tab').removeClass('disabled');
+									 $('#clinician-tabs li:eq(4) a').tab('show');
+
+								    $.each(data, function(key,val){
+
+								    	  if(val!=''){
+								       $('#items-results').append('<tr><td> '+key+' </td> <td> '+val+' </td></tr>'); 										    	  	
+								    	  }});
+									},
+									error:function(err){
+										console.log(err);
+									}
+          });
+								
+								});
+       
+    
+
+
 							$('#dynamic-table-incoming').on('click', '.openAttend', function(){
 
        	var clientNumber = $(this).attr('id');
@@ -769,7 +895,7 @@ public function getTests(){
         data : data,
         crossDomain: true,
         success: function (data) {
-        	$('#client-name').empty();
+        $('#client-name').empty();
         $('#client-name').append(clientName);
        	$('#clendar-hide').hide();
        	$('#attend').show();
@@ -953,16 +1079,51 @@ public function getTests(){
         }});
 
 								e.preventDefault();
+								});
 
-								
+        
+        //form test results [scientist]
+        $('form.form-tests').on('submit',function(e){
+        	e.preventDefault();
+        	var data = $(this).serialize();
+        	  $.ajax({
+        	  	type:'POST',
+        	  	data:data,
+        	  	url: 'http://localhost/wellness/dashboard/saveTests/',
+        	  	dataType:'json',
+        	  	success: function(data){
+        	  		alert('Test results saved successfully.');
 
-								});";
+        	  		$('#tests-tab').removeClass('active').addClass('disabled');
+        	  		$('#tests').removeClass('active').addClass('disabled');
+        	  		$('#results-tab').removeClass('disabled').addClass('active');
+        	  		$('#results').removeClass('disabled').addClass('active');
+             
+             console.log(data)
+              
+
+										    $.each(data, function(key,val){
+										    	  if(val!=''){
+										       $('#items').append('<tr><td> '+key+' </td> <td> '+val+' </td></tr>'); 										    	  	
+										    	  }
+
+										    });
+
+        	  	},error:function(err){
+        	  		alert('Please attempt saving again.')
+        	  		console.log(err);
+        	  	}
+        	  })
+        });
+        
+        ";
 
 			
 
 			$this->javascript->output($hideForm);
 			$this->javascript->output($showIncomingClients);
 			$this->javascript->output($showIncomingTestClients);
+			$this->javascript->output($showInComingBloodResults);
 			$this->javascript->output($attachStaticEventHandlers);
 			$this->javascript->click('.day',$getDay);
 			$this->javascript->click('.day',$showClients);

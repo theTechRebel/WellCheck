@@ -8,7 +8,7 @@
 <div class="panel-body">
 
    <ul class="nav nav-tabs" data-tabs="tabs" id="clinician-tabs">
-    <li class="active"><a href="#records" data-toggle="tab">Patient File</a></li>
+    <li class="active" id="records-tab"><a href="#records" data-toggle="tab">Patient File</a></li>
     <li><a href="#packages" data-toggle="tab">Packages</a></li>
     <li id="questionaire-tab"><a href="#questionaire" data-toggle="tab">Questionaire</a></li>
     <li id="tests-tab"><a href="#tests" data-toggle="tab">Tests</a></li>      
@@ -29,7 +29,13 @@
 
     </div>
     <div class="tab-pane" id="results">
+      <table class="table small">
+        <tr>
+            <th>Test</th><th>Results</th>
+        </tr>
+        <tbody id="items-results"></tbody>
 
+        </table>
     </div>
 </div>
 
