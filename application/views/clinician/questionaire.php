@@ -1,113 +1,192 @@
+<div class="container-fluid">
+    <div class="row">
+    <div id="tab-content-packages" class="tab-content">
+        <div class="col-lg-3">
+            <ul class="nav nav-pills nav-stacked" data-tabs="tabs" id="packages-tabs">
+                <li class="active" id="current-tab"><a href="#current" data-toggle="tab">Current Treatments</a></li> 
+                <li id="family-tab"><a href="#family" data-toggle="tab">Family History</a></li>
+                <li id="lifestyleinfections-tab"><a href="#lifestyle" data-toggle="tab">Lifestyle Questions</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-9">
+<form name='form-questionaire' method='post' action='#' class='form-questionaire'>
+        <div id="tab-content-packages" class="tab-content">
+                <div class="tab-pane active" id="current">
+                    <div class='table-responsive'>
+                    
+    <table class='table small'>
+    <td>Question</td><td>Answer</td>
+    <tbody>
+        <tr>
+        <td>Are you on any prolonged medication?</td>
+        <td><input type="radio" name="prolonged_medication" value="yes">Yes
+            <input type="radio" name="prolonged_medication" value="no">No</td>
+        </tr>
 
-<div id="client-id"></div>
+        <tr>
+        <td>If yes, please specify</td>
+        <td> <textarea rows="3" cols="30" name="medication"></textarea></td>
+        </tr>
 
-<div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-calendar fa-fw"></i>Attending to Client: <h3><div id="client-name"></div></h3></div>
-    </div>
-    <!-- /.panel-heading -->
-    <div class="panel-body">
-					<ul class="nav nav-tabs" data-tabs="tabs" id="clinician-tabs">
-        <li class="active"><a href="#records" data-toggle="tab">Patient File</a></li>
-        <li><a href="#packages" data-toggle="tab">Packages</a></li>
-        <li id="questionaire-tab"><a href="#questionaire" data-toggle="tab">Questionaire</a></li>
-        <li id="tests-tab"><a href="#tests" data-toggle="tab">Tests</a></li>      
-        <li id="results-tab"><a href="#results" data-toggle="tab">Results</a></li>        
-      </ul>
-          <div id="tab-content" class="tab-content">
-        <div class="tab-pane active" id="records">
-            <div id="client-records">
+        <tr><td>High Blood Pressure</td>
+        <td><input type="radio" name="high_blood_pressure" value="yes">Yes
+            <input type="radio" name="high_blood_pressure" value="no">No</td>        
+        </tr>
+
+        <tr><td>Heart Disease</td>
+        <td><input type="radio" name="heart_disease" value="yes">Yes
+            <input type="radio" name="heart_disease" value="no">No</td>        
+        </tr>
+                <tr><td>Tuberculosis</td>
+        <td><input type="radio" name="tuberculosis" value="yes">Yes
+            <input type="radio" name="tuberculosis" value="no">No</td>        
+        </tr>
+          <tr><td>HIV/Immunosuppression Disease</td>
+        <td><input type="radio" name="hiv" value="yes">Yes
+            <input type="radio" name="hiv" value="no">No</td>        
+        </tr>
+        <tr><td>If YES are you on ARVs?</td>
+        <td><input type="radio" name="arv" value="yes">Yes
+            <input type="radio" name="arv" value="no">No</td>        
+        </tr>
+        <tr><td>Stroke</td>
+        <td><input type="radio" name="stroke" value="yes">Yes
+            <input type="radio" name="stroke" value="no">No</td>        
+        </tr>
+        <tr><td>Diabetes</td>
+        <td><input type="radio" name="diabetes" value="yes">Yes
+            <input type="radio" name="diabetes" value="no">No</td>        
+        </tr>
+        <tr><td>Epilepsy</td>
+        <td><input type="radio" name="epilepsy" value="yes">Yes
+            <input type="radio" name="epilepsy" value="no">No</td>        
+        </tr>
+        <tr><td>Cancer</td>
+        <td><input type="radio" name="cancer" value="yes">Yes
+            <input type="radio" name="cancer" value="no">No</td>        
+        </tr>        
+        <tr><td>Any other disease?</td>
+        <td><textarea rows="3" cols="30" name="other_disease"></textarea></td>        
+        </tr>        
+    </tbody>
+    </table>
+                    
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="family">
+                    <div class='table-responsive'>
+    <table class='table small'>
+    <td>Question</td><td>Answer</td>
+    <tbody>
+        <tr><td>High Blood Pressure</td>
+        <td><input type="radio" name="fam_high_blood_pressure" value="yes">Yes
+            <input type="radio" name="fam_high_blood_pressure" value="no">No</td>        
+        </tr>
+                <tr><td>Tuberculosis</td>
+        <td><input type="radio" name="fam_tuberculosis" value="yes">Yes
+            <input type="radio" name="fam_tuberculosis" value="no">No</td>        
+        </tr>
+          <tr><td>Stroke</td>
+        <td><input type="radio" name="fam_stroke" value="yes">Yes
+            <input type="radio" name="fam_stroke" value="no">No</td>        
+        </tr>
+        <tr><td>Diabetes</td>
+        <td><input type="radio" name="fam_diabetes" value="yes">Yes
+            <input type="radio" name="fam_diabetes" value="no">No</td>        
+        </tr>
+        <tr><td>Mental Illness</td>
+        <td><input type="radio" name="fam_mental_illness" value="yes">Yes
+            <input type="radio" name="fam_mental_illness" value="no">No</td>        
+        </tr>
+        <tr><td>Cancer</td>
+        <td><input type="radio" name="fam_cancer" value="yes">Yes
+            <input type="radio" name="fam_cancer" value="no">No</td>        
+        </tr>
+        <tr><td>Heart Disease</td>
+        <td><input type="radio" name="fam_heart_disease" value="yes">Yes
+            <input type="radio" name="fam_heart_disease" value="no">No</td>        
+        </tr> 
+    </tbody>
+    </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="lifestyle">
+                    <div class='table-responsive'>
+    <table class='table small'>
+    <td>Question</td><td>Answer</td>
+    <tbody>
+        <tr><td>Do you take alcohol?</td>
+        <td><input type="radio" name="alcohol" value="yes">Yes
+            <input type="radio" name="alcohol" value="no">No</td>        
+        </tr>
+        <tr><td>if yes how much daily?</td>
+        <td><input type="text" name="alcohol_ammount"/></td></tr>
+
+        <tr><td>Do you smoke or take tobacco?</td>
+        <td><input type="radio" name="tobacco" value="yes">Yes
+            <input type="radio" name="tobacco" value="no">No</td>        
+        </tr>
+        <tr><td>if yes how much daily?</td>
+        <td><input type="text" name="tobacco_ammount"/></td></tr>
+
+        <tr><td>Do you have fainting spells?</td>
+        <td><input type="radio" name="fainting_spells" value="yes">Yes
+            <input type="radio" name="fainting_spells" value="no">No</td>        
+        </tr>
+
+        <tr><td>Do you become unusually short of breath when you walk up a flight of stairs?</td>
+        <td><input type="radio" name="short_of_breath" value="yes">Yes
+            <input type="radio" name="short_of_breath" value="no">No</td>        
+        </tr>
+        <tr><td>Have you had a cough that started in the last 6 months and has remained for more than a month?</td>
+        <td><input type="radio" name="prolonged_cough" value="yes">Yes
+            <input type="radio" name="prolonged_cough" value="no">No</td>        
+        </tr>
+
+        <tr><td>Have you ever vomited or coughed out blood?</td>
+        <td><input type="radio" name="coughed_blood" value="yes">Yes
+            <input type="radio" name="coughed_blood" value="no">No</td>        
+        </tr> 
+
+                <tr><td>Do you have weakness or paralysis of either your arms or legs</td>
+        <td><input type="radio" name="weakness_or_paralysis" value="yes">Yes
+            <input type="radio" name="weakness_or_paralysis" value="no">No</td>        
+        </tr> 
+                <tr><td>Do you ever feel so depressed that it interfers with your work?</td>
+        <td><input type="radio" name="depression" value="yes">Yes
+            <input type="radio" name="depression" value="no">No</td>        
+        </tr> 
+                <tr><td>Do you ever feel you need medical or psychiatric help because of nervousness?</td>
+        <td><input type="radio" name="psychiatric_help_from_nervousness" value="yes">Yes
+            <input type="radio" name="psychiatric_help_from_nervousness" value="no">No</td>        
+        </tr> 
+           <tr><td>Do you have Hernia/Piles/Hydrocele</td>
+        <td><input type="radio" name="hernia_piles_hydrocele" value="yes">Yes
+            <input type="radio" name="hernia_piles_hydrocele" value="no">No</td>        
+        </tr> 
+           <tr><td>Please specify any other significant information, not covered above:</td>
+        <td><textarea rows="3" cols="30" name="other_significant_information"></textarea></td>       
+        </tr> 
+            <tr><td>May we contact you via SMS</td>
+        <td><input type="radio" name="sms_contact" value="yes">Yes
+            <input type="radio" name="sms_contact" value="no">No</td>
+        </tr>
+             <tr><td>May we contact you via EMAIL</td>
+        <td><input type="radio" name="email_contact" value="yes">Yes
+            <input type="radio" name="email_contact" value="no">No</td>        
+        </tr>
+    </tbody>
+    </table>
+</div>
+    <input type="submit" name="questionaire_complete" value="Complete Questionaire" class="btn btn-lg btn-success"/>
+                   
+                </div>
             </div>
+        </form>
         </div>
-        <div class="tab-pane" id="packages">
-
-        	<div class='col-lg-12'>
-        		<h3 align='center'>Corporate Package</h3>
-        	<div class='table-responsive'>
-        	<form name='package' method='post' action='<?php echo $url?>dashboard/stage/' class='form-packages'>
-        		<table class='table small'>
-												<td>Description</td><td>Amount</td>
-        			<tbody>
-        				<tr><td><input type='checkbox' name='corporate[]' value='visualtest_5'>Visual Test</td><td>$5.00</td></tr>
-        			</tbody>
-        		</table>
-        		<input type='submit' name='submit' class='bill' value='Bill Corporate'/>
-        	</form>
-        	</div>
-        	</div>
-
-		       <br/>
-
-
-        	<h3 align='center'>Well Living</h3>
-        	<div class='col-lg-4'>
-        		<h3 align='center'>Basic</h3>
-        	<div class='table-responsive'>
-        	<form name='package' method='post' action='<?php echo $url?>dashboard/stage/' class='form-packages'>
-        		<table class='table small'>
-        			<td>Description</td><td>Amount</td>
-        			<tbody>
-        				<tr><td><input type='checkbox' name='basic[]' value='bp_5'>Blood Pressure</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='basic[]' value='bloodsugar_5'>Blood Sugar</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='basic[]' value='bmi_5'>Body Mass Index</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='basic[]' value='bloodtest_5'>Blood Test</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='basic[]' value='bloodtype_5'>Blood Type</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='basic[]' value='urine_5'>Urine Test</td><td>$5.00</td></tr>
-        			</tbody>
-        		</table>
-        		<input type='submit' name='submit' class='bill' value='Bill Basic'/>
-        	</form>
-        	</div>
-        	</div>
-        	<div class='col-lg-4'>
-        		<h3 align='center'>Standard</h3>
-        	<div class='table-responsive'>
-        	<form name='package' method='post' action='<?php echo $url?>dashboard/stage/' class='form-packages'>
-        		<table class='table small'>
-											<td>Description</td><td>Amount</td>
-        			<tbody>
-        				<tr><td><input type='checkbox' name='standard[]' value='hiv_5'/>HIV AIDS test</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='standard[]' value='hdl_5'/>HDL test</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='standard[]' value='totalcholesterol_5'/>Total Cholesterol test</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='standard[]' value='viac_5'/>VIAC test</td><td>$5.00</td></tr>
-        			</tbody>
-        		</table>
-        		<input type='submit' name='submit' class='bill' value='Bill Standard'/>
-        	</form>
-        	</div>
-        	</div>
-        	<div class='col-lg-4'>
-        		<h3 align='center'>Comprehensive</h3>
-        	<div class='table-responsive'>
-        	<form name='package' method='post' action='<?php echo $url?>dashboard/stage/' class='form-packages'>
-        		<table class='table small'>
-												<td>Description</td><td>Amount</td>
-        			<tbody>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='ldl_5'>LDL Cholesterol</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='trigs_5'>TRIGS</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='hba1c_5'>HBA1c</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='ecg_5'>ECG</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='hepatitis_5'>Hepatitis Screen</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='cea_5'>CEA</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='ca125_5'>CA-125</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='psa_5'>PSA</td><td>$5.00</td></tr>
-        				<tr><td><input type='checkbox' name='comprehensive[]' value='alphafetoprotein_5'>Alpha Feto Protein</td><td>$5.00</td></tr>
-        			</tbody>
-        		</table>
-        		<input type='submit' name='submit' class='bill' value='Bill Comprehensive'/>
-        	</form>
-        	</div>
-        	</div>
-
-        
-        </div>
-        <div class="tab-pane" id="questionaire">
-            
-        </div>
-        <div class="tab-pane" id="tests">
-            
-        </div>
-        <div class="tab-pane" id="results">
-            
-        </div>
+    </div>
     </div>
 </div>

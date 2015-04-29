@@ -9,16 +9,6 @@
 
 <div id="dynamic-table-incoming">
 </div>
-<table class="table small">
-<th>
-	<td>Clients Details</td><td>time in</td><td>Attend</td>
-</th>
-
-<tr>
-
-</tr>
-
-</table>
 </div>
 </div>
 </div>
@@ -35,16 +25,6 @@
 
 <div id="dynamic-table-incoming-bloods">
 </div>
-<table class="table small">
-<th>
-	<td>Clients Details</td><td>View Results</td>
-</th>
-
-<tr>
-
-</tr>
-
-</table>
 </div>
 </div>
 </div>
@@ -60,16 +40,6 @@
 
 <div id="dynamic-table">
 </div>
-<table class="table small">
-<th>
-<td>Clients</td><td>Cancel</td><td>Processed</td><td>In Que</td>
-</th>
-
-<tr>
-
-</tr>
-
-</table>
 </div>
 </div>
 </div>

@@ -36,10 +36,10 @@
                             <a href="#"><i class="fa fa-user fa-fw"></i> Client Records<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="<?php echo $url?>dashboard/walkInClient/2">View All Clients.</a>
+                                    <a href="<?php echo $url?>dashboard/clients/">View All Clients.</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo $url?>dashboard/clients/">View Clients Checkup History</a>
+                                    <a href="<?php echo $url?>dashboard/testsResults/">View Clients Test Results</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

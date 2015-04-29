@@ -8,16 +8,6 @@
 
 <div id="dynamic-table">
 </div>
-<table class="table small">
-<th>
-<td>Clients</td><td>Cancel</td><td>Processed</td><td>In Que</td>
-</th>
-
-<tr>
-
-</tr>
-
-</table>
 </div>
 </div>
 </div>

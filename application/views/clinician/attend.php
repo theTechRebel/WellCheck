@@ -1,4 +1,7 @@
-
+<?php
+   $url = $this->config->item('base_url');
+   $theDate = getCalendarDateTodayFull();
+?>
 <div id="client-id"></div>
 
 <div class="panel panel-default">
@@ -23,18 +26,22 @@
     	<?php include_once('packages.php');?>
     </div>
     <div class="tab-pane" id="questionaire">
-
+        <?php include_once('questionaire.php');?>
     </div>
     <div class="tab-pane" id="tests">
 
     </div>
     <div class="tab-pane" id="results">
+    <br/><br/>
+    <p align="center"><a class="btn btn-lg btn-success" href="<?php echo $url?>dashboard/testsResults/<?php echo $this->session->userdata('attend');?>/<?php echo $theDate;?>">View Results for Client 
+        <?php echo $this->session->userdata('attend');?></a></p>
+
       <table class="table small">
         <tr>
             <th>Test</th><th>Results</th>
         </tr>
         <tbody id="items-results"></tbody>
-
+        
         </table>
     </div>
 </div>

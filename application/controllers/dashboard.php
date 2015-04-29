@@ -123,7 +123,7 @@ class Dashboard extends CI_Controller {
 							$qued = 1;
 							$this->app_model->insert("calendarcount", array('thedate'=>getCalendarDateTodayFull(),'qued'=>$qued));
 					}
-					$this->clients('Succesfully booked client with assigned WellCheck ID: '.$id);
+					$this->clients(0,'Succesfully booked client with assigned WellCheck ID: '.$id);
 				}
 		}
 	}
@@ -284,20 +284,47 @@ class Dashboard extends CI_Controller {
 
 		}
 
-		public function clients($report=null){
+		public function clients($offset=0,$report=null){
 
+			$config['base_url'] = 'http://localhost/wellness/dashboard/clients/';
+			
 			$this->db->select('*');
 			$this->db->from('patientrecord');
+			$this->db->limit(8, $offset);
 			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
 			$this->db->order_by('patientrecord.id', 'DESC'); 
 			$query = $this->db->get();
 
-			if($report != null){
-				$this->load->view('dashboard_clients',array('patientrecords'=>$query,'report'=>$report));
-			}else{
-				$this->load->view('dashboard_clients',array('patientrecords'=>$query));
-			}
-			
+			$totalRows = $this->app_model->get_all("patientrecord");
+
+			$config['total_rows'] = $totalRows->num_rows();
+			$config['per_page'] = 8;
+
+			$this->pagination->initialize($config);
+
+					switch($this->session->userdata('rights')){
+						case "clinician":
+											if($report != null){
+												$this->load->view('js');
+												$this->load->view('header');		
+												$this->load->view('clinician/dashboard_clients',array('patientrecords'=>$query,'report'=>$report));
+												$this->load->view('footer');
+													}else{
+												$this->load->view('js');
+												$this->load->view('header');	
+												$this->load->view('clinician/dashboard_clients',array('patientrecords'=>$query));
+												$this->load->view('footer');
+													}
+						break;
+
+						case "reception":
+										if($report != null){
+											$this->load->view('dashboard_clients',array('patientrecords'=>$query,'report'=>$report));
+										}else{
+											$this->load->view('dashboard_clients',array('patientrecords'=>$query));
+										}
+						break;
+					}
 		}
 
 
@@ -643,7 +670,7 @@ public function getTests(){
 				$data = $query->row();
 				$arrayOfTests = explode(',', $data->test,5);
 
-				echo "<form class='form'>";
+				echo "<form class='form-clinician' name='form-clinician-tests' action='#'>";
 				echo "<table class='table table-striped table-bordered table-hover'>";
 				echo "<tr><th>Test</th><th>Results</th></tr>";
 
@@ -698,6 +725,68 @@ public function getSavedTests(){
 				         'clientnumber'=>$_POST['clientNumber']);
 				$query = $this->app_model->get_all_where("patientresults", $condition, $limit=1);
 					print $query->row()->results;
+}
+
+public function saveQuestionaire(){
+	 $condition = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'));
+				$query = $this->app_model->get_all_where("patientresults", $condition, $limit=1);
+
+				if($query->num_rows() > 0){
+								$data = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'questionaire' => json_encode($_POST));
+				$condition =  array('date'=>getCalendarDateTodayFull(),
+					                   'clientnumber'=>$this->session->userdata('attend'));
+					$this->app_model->update("patientresults", $data, $condition);
+					echo "questionaire saved successfully";
+					die();
+				}else{
+				$data = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'questionaire'=> json_encode($_POST));
+				$this->app_model->insert("patientresults",$data);	
+					echo "questionaire saved successfully";
+					die();
+				}
+}
+
+public function saveClinicianTests(){
+$condition = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'));
+				$query = $this->app_model->get_all_where("patientresults", $condition, $limit=1);
+
+				if($query->num_rows() > 0){
+								$data = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'clinicianresults' => json_encode($_POST));
+				$condition =  array('date'=>getCalendarDateTodayFull(),
+					                   'clientnumber'=>$this->session->userdata('attend'));
+					$this->app_model->update("patientresults", $data, $condition);
+					echo "clinician tests saved successfully";
+					die();
+				}else{
+				$data = array('date'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'clinicianresults'=> json_encode($_POST));
+				$this->app_model->insert("patientresults",$data);	
+					echo "clinician tests saved successfully";
+					die();
+				}
+}
+
+public function testsResults($clientID,$year=null,$month=null,$day=null){
+	$condition = array('clientnumber'=>$clientID,
+		                  'date'=>$year."/".$month."/".$day);
+	$query = $this->app_model->get_all_where("patientresults", $condition, 1);
+	$row = $query->row();
+	$data = array('questionaire'=>$row->questionaire,
+		             'clinicianresults'=>$row->clinicianresults,
+		             'scientisttests'=>$row->results); 
+  $this->load->view('js');
+ $this->load->view('header');		
+	$this->load->view('clinician/dashboard_results',$data);
+	$this->load->view('footer');
 }
 
 		public function javascript_functions(){
@@ -832,7 +921,6 @@ public function getSavedTests(){
 							},2500);";
 
 						$attachStaticEventHandlers = "
-
 						$('#dynamic-table-incoming-bloods').on('click','.openResults',function(){
 
 							 var clientName = $(this).attr('val');
@@ -865,6 +953,8 @@ public function getSavedTests(){
 									 //$('#tests-tab').removeClass('disabled');
 									 $('#clinician-tabs li:eq(4) a').tab('show');
 
+          $('#items-results').empty();
+          
 								    $.each(data, function(key,val){
 
 								    	  if(val!=''){
@@ -1102,6 +1192,7 @@ public function getSavedTests(){
              console.log(data)
               
 
+              
 										    $.each(data, function(key,val){
 										    	  if(val!=''){
 										       $('#items').append('<tr><td> '+key+' </td> <td> '+val+' </td></tr>'); 										    	  	
@@ -1115,7 +1206,47 @@ public function getSavedTests(){
         	  	}
         	  })
         });
-        
+         //end of form test results [scientist]
+
+         //form form-questionaire
+        $('form.form-questionaire').on('submit',function(e){
+           e.preventDefault();
+           var data = $(this).serialize();
+                      $.ajax({
+            type:'POST',
+                data:data,
+                url: 'http://localhost/wellness/dashboard/saveQuestionaire/',
+                success: function(data){
+                    alert(data);
+
+                    $('#questionaire-tab').removeClass('active').addClass('disabled');
+                    $('#questionaire').removeClass('active').addClass('disabled');
+                    $('#tests-tab').addClass('active');
+                    $('#tests').addClass('active');
+           }
+         });
+        });
+
+         //submitting of clinician tests
+          $('#tests').on('submit','form.form-clinician',function(e){
+           e.preventDefault();
+           var data = $(this).serialize();
+           $.ajax({
+            type:'POST',
+             data:data,
+             url: 'http://localhost/wellness/dashboard/saveClinicianTests/',
+             success: function(data){
+                    alert(data);
+
+                    $('#tests-tab').removeClass('active');
+                    $('#tests').removeClass('active');
+                    $('#results-tab').addClass('active');
+                    $('#results').addClass('active');
+           }
+         });
+         });
+         //end of submitting of clincician tests
+
         ";
 
 			
