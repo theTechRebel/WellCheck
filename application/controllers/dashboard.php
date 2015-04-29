@@ -48,9 +48,19 @@ class Dashboard extends CI_Controller {
 		  }
 			}else{
 
+			$config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
+			$totalRows = $this->app_model->get_all("patientdetails");
+
+			$config['total_rows'] = $totalRows->num_rows();
+			$config['per_page'] = 10;
+			$config['anchor_class'] = "class='dropDownMoreClients'";
+
+			$this->pagination->initialize($config);
+
+
 				$dates = explode("/", getCalendarDateToday());
 				$query 	= $this->calendar_model->getBookings($dates[0],$dates[1]);
-				$query2 = $this->app_model->get_all("patientdetails");
+				$query2 = $this->app_model->get_all("patientdetails", 10, 0);
 				$query3 = getCalendarDateToday();
 
 				$data = array('bookings'	=>$query,
@@ -67,8 +77,10 @@ class Dashboard extends CI_Controller {
 			   break;
 
 			   case "reception":
-			   	$this->load->view('js');		
-							$this->load->view('dashboard',$data);
+			   	$this->load->view('js');
+			   	$this->load->view('header');			
+							$this->load->view('reception/dashboard',$data);
+							$this->load->view('footer');
 			   break;
 
 			   case "scientist":
@@ -234,7 +246,10 @@ class Dashboard extends CI_Controller {
 		 	'trim|required');
 
 			if($this->form_validation->run()==FALSE){
-								$this->load->view('dashboard_walkinclient',array('type'=>$type));
+								$this->load->view('js');
+			   	 $this->load->view('header');	
+								$this->load->view('reception/dashboard_walkinclient',array('type'=>$type));
+								$this->load->view('footer');
         }else{
 
         	$query = $this->app_model->get_all_where("patientdetails", array('idnumber'=>$_POST['idnumber']));
@@ -290,7 +305,7 @@ class Dashboard extends CI_Controller {
 			
 			$this->db->select('*');
 			$this->db->from('patientrecord');
-			$this->db->limit(8, $offset);
+			$this->db->limit(12, $offset);
 			$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
 			$this->db->order_by('patientrecord.id', 'DESC'); 
 			$query = $this->db->get();
@@ -298,7 +313,7 @@ class Dashboard extends CI_Controller {
 			$totalRows = $this->app_model->get_all("patientrecord");
 
 			$config['total_rows'] = $totalRows->num_rows();
-			$config['per_page'] = 8;
+			$config['per_page'] = 12;
 
 			$this->pagination->initialize($config);
 
@@ -316,15 +331,45 @@ class Dashboard extends CI_Controller {
 												$this->load->view('footer');
 													}
 						break;
+		
 
 						case "reception":
 										if($report != null){
-											$this->load->view('dashboard_clients',array('patientrecords'=>$query,'report'=>$report));
+												$this->load->view('js');
+			   	    $this->load->view('header');	
+											$this->load->view('reception/dashboard_clients',array('patientrecords'=>$query,'report'=>$report));
+											$this->load->view('footer');
 										}else{
-											$this->load->view('dashboard_clients',array('patientrecords'=>$query));
+											$this->load->view('js');
+			   	    $this->load->view('header');	
+											$this->load->view('reception/dashboard_clients',array('patientrecords'=>$query));
+											$this->load->view('footer');
 										}
 						break;
 					}
+		}
+
+		public function getClients($offset=0){
+   $config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
+			$totalRows = $this->app_model->get_all("patientdetails");
+
+			$config['total_rows'] = $totalRows->num_rows();
+			$config['per_page'] = 10;
+			$config['anchor_class'] = "class='dropDownMoreClients'";
+
+			$this->pagination->initialize($config);
+
+			$query = $this->app_model->get_all("patientdetails",10,$offset);
+
+		  foreach($query->result() as $patient){
+		  echo "<li role='presentation'>";
+			 echo "<a role='menuitem' tabindex='-1' class='clickBook' id='$patient->idnumber'>";
+			 echo "$patient->names $patient->surname $patient->idnumber</a></li>";
+		  }
+		  echo "<p align='center'>";
+		  echo $this->pagination->create_links();
+		  echo "</p>";
+		  echo "<p align='center'><a href='http://localhost/wellness/dashboard/walkInClient/2'><b>+</b> Add As New Client</a></p>";
 		}
 
 
@@ -1249,6 +1294,55 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 
         ";
 
+   $getMoreClients = "
+		 $('#clientsDropDown').on('click','.dropDownMoreClients',function(e) {
+		 	e.preventDefault();
+		 	var location = $(this).attr('href');
+		 	$.ajax({
+						type:'GET',
+						url:location,
+						success:function(data){
+							$('#clientsDropDown').empty().html(data);
+						}
+		 	});
+    return false; 
+		 });
+   ";
+
+   $bookingRequest = "
+    $('#clientsDropDown').on('click','.clickBook',function(e) {
+		 	//e.preventDefault();
+		 	var selectedDay = $('.selected .d').text().trim();
+		 	if(selectedDay == ''){	
+						alert('Please select a valid day.')
+						$('.day_listing').removeClass('selected')
+					}else{
+						var data = {
+						'idnumber' : $(this).attr('id'),
+						'status'			:	'qued',
+						'day'						:	selectedDay,
+						'date'					: $('#dates').text().toString()}
+
+						//provide full domain URL because we are using controllers and url mapping
+						//request could get lost in space
+						$.ajax({
+						type: 'POST',
+						url: 'http://localhost/wellness/dashboard/bookClient/',
+						crossDomain: true,
+						data: data,
+						success: function (data) {
+						alert(data)
+						location.reload(true)
+						},
+						error: function (err) {
+						console.log(err)
+						}
+						});
+					}
+    return false; 
+		 });
+   ";
+
 			
 
 			$this->javascript->output($hideForm);
@@ -1256,9 +1350,11 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 			$this->javascript->output($showIncomingTestClients);
 			$this->javascript->output($showInComingBloodResults);
 			$this->javascript->output($attachStaticEventHandlers);
+			$this->javascript->output($getMoreClients);
+			$this->javascript->output($bookingRequest);
 			$this->javascript->click('.day',$getDay);
 			$this->javascript->click('.day',$showClients);
-			$this->javascript->click('.clickBook',$bookRequest);	
+			//$this->javascript->click('.clickBook',$bookRequest);	
 			$this->javascript->compile();
 		}
 

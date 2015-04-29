@@ -1,5 +1,5 @@
 <?php
-require_once('header.php');     
+   $url = $this->config->item('base_url');
 ?>
 <body>
 
@@ -45,6 +45,3 @@ require_once('header.php');
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <?php
-require_once('footer.php');
-?>

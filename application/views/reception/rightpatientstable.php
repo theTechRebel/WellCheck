@@ -6,7 +6,7 @@
 <div class="panel-body">
 <div class="table-responsive">
 
-<div id="dynamic-table">
+<div id="dynamic-table" class="table-responsive">
 </div>
 </div>
 </div>

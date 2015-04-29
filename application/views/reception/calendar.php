@@ -12,16 +12,18 @@
 								    Select a client to Book
 								    <span class="caret"></span>
 								  </button>
-								  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-								  <?php foreach($patients->result() as $patient): ?>	
-								  <li role="presentation">
-									  <a role="menuitem" tabindex="-1" class="clickBook" id="<?php echo $patient->idnumber;?>">
-									  <?php echo $patient->names." ".$patient->surname." ".$patient->idnumber;?>
-									  </a>
-								  </li>
-								  <?php endforeach; ?>
-								  </ul>
-	</div>
+										  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="clientsDropDown">
+										  <?php foreach($patients->result() as $patient): ?>	
+										  <li role="presentation">
+											  <a role="menuitem" tabindex="-1" class="clickBook" id="<?php echo $patient->idnumber;?>">
+											  <?php echo $patient->names." ".$patient->surname." ".$patient->idnumber;?>
+											  </a>
+										  </li>
+										  <?php endforeach; ?>
+										  <p align="center"><?php echo $this->pagination->create_links(); ?></p>
+										  <p align="center"><a href="http://localhost/wellness/dashboard/walkInClient/2"><b>+</b> Add As New Client</a></p>
+										  </ul>
+	       </div>
 		    </form>
 				</div>
 

@@ -2,7 +2,7 @@
 <div class="row">
 	<h5><font color="red"><?php if(isset($report)){echo $report;} ?></font></h5>
 			<table class="table">
-				<td>WellCheck ID</td><td>ID Number</td><td>Salutation</td><td>Name</td><td>Surname</td><td>Book Client</td>
+				<td>WellCheck ID</td><td>ID Number</td><td>Salutation</td><td>Name</td><td>Surname</td><td>Book Client</td><td>Book Another Date</td><td>Edit Records</td>
 				<tbody>
 				<?php foreach ($patientrecords->result() as $row): ?>
 					<tr>

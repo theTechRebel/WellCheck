@@ -1,5 +1,5 @@
 <?php
-require_once('header.php');     
+   $url = $this->config->item('base_url');
 ?>
 <body>
 
@@ -14,7 +14,7 @@ require_once('header.php');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo $url?>">WellCheck App: <?php echo $this->session->userdata('rights');?> dashboard</a>
+                <a class="navbar-brand" href="index.html">WellCheck App: <?php echo $this->session->userdata('rights');?> dashboard</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -30,12 +30,14 @@ require_once('header.php');
 <!-- -->
 <!-- Middle Page Row -->
             <div class="row">
-                <div class="col-lg-8">
-                <?php include_once('calendar.php');?>                   
+                <div class="col-lg-12">
+                <?php include_once('clients.php');?>                   
                 </div>
+                <!--
                 <div class="col-lg-4">
-                <?php include_once('rightpatientstable.php');?>
+                <?php //include_once('rightsidepanel.php');?>
                 </div>
+                -->
             </div>
 <!-- -->
 <!-- Bottom Page Row -->
@@ -45,6 +47,3 @@ require_once('header.php');
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <?php
-require_once('footer.php');
-?>

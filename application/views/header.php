@@ -86,5 +86,16 @@ div.today {
 .disabled{
   pointer-events: none;
 }
+.panel {
+    margin-bottom: 0px;
+    }
+body{
+  font-size: 12px;
+  font-style: sans-serif;
+}
+.table{
+  font-size: 12px;
+  font-style: sans-serif;
+}
 </style>
   </head>
