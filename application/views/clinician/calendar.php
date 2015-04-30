@@ -20,6 +20,8 @@
 									  </a>
 								  </li>
 								  <?php endforeach; ?>
+								  		<p align="center"><?php echo $this->pagination->create_links(); ?></p>
+										  <p align="center"><a href="http://localhost/wellness/dashboard/walkInClient/2"><b>+</b> Add As New Client</a></p>
 								  </ul>
 	</div>
 		    </form>

@@ -7,7 +7,7 @@
 <div class="panel-body">
 <div class="table-responsive">
 
-<div id="dynamic-table-incoming" style="font-size:9px;">
+<div id="dynamic-table-incoming">
 </div>
 </div>
 </div>
@@ -23,7 +23,7 @@
 <div class="panel-body">
 <div class="table-responsive">
 
-<div id="dynamic-table-incoming-bloods" style="font-size:9px;">
+<div id="dynamic-table-incoming-bloods">
 </div>
 </div>
 </div>
@@ -38,7 +38,7 @@
 <div class="panel-body">
 <div class="table-responsive">
 
-<div id="dynamic-table" style="font-size:9px;">
+<div id="dynamic-table">
 </div>
 </div>
 </div>
