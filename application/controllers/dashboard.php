@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller {
 	{
 			$crud = new grocery_CRUD();
 
-			$crud->set_theme('flexigrid');
+			$crud->set_theme('datatables');
 			$crud->set_table('patientdetails');
 			$crud->set_subject('Clients');
 			$crud->columns('idnumber','names','surname','salutation','gender');

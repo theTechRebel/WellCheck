@@ -104,5 +104,8 @@ body{
   font-size: 12px;
   font-style: sans-serif;
 }
+.form-control{
+  height:40px;
+}
 </style>
   </head>

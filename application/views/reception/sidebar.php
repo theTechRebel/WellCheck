@@ -35,6 +35,9 @@
                                 <li>
                                     <a href="<?php echo $url?>dashboard/clients/">View All Clients</a>
                                 </li>
+                                <li>
+                                    <a href="<?php echo $url?>dashboard/editClient/">Edit All Clients</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
