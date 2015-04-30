@@ -30,12 +30,12 @@
 <!-- -->
 <!-- Middle Page Row -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                 <?php include_once('editclient.php');?>                   
                 </div>
-                <div class="col-lg-4">
-                <?php include_once('rightsidepanel.php');?>
-                </div>
+                <!-- <div class="col-lg-4"> -->
+                <?php //include_once('rightsidepanel.php');?>
+                <!-- </div> -->
             </div>
 <!-- -->
 <!-- Bottom Page Row -->

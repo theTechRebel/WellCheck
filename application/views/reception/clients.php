@@ -16,7 +16,7 @@
 						<input type="hidden" name="clientNumber" value="<?php echo $row->clientnumber;?>">
 						<input type='text' name='booking' size='10' value='' class='bookDay' /><br/>
 						<a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">Book Selected date</a></form></td>
-						<td><a href="http://localhost/wellness/dashboard/edit/<?php echo $row->idnumber;?>">Edit Record</a></td>
+						<td><a href="http://localhost/wellness/dashboard/editClient/">Edit Record</a></td>
 					</tr>
 					<?php endforeach;?>
 				</tbody>

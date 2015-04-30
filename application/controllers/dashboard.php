@@ -12,6 +12,24 @@ class Dashboard extends CI_Controller {
 			$this->calendar();
 		}
 
+//you cant name a controller edit when using groceryCRUD
+	public function editClient()
+	{
+			$crud = new grocery_CRUD();
+
+			$crud->set_theme('flexigrid');
+			$crud->set_table('patientdetails');
+			$crud->set_subject('Clients');
+			$crud->columns('idnumber','names','surname','salutation','gender');
+
+			$output = $crud->render();
+
+	$this->load->view('js');
+ $this->load->view('header');		
+	$this->load->view('reception/dashboard_editClient',$output);
+	$this->load->view('footer');
+	}
+
 
 		public function calendar($year=null, $month=null){
 
@@ -306,79 +324,6 @@ class Dashboard extends CI_Controller {
         	//send notification to nurse of new client
         }
 
-		}
-
-		public function edit($id=null){
-			if($this->form_validation->run()==FALSE){
-									$query = $this->app_model->get_all_where("patientdetails", array('idnumber'=>$id), 1);
-									$data = array('patient' => $query);
-
-									$this->load->view('js');
-						 	 $this->load->view('header');	
-									$this->load->view('reception/dashboard_editClient',$data);
-									$this->load->view('footer');			
-        }else{
-
-						$this->form_validation->set_rules(
-								 	'clientname',
-								 	'Client Name',
-								 	'trim|required');
-
-						   $this->form_validation->set_rules(
-								 	'clientsurname',
-								 	'Client Surname',
-								 	'trim|required');
-
-						   $this->form_validation->set_rules(
-								 	'address',
-								 	'Client Address',
-								 	'trim|required');
-
-						   $this->form_validation->set_rules(
-								 	'occupation',
-								 	'Client Occupation',
-								 	'trim|required');
-
-						   $this->form_validation->set_rules(
-								 	'employer',
-								 	'Client Employer',
-								 	'trim|required');
-
-						   $this->form_validation->set_rules(
-								 	'dob',
-								 	'Client Date of birth',
-								 	'trim|required');
-
-						   $this->form_validation->set_rules(
-								 	'phone',
-								 	'Client Phone Number',
-								 	'trim|required');
-
-						   $this->form_validation->set_rules(
-								 	'idnumber',
-								 	'Client ID Number',
-								 	'trim|required');
-
-      	$data = array(
-      			'idnumber' => $_POST['idnumber'],
-      			'names'	   => $_POST['clientname'],
-      			'surname'	=> $_POST['clientsurname'],
-      			'salutation' => $_POST['salutation'],
-      			'marital' => $_POST['marital'],
-      			'address' => $_POST['address'],
-      			'gender' => $_POST['gender'],
-      			'occupation' => $_POST['occupation'],
-      			'employer' => $_POST['employer'],
-      			'dob' => $_POST['dob'],
-      			'email' => $_POST['email'],
-      			'phone' => $_POST['phone'],
-      			'location' => ""
-      		 );
-        	//add the client to the system
-    $condition = array('idnumber'=>$_POST['ogID']);
-    $this->app_model->update('patientdetails', $data, $condition);
-    redirect('dashboard/clients');
-		}
 		}
 
 		public function clients($offset=0,$report=null){
