@@ -13,3 +13,5 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo $url?>uiux/bootstrap/dashboard/dist/js/sb-admin-2.js"></script>
+    <script src="<?php echo $url?>uiux/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="<?php echo $url?>uiux/jqueryui/jquery-ui.min.js"></script>

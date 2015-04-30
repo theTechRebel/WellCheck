@@ -10,6 +10,13 @@
     <title>Wellnes Center</title>
     <link rel="stylesheet" type="text/css" href="<?php echo $url?>uiux/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $url?>uiux/bootstrap/css/bootstrap-theme.min.css">
+
+    <!-- Full Calendar -->
+    <link href="<?php echo $url?>uiux/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+
+    <!-- JQuery UI -->
+    <link href="<?php echo $url?>uiux/jqueryui/jquery-ui.min.css" rel="stylesheet">
+
     <!-- MetisMenu CSS -->
     <link href="<?php echo $url?>uiux/bootstrap/dashboard/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 

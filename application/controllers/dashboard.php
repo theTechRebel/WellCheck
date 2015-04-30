@@ -14,11 +14,18 @@ class Dashboard extends CI_Controller {
 
 
 		public function calendar($year=null, $month=null){
-			if($year != null && $month != null){
 
-					$query 	= $this->calendar_model->getBookings($year,$month);
-					$query2 = $this->app_model->get_all("patientdetails");
-					$query3 = $year."/".$month;
+				$config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
+			$totalRows = $this->app_model->get_all("patientdetails");
+			$config['total_rows'] = $totalRows->num_rows();
+			$config['per_page'] = 10;
+			$config['anchor_class'] = "class='dropDownMoreClients'";
+			$this->pagination->initialize($config);
+
+			if($year != null && $month != null){
+				$query 	= $this->calendar_model->getBookings($year,$month);
+				$query2 = $this->app_model->get_all("patientdetails", 10, 0);
+				$query3 = $year."/".$month;
 					
 					$data = array('bookings'	=>$query,
 						             'patients'	=>$query2,
@@ -34,8 +41,10 @@ class Dashboard extends CI_Controller {
 		   break;
 
 		   case "reception":
-							$this->load->view('js');
-							$this->load->view('dashboard',$data);
+			   	$this->load->view('js');
+			   	$this->load->view('header');			
+							$this->load->view('reception/dashboard',$data);
+							$this->load->view('footer');
 		   break;
 
 		   case "scientist":
@@ -47,16 +56,6 @@ class Dashboard extends CI_Controller {
 
 		  }
 			}else{
-
-			$config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
-			$totalRows = $this->app_model->get_all("patientdetails");
-
-			$config['total_rows'] = $totalRows->num_rows();
-			$config['per_page'] = 10;
-			$config['anchor_class'] = "class='dropDownMoreClients'";
-
-			$this->pagination->initialize($config);
-
 
 				$dates = explode("/", getCalendarDateToday());
 				$query 	= $this->calendar_model->getBookings($dates[0],$dates[1]);
@@ -95,13 +94,23 @@ class Dashboard extends CI_Controller {
 		}
 
 		public function booking($id=null){
+			die(var_dump($_POST));
 				if($id==null){
 					//no id specified
 				}else{
+
+						if(isset($_POST['booking'])){
+							die(var_dump($_POST));
+							$id = $_POST['clientNumber'];
+							$date = $_POST['booking'];
+						}else{
+							$date = getCalendarDateTodayFull();
+						}
+
 						$table_name = "calendar";
-				$condition = array(
+				  $condition = array(
 						'clientnumber'=>$id,
-						'thedate' => getCalendarDateTodayFull(),
+						'thedate' => $date,
 						'status' => 'qued'
 						);
 
@@ -117,23 +126,23 @@ class Dashboard extends CI_Controller {
 					//echo 'we are about to book you';
 					$condition = array(
 						'clientnumber'=>$id,
-						'thedate' => getCalendarDateTodayFull(),
+						'thedate' => $date,
 						'status' => 'qued',
 						'time' => date('H:i:s')
 						);
 
 					$this->app_model->insert($table_name, $condition);
-					$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>getCalendarDateTodayFull()));
+					$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>$date));
 
 					if($query->num_rows() > 0){
 						//if there are other bookings already for that date
 							$qued = intval($query->row()->qued);
 							$qued ++;
-							$this->app_model->update("calendarcount", array('qued'=>$qued), array('thedate'=>getCalendarDateTodayFull()));
+							$this->app_model->update("calendarcount", array('qued'=>$qued), array('thedate'=>$date));
 					}else{
 						//there are no bookings for that date
 							$qued = 1;
-							$this->app_model->insert("calendarcount", array('thedate'=>getCalendarDateTodayFull(),'qued'=>$qued));
+							$this->app_model->insert("calendarcount", array('thedate'=>$date,'qued'=>$qued));
 					}
 					$this->clients(0,'Succesfully booked client with assigned WellCheck ID: '.$id);
 				}
@@ -297,6 +306,79 @@ class Dashboard extends CI_Controller {
         	//send notification to nurse of new client
         }
 
+		}
+
+		public function edit($id=null){
+			if($this->form_validation->run()==FALSE){
+									$query = $this->app_model->get_all_where("patientdetails", array('idnumber'=>$id), 1);
+									$data = array('patient' => $query);
+
+									$this->load->view('js');
+						 	 $this->load->view('header');	
+									$this->load->view('reception/dashboard_editClient',$data);
+									$this->load->view('footer');			
+        }else{
+
+						$this->form_validation->set_rules(
+								 	'clientname',
+								 	'Client Name',
+								 	'trim|required');
+
+						   $this->form_validation->set_rules(
+								 	'clientsurname',
+								 	'Client Surname',
+								 	'trim|required');
+
+						   $this->form_validation->set_rules(
+								 	'address',
+								 	'Client Address',
+								 	'trim|required');
+
+						   $this->form_validation->set_rules(
+								 	'occupation',
+								 	'Client Occupation',
+								 	'trim|required');
+
+						   $this->form_validation->set_rules(
+								 	'employer',
+								 	'Client Employer',
+								 	'trim|required');
+
+						   $this->form_validation->set_rules(
+								 	'dob',
+								 	'Client Date of birth',
+								 	'trim|required');
+
+						   $this->form_validation->set_rules(
+								 	'phone',
+								 	'Client Phone Number',
+								 	'trim|required');
+
+						   $this->form_validation->set_rules(
+								 	'idnumber',
+								 	'Client ID Number',
+								 	'trim|required');
+
+      	$data = array(
+      			'idnumber' => $_POST['idnumber'],
+      			'names'	   => $_POST['clientname'],
+      			'surname'	=> $_POST['clientsurname'],
+      			'salutation' => $_POST['salutation'],
+      			'marital' => $_POST['marital'],
+      			'address' => $_POST['address'],
+      			'gender' => $_POST['gender'],
+      			'occupation' => $_POST['occupation'],
+      			'employer' => $_POST['employer'],
+      			'dob' => $_POST['dob'],
+      			'email' => $_POST['email'],
+      			'phone' => $_POST['phone'],
+      			'location' => ""
+      		 );
+        	//add the client to the system
+    $condition = array('idnumber'=>$_POST['ogID']);
+    $this->app_model->update('patientdetails', $data, $condition);
+    redirect('dashboard/clients');
+		}
 		}
 
 		public function clients($offset=0,$report=null){
@@ -1343,6 +1425,10 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 		 });
    ";
 
+   $showDatePicker = "
+    $('.bookDay').datepicker({dateFormat:'yy/mm/dd'});
+   ";
+
 			
 
 			$this->javascript->output($hideForm);
@@ -1352,6 +1438,7 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 			$this->javascript->output($attachStaticEventHandlers);
 			$this->javascript->output($getMoreClients);
 			$this->javascript->output($bookingRequest);
+			$this->javascript->output($showDatePicker);
 			$this->javascript->click('.day',$getDay);
 			$this->javascript->click('.day',$showClients);
 			//$this->javascript->click('.clickBook',$bookRequest);	
