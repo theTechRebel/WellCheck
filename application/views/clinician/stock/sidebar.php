@@ -30,7 +30,7 @@
                                     <a href="<?php echo $url?>dashboard/clients/">View All Clients.</a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo $url?>dashboard/testsResults/">View Clients Test Results</a>
+                                    <a href="<?php echo $url?>dashboard/testHistory/">View Clients Test Records</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

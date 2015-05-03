@@ -19,18 +19,18 @@
                         <a href="#"><i class="fa fa-gear fa-fw"></i>Stock Management<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $url?>dashboard/walkInClient/1">Add incoming items</a>   
-                            </li>
-                            <li>
-                                <a href="<?php echo $url?>dashboard/walkInClient/1">Deduct used items</a>   
-                            </li>
-                            <li>
-                                <a href="<?php echo $url?>dashboard/walkInClient/1">View Transactions</a>   
-                            </li>
-                            <li>
-                                <a href="<?php echo $url?>dashboard/walkInClient/1">View stock status</a>   
+                                <a href="<?php echo $url?>stocks/">Stocks</a>   
                             </li>
                         </ul>
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Client Records<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo $url?>dashboard/testHistory/">View Clients Test Records</a>
+                            </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         </li>
                         <li>
                         </li>

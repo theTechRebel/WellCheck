@@ -987,16 +987,76 @@ $condition = array('date'=>getCalendarDateTodayFull(),
 }
 
 public function testsResults($clientID,$year=null,$month=null,$day=null){
+
+ 	$this->db->select('*');
+		$this->db->from('patientresults');
+		$this->db->where(array('patientresults.clientnumber'=>$clientID));
+		$this->db->join('patientrecord', 'patientrecord.clientnumber = patientresults.clientnumber');
+		$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+		$query1 = $this->db->get();
+		$client = $query1->row();
+
 	$condition = array('clientnumber'=>$clientID,
 		                  'date'=>$year."/".$month."/".$day);
 	$query = $this->app_model->get_all_where("patientresults", $condition, 1);
 	$row = $query->row();
 	$data = array('questionaire'=>$row->questionaire,
 		             'clinicianresults'=>$row->clinicianresults,
-		             'scientisttests'=>$row->results); 
+		             'scientisttests'=>$row->results,
+		             'client'=>$client); 
   $this->load->view('js');
  $this->load->view('header');		
 	$this->load->view('clinician/dashboard_results',$data);
 	$this->load->view('footer');
 }
-}
+
+
+		public function testHistory($year=null,$month=null){
+			if($year != null && $month != null){
+				$date = $year.'/'.$month;
+			}else{
+				$date = getCalendarDateTodayFull();
+			}
+
+			$month = explode('/', $date);
+			$like_condition = array('date'=>$month[0].'/'.$month[1]);
+
+			$next = (int)$month[1] +1;
+			$prev = (int)$month[1] -1;
+			(strlen($next)<2) ? $next = '0'.$next: $next = $next;
+			(strlen($prev)<2) ? $prev = '0'.$prev: $prev = $prev;
+
+			$this->db->like($like_condition);
+   $this->db->order_by("patientresults.date", "asc");
+   //$this->db->where(array('stocktransactions.user' => $this->session->userdata('rights')));
+   $this->db->join('patientrecord', 'patientrecord.clientnumber = patientresults.clientnumber');
+   $this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+   $query = $this->db->get("patientresults");
+
+   $data = array('records' => $query,
+   														'year' => $month[0], 
+   	             'month'=>$month[1], 
+   	             'next'=> $next,
+   	             'prev'=> $prev);
+
+   switch($this->session->userdata('rights')){
+
+		   case "clinician":
+   $this->load->view('js');
+   $this->load->view('header');		
+   $this->load->view('clinician/dashboard_patienthistory',$data);
+   $this->load->view('footer');
+		   break;
+
+		   case "scientist":
+   $this->load->view('js');
+   $this->load->view('header');		
+   $this->load->view('scientist/dashboard_patienthistory',$data);
+   $this->load->view('footer');   	
+		   break;
+
+		  }
+
+
+		}
+	}
