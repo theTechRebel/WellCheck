@@ -1,7 +1,7 @@
 <?php
    $url = $this->config->item('base_url');
 ?>
-<body onload="onrefresh();">
+<body>
 
     <div id="wrapper">
 
@@ -14,7 +14,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo $url?>">WellCheck App: <?php echo $this->session->userdata('rights');?> dashboard</a>
+                <a class="navbar-brand" href="index.html">WellCheck App: <?php echo $this->session->userdata('rights');?> dashboard</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -30,14 +30,11 @@
 <!-- -->
 <!-- Middle Page Row -->
             <div class="row">
-                <div class="col-lg-9" id="clendar-hide">
-                <?php include_once('calendar.php');?>                   
+                <div class="col-lg-8">
+                <?php include_once('bookOnDate.php');?>                   
                 </div>
-                <div class="col-lg-9" id="attend">
-                <?php include_once('attend.php');?>  
-                </div>
-                <div class="col-lg-3">
-                <?php include_once('rightpatientstable.php');?>
+                <div class="col-lg-4">
+                <?php include_once('rightsidepanel.php');?>
                 </div>
             </div>
 <!-- -->
@@ -47,3 +44,4 @@
         </div>
         <!-- /#page-wrapper -->
     </div>
+    <!-- /#wrapper -->

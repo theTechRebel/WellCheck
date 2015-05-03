@@ -1,13 +1,13 @@
 <div class="container-fluid">
 <div class="row">
-<form class="form" method="POST" action="<?php echo $url?>dashboard/walkInClient/1">
+<form class="form" method="POST" action="<?php echo $url?>dashboard/bookACertainDay/">
 
 <h5 align="center"><font color="red"><?php if(isset($problem)){echo $problem;}?></font></h5>
 
 <h4 align="center">Enter new client details</h4>
-<label class="form-control"><?php if(isset($type)){ if($type==1){echo "DEALING WITH A WALK-IN CLIENT & BOOKING THEM FOR A CHECK TODAY.";}elseif($type==2){echo "ADDING A CLIENT TO THE SYSTEM & DOES NOT INCLUDE BOOKING FOR ANY DATE.";}} ?></label>
 <div align="center"><br/>
-
+<input type="hidden" name="date" value="<?php if(isset($date)){echo $date;} ?>">
+<label class="form-control"><?php if(isset($date)){echo "Adding client to system & placing a booking for: " . $date;} ?></label>
 <input type="text" class="form-control" name="idnumber" placeholder="Enter Client ID-Number" autofocus value="<?php echo set_value('idnumber')?>">
 <font color="red"><?php echo form_error('idnumber'); ?></font><br/>
 

@@ -30,7 +30,7 @@
 <!-- -->
 <!-- Middle Page Row -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8" id="clendar-hide">
                 <?php include_once('calendar.php');?>                   
                 </div>
                 <div class="col-lg-4">

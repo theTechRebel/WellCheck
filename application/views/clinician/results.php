@@ -25,7 +25,21 @@
       		<tr><td><?php echo str_replace("_"," ",$key);?></td><td><?php echo $value?></td></tr>
         <?php }}?>
        </table>
-        <?php }?>
+        <?php }else{
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "Tests not yet completed please come back when notification arives in sidebar.";
+        }
+
+        ?>
      </div>
      <div class="tab-pane" id="clinician">
        <?php
@@ -36,10 +50,36 @@
       		<?php foreach ($b as $key => $value) {
       			 if($value != ""){
       			?>
-      		<tr><td><?php echo str_replace("_"," ",$key);?></td><td><?php echo $value?></td></tr>
+      		<tr><td><?php echo str_replace("_"," ",$key);?></td>
+          <td>
+         <?php if(!is_array($value)){
+          echo str_replace("_"," ",$value);
+         }else{
+          for ($i=0; $i < count($value); $i++) { 
+           echo str_replace("_"," ",$value[$i]);
+           echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+          }
+         }
+
+         ?>
+          </td></tr>
         <?php }}?>
        </table>
-        <?php }?>
+        <?php }else{
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "Tests not yet completed please come back when notification arives in sidebar.";
+        }
+
+        ?>
      </div>
      <div class="tab-pane" id="bloods">
        <?php
@@ -50,10 +90,31 @@
       		<?php foreach ($c as $key => $value) {
       			 if($value != ""){
       			?>
-      		<tr><td><?php echo str_replace("_"," ",$key);?></td><td><?php echo $value?></td></tr>
+      		<tr><td><?php echo str_replace("_"," ",$key);?></td>
+                    <td>
+         <?php if(!is_array($value)){
+          echo str_replace("_"," ",$value);
+         }else{
+          var_dump($value);
+         }
+
+         ?>
+          </td></tr>
         <?php }}?>
        </table>
-        <?php }?>
+        <?php }else{
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "<br/>";
+          echo "Tests not yet completed please come back when notification arives in sidebar.";
+          }?>
      </div>
      <div class="tab-pane" id="comments">
 					<textarea name="clinician_comments" rows="10" cols="50"></textarea><br/><br/>

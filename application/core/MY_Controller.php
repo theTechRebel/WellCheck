@@ -141,8 +141,9 @@ public function javascript_functions(){
         }});
                             },2500);";
 
-                        $attachStaticEventHandlers = "
-                        $('#dynamic-table-incoming-bloods').on('click','.openResults',function(){
+        $attachStaticEventHandlers = "
+
+        $('#dynamic-table-incoming-bloods').on('click','.openResults',function(){
 
                              var clientName = $(this).attr('val');
         var timein = $(this).attr('time');
@@ -192,7 +193,7 @@ public function javascript_functions(){
     
 
 
-                            $('#dynamic-table-incoming').on('click', '.openAttend', function(){
+        $('#dynamic-table-incoming').on('click', '.openAttend', function(){
 
         var clientNumber = $(this).attr('id');
         var clientName = $(this).attr('val');
@@ -200,12 +201,13 @@ public function javascript_functions(){
                                 var data = {'clientNumber' : clientNumber,
                                          'timein':timein};
 
-                                $.ajax({
+        $.ajax({
         type: 'POST',
         url: 'http://localhost/wellness/dashboard/getClientDetails/',
         data : data,
         crossDomain: true,
         success: function (data) {
+       /*
         $('#client-name').empty();
         $('#client-name').append(clientName);
         $('#clendar-hide').hide();
@@ -215,6 +217,8 @@ public function javascript_functions(){
         $('#questionaire-tab').addClass('disabled');
         $('#tests-tab').addClass('disabled');
         $('#results-tab').addClass('disabled');
+       */
+         window.location = 'http://localhost/wellness/dashboard/?&reload=true&clientNumber='+clientNumber+'&clientName='+clientName+'&timein='+timein;
         },
         error: function (err) {
             console.log(err);
@@ -347,20 +351,13 @@ public function javascript_functions(){
                 //visual screen
             }else if(data == 'tests visualscreen'){
                     $('#questionaire-tab').addClass('disabled');
-                                        $('#tests-tab').removeClass('disabled');
-                                        $('#clinician-tabs li:eq(3) a').tab('show')
-
-                                            $.ajax({
-                                            type: 'POST',
-                                            url: 'http://localhost/wellness/dashboard/getTests/',
-                                            success: function(data){
-                                                var tests = data.split(',');
-                                                $('#tests').html('http://localhost/wellness/application/views/clinician/tests/wellness.html')
-                        console.log(tests);
-                                            }
-                                            });
-
-
+                    $('#tests-tab').removeClass('disabled');
+                    $('#clinician-tabs li:eq(3) a').tab('show');
+                    
+                    //get the file and dump the content into our DIV tag
+                    $.get('http://localhost/wellness/application/views/clinician/tests/visual_screen.html', function(data){
+                        $('#tests').html(data);
+                    });
 
                 //wellcheck tests with questionaire
             }else if(data=='questionaire'){
@@ -468,6 +465,26 @@ public function javascript_functions(){
          });
          //end of submitting of clincician tests
 
+         //submitting of clinician visual test
+          $('#tests').on('submit','form.form-clinician-visual-test',function(e){
+           e.preventDefault();
+           var data = $(this).serialize();
+           $.ajax({
+            type:'POST',
+             data:data,
+             url: 'http://localhost/wellness/dashboard/saveClinicianTests/',
+             success: function(data){
+                    alert(data);
+
+                    $('#tests-tab').removeClass('active');
+                    $('#tests').removeClass('active');
+                    $('#results-tab').addClass('active');
+                    $('#results').addClass('active');
+           }
+         });
+         });
+         //end of submitting of clincician tests
+
         ";
 
    $getMoreClients = "
@@ -482,6 +499,28 @@ public function javascript_functions(){
                         }
             });
     return false; 
+         });
+   ";
+      //booking a new client on a certain date
+      $openFormForBooking = "
+         $('#clientsDropDown').on('click','#bookNewClientToday',function(e) {
+            e.preventDefault();
+            var selectedDay = $('.selected .d').text().trim();
+
+            if(selectedDay == ''){  
+              alert('Please select a valid day.')
+              $('.day_listing').removeClass('selected')
+              return false;
+            }else{
+              var date = $('#dates').text().toString()
+            }
+            
+            if(selectedDay.length < 2){selectedDay = '0'+selectedDay;}
+            date = date +'/'+ selectedDay;
+
+            $('#clendar-hide').html('<form action=http://localhost/wellness/dashboard/bookACertainDay/ name=date method=POST style=display:none;><input type=hidden name=date value='+date+' /></form>');
+
+            document.forms['date'].submit();
          });
    ";
 
@@ -523,6 +562,58 @@ public function javascript_functions(){
     $('.bookDay').datepicker({dateFormat:'yy/mm/dd'});
    ";
 
+   $staticFunctions = "
+        $(window).load(function() {
+          function getUrlParameter(sParam){
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) 
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) 
+                {
+                    return sParameterName[1];
+                }
+            }
+        } 
+
+
+
+        var clientNumber = decodeURI(getUrlParameter('clientNumber'));
+        var clientName = decodeURI(getUrlParameter('clientName'));
+        var timein = decodeURI(getUrlParameter('timein'));
+        var reload = decodeURI(getUrlParameter('reload'));
+
+        var data = {'clientNumber' : clientNumber,'timein':timein};
+
+       if(reload == 'true'){
+        $.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/getClientDetails/',
+        data : data,
+        crossDomain: true,
+        success: function (data) {
+       
+        $('#client-name').empty();
+        $('#client-name').append(clientName);
+        $('#clendar-hide').hide();
+        $('#attend').show();
+        $('#records').html(data);
+        $('#clinician-tabs  a:first').tab('show');
+        $('#questionaire-tab').addClass('disabled');
+        $('#tests-tab').addClass('disabled');
+        $('#results-tab').addClass('disabled');
+
+        //window.location = 'http://localhost/wellness/dashboard/#';
+        },
+        error: function (err) {
+            console.log(err);
+        }});
+       }
+
+        });
+   ";
+
             
 
             $this->javascript->output($hideForm);
@@ -533,6 +624,8 @@ public function javascript_functions(){
             $this->javascript->output($getMoreClients);
             $this->javascript->output($bookingRequest);
             $this->javascript->output($showDatePicker);
+            $this->javascript->output($openFormForBooking);
+            $this->javascript->output($staticFunctions);
             $this->javascript->click('.day',$getDay);
             $this->javascript->click('.day',$showClients);
             //$this->javascript->click('.clickBook',$bookRequest);  

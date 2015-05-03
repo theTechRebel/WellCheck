@@ -12,6 +12,140 @@ class Dashboard extends MY_Controller {
 			$this->calendar();
 		}
 
+	public function bookACertainDay(){
+
+			$this->form_validation->set_rules(
+		 	'clientname',
+		 	'Client Name',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'clientsurname',
+		 	'Client Surname',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'address',
+		 	'Client Address',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'occupation',
+		 	'Client Occupation',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'employer',
+		 	'Client Employer',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'dob',
+		 	'Client Date of birth',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'phone',
+		 	'Client Phone Number',
+		 	'trim|required');
+
+   $this->form_validation->set_rules(
+		 	'idnumber',
+		 	'Client ID Number',
+		 	'trim|required');
+
+			if($this->form_validation->run()==FALSE){
+        $type=null;
+								$this->load->view('js');
+			   	 $this->load->view('header');	
+								$this->load->view('reception/dashboard_bookClientOnDate',array('type'=>$type,'date'=>$_POST['date']));
+								$this->load->view('footer');
+        }else{
+
+        	$query = $this->app_model->get_all_where("patientdetails", array('idnumber'=>$_POST['idnumber']));
+
+        	if($query->num_rows() > 0){
+        		//we already have the client
+        		$this->load->view('js');
+			   	  $this->load->view('header');	
+        		$this->load->view('reception/dashboard_bookClientOnDate',array('problem'=>"The Client is already in the system, please select the clients record from the clients tab and que them for check up.",'date'=>$_POST['date']));
+        		$this->load->view('footer');
+        	}else{
+        		//we dont have the client
+        		$data = array(
+        			'idnumber' => $_POST['idnumber'],
+        			'names'	   => $_POST['clientname'],
+        			'surname'	=> $_POST['clientsurname'],
+        			'salutation' => $_POST['salutation'],
+        			'marital' => $_POST['marital'],
+        			'address' => $_POST['address'],
+        			'gender' => $_POST['gender'],
+        			'occupation' => $_POST['occupation'],
+        			'employer' => $_POST['employer'],
+        			'dob' => $_POST['dob'],
+        			'email' => $_POST['email'],
+        			'phone' => $_POST['phone'],
+        			'location' => ""
+        		 );
+        	//add the client to the system
+        	$this->app_model->insert('patientdetails',$data);
+
+        	//generate client ID
+        	$query = $this->app_model->get_all("patientrecord");
+
+        	$int = (int)$query->row($query->num_rows())->id + 1;
+        	$clientID = "J0".$int;
+
+        	$this->app_model->insert('patientrecord',array('idnumber'=>$_POST['idnumber'],
+        		'clientnumber'=>$clientID,
+        		'company'=>$_POST['employer']));
+         //book this dude
+         
+         	$table_name = "calendar";
+								  $condition = array(
+										'clientnumber'=>$clientID,
+										'thedate' => $_POST['date'],
+										'status' => 'qued'
+										);
+
+				     $query = $this->app_model->get_all_where($table_name, $condition);
+
+								if($query->num_rows > 0){
+									//the client is already booked so we cant book them twice
+									//var_dump($condition);
+										$this->clients('You cannot book a client twice sorry select another date or another client.');
+								}else{
+									//the client is not booked, book them
+									//var_dump($condition);
+									//echo 'we are about to book you';
+									$condition = array(
+										'clientnumber'=>$clientID,
+										'thedate' => $_POST['date'],
+										'status' => 'qued',
+										'time' => date('H:i:s')
+										);
+
+								$this->app_model->insert($table_name, $condition);
+								$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>$_POST['date']));
+
+								if($query->num_rows() > 0){
+									//if there are other bookings already for that date
+										$qued = intval($query->row()->qued);
+										$qued ++;
+										$this->app_model->update("calendarcount", array('qued'=>$qued), array('thedate'=>$_POST['date']));
+								}else{
+									//there are no bookings for that date
+										$qued = 1;
+										$this->app_model->insert("calendarcount", array('thedate'=>$_POST['date'],'qued'=>$qued));
+								}
+									$this->clients(0,'Succesfully booked client with assigned WellCheck ID: '.$clientID);
+								}
+          //redirect('dashboard/clients/');
+       }
+        	//send notification to nurse of new client
+     }
+	}
+
 //you cant name a controller edit when using groceryCRUD
 	public function editClient()
 	{
@@ -112,7 +246,7 @@ class Dashboard extends MY_Controller {
 		}
 
 		public function booking($id=null){
-			die(var_dump($_POST));
+			//die(var_dump($_POST));
 				if($id==null){
 					//no id specified
 				}else{
@@ -283,7 +417,10 @@ class Dashboard extends MY_Controller {
 
         	if($query->num_rows() > 0){
         		//we already have the client
-        		$this->load->view('dashboard_walkinclient',array('problem'=>"The Client is already in the system, please select the clients record from the clients tab and que them for check up."));
+								  $this->load->view('js');
+			   	   $this->load->view('header');	
+        		$this->load->view('dashboard_walkinclient',array('problem'=>"The Client is already in the system, please select the clients record from the clients tab and que them for check up.",'type'=>$type));
+        		$this->load->view('footer');
         	}else{
         		//we dont have the client
         		$data = array(
@@ -396,7 +533,7 @@ class Dashboard extends MY_Controller {
 		  echo "<p align='center'>";
 		  echo $this->pagination->create_links();
 		  echo "</p>";
-		  echo "<p align='center'><a href='http://localhost/wellness/dashboard/walkInClient/2'><b>+</b> Add As New Client</a></p>";
+		  echo "<p align='center'><a href='http://localhost/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
 		}
 
 
@@ -505,6 +642,7 @@ class Dashboard extends MY_Controller {
 			$this->db->order_by('patienthistory.timein', 'DESC'); 
 			$query = $this->db->get();
 
+    $date = getCalendarDateTodayFull();
 				if($query->num_rows()>0){
 				echo "<table class='table small' id='table-generated-incoming-tests-bloods'>";
 				echo "<td>Client details</td><td>View Results</td>";
@@ -512,7 +650,7 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname </td>";
-				echo "<td><a class='openResults' id='$row->clientnumber' href='#' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
+				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://localhost/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
 				echo "</tr>";
 				}
 				echo "</tbody>";
@@ -521,6 +659,10 @@ class Dashboard extends MY_Controller {
 		}
 
 		public function getClientDetails(){
+			$this->session->unset_userdata('attend');
+			$this->session->set_userdata('attend',$_POST['clientNumber']);
+			$this->session->set_userdata('time',$_POST['timein']);
+
 			$this->db->select('*');
 			$this->db->from('patientrecord');
 			$this->db->where(array('clientnumber'=>$_POST['clientNumber']));
@@ -563,9 +705,6 @@ class Dashboard extends MY_Controller {
 				}
 				echo "</tbody>";
 				echo "</table>";
-
-					$this->session->set_userdata('attend',$id);
-					$this->session->set_userdata('time',$_POST['timein']);
 			}
 
 		}

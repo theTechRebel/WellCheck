@@ -11,7 +11,7 @@
 						<td><?php echo $row->salutation;?></td>
 						<td><?php echo $row->names;?></td>
 						<td><?php echo $row->surname;?></td>
-						<td><a href="<?php echo $url?>dashboard/booking/<?php echo $row->clientnumber;?>">Book today</a></td>
+						<td><a href="<?php echo $url?><?php echo $row->clientnumber;?>">View Records</a></td>
 					</tr>
 					<?php endforeach;?>
 				</tbody>
