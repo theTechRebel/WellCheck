@@ -1004,10 +1004,25 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 		             'clinicianresults'=>$row->clinicianresults,
 		             'scientisttests'=>$row->results,
 		             'client'=>$client); 
-  $this->load->view('js');
+
+
+	   switch($this->session->userdata('rights')){
+
+		   case "clinician":
+ $this->load->view('js');
  $this->load->view('header');		
 	$this->load->view('clinician/dashboard_results',$data);
 	$this->load->view('footer');
+		   break;
+
+		   case "scientist":
+  $this->load->view('js');
+ $this->load->view('header');		
+	$this->load->view('scientist/dashboard_results',$data);
+	$this->load->view('footer');  	
+		   break;
+
+		  }
 }
 
 

@@ -9,7 +9,7 @@
     <table class="table table-condensed table-striped table-bordered table-hover">
     	<tr><th>Item Code</th><th>Item Name</th><th>Description</th><th>Ammount Currently in Stock</th><th>Measurement</th><th>Add</th><th>Deduct</th></tr>
 			<?php 
-    if(isset($stocks)){
+   if(isset($stocks)){
 			foreach ($stocks->result() as $row): ?>
 				<tr>
 					<td>
@@ -34,7 +34,7 @@
 						<a class='deductStock' href="<?php echo base_url('stocks/deduct/'.$row->code); ?>">Deduct from stock</a>
 					</td>
 				</tr>
-			<?php endforeach; }?>
+			<?php endforeach;}?>
 		  </table>
 			<?php echo $this->pagination->create_links(); ?>
     </div>

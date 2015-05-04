@@ -36,7 +36,7 @@ class Stocks extends MY_Controller {
 			if($this->form_validation->run()==FALSE){
 				$this->_views('dashboard_addstock');
 			}else{
-					$query = $this->app_model->get_all_where('stockstatus',array('title'=>$_POST['itemname']));
+					$query = $this->app_model->get_all_where('stockstatus',array('title'=>$_POST['itemname'],'user'=>$this->session->userdata('rights')));
 					if($query->num_rows()>0){
 						$data = array('error'=>'that item already exists, please add a different one.');
 						$this->_views('dashboard_addstock',$data);
@@ -172,7 +172,7 @@ class Stocks extends MY_Controller {
 		   case "scientist":
 		    $this->load->view('js');
 						$this->load->view('header');		
-						$this->load->view('scientist/stock/dashboard',$data);
+						$this->load->view('scientist/stock/'.$view,$data);
 						$this->load->view('footer');	   	
 		   break;
 
