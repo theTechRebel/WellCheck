@@ -563,6 +563,11 @@ public function javascript_functions(){
    ";
 
    $staticFunctions = "
+   //placed on Document.load() to check if a user was selected for assesment
+   //and then attend to them having stored their value in the cookie
+   //bug fix for when the previous user was being checked because the server had
+   //not replied with the value of the new selected user.
+
         $(window).load(function() {
           function getUrlParameter(sParam){
             var sPageURL = window.location.search.substring(1);
@@ -576,8 +581,6 @@ public function javascript_functions(){
                 }
             }
         } 
-
-
 
         var clientNumber = decodeURI(getUrlParameter('clientNumber'));
         var clientName = decodeURI(getUrlParameter('clientName'));
@@ -614,6 +617,26 @@ public function javascript_functions(){
         });
    ";
 
+   $submitDoctorsEvaluation = "
+     $('form#drAssesment').on('submit',function(e){ 
+        e.preventDefault();                 
+        var data = $(this).serialize();
+       
+        $.ajax({
+        type: 'POST',
+        url: 'http://localhost/wellness/dashboard/saveDrAssesment/',
+        crossDomain: true,
+        data: data,
+        success: function (data) {
+         alert(data);
+        },
+        error: function(err){
+            console.log(err);
+        }
+      });
+     });
+   ";
+
             
 
             $this->javascript->output($hideForm);
@@ -626,6 +649,7 @@ public function javascript_functions(){
             $this->javascript->output($showDatePicker);
             $this->javascript->output($openFormForBooking);
             $this->javascript->output($staticFunctions);
+            $this->javascript->output($submitDoctorsEvaluation);
             $this->javascript->click('.day',$getDay);
             $this->javascript->click('.day',$showClients);
             //$this->javascript->click('.clickBook',$bookRequest);  

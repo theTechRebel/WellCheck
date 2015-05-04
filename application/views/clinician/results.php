@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-user fa-fw"></i>Client Results: <?php echo $client->clientnumber.' '.$client->names.' '.$client->surname;?></div>
+    <div class="panel-heading"><i class="fa fa-user fa-fw"></i>Client Results: <?php echo $client->clientnumber.' '.$client->names.' '.$client->surname;?> for Date: <?php echo $client->date;?></div>
     </div>
 
 <div class="container-fluid">
@@ -121,9 +121,13 @@
           }?>
      </div>
      <div class="tab-pane" id="comments">
-					<textarea name="clinician_comments" rows="25" cols="100"></textarea><br/><br/>
+     <form name="comments" id="drAssesment">
+					<textarea name="clinician_comments" rows="25" cols="100"><?php if(isset($comments)){echo $comments;}?></textarea><br/><br/>
+          <input type="hidden" value="<?php echo $client->date; ?>" name="date">
+          <input type="hidden" value="<?php echo $client->clientnumber; ?>" name="id">
 					<input type="submit" name="save_comments" value="Save Comments" class="btn btn-lg btn-success"/>
 					<input type="submit" name="print" value="Print Out Report" class="btn btn-lg btn-success">
+      </form>
      </div>
    </div>
   </div>

@@ -986,23 +986,33 @@ $condition = array('date'=>getCalendarDateTodayFull(),
 				}
 }
 
+public function saveDrAssesment(){
+	$data = array('comments'=>$_POST['clinician_comments']);
+	$condition = array('clientnumber'=>$_POST['id'],'date'=>$_POST['date']);
+ $this->app_model->update("patientresults", $data, $condition);
+ echo "succesfully updated comments";
+}
+
 public function testsResults($clientID,$year=null,$month=null,$day=null){
+
+	$condition = array('patientresults.clientnumber'=>$clientID,
+		                  'patientresults.date'=>$year."/".$month."/".$day);
 
  	$this->db->select('*');
 		$this->db->from('patientresults');
-		$this->db->where(array('patientresults.clientnumber'=>$clientID));
+		$this->db->where($condition);
 		$this->db->join('patientrecord', 'patientrecord.clientnumber = patientresults.clientnumber');
 		$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
 		$query1 = $this->db->get();
 		$client = $query1->row();
 
-	$condition = array('clientnumber'=>$clientID,
-		                  'date'=>$year."/".$month."/".$day);
+
 	$query = $this->app_model->get_all_where("patientresults", $condition, 1);
 	$row = $query->row();
 	$data = array('questionaire'=>$row->questionaire,
 		             'clinicianresults'=>$row->clinicianresults,
 		             'scientisttests'=>$row->results,
+		             'comments'=>$row->comments,
 		             'client'=>$client); 
 
 
