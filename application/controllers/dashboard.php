@@ -1152,4 +1152,73 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
  
 			redirect("/downloads/reports/$filename.pdf");
 		}
+
+
+
+
+		public function billing($id=null,$year=null,$month=null,$day=null){
+			if(!isset($id)){
+				$this->db->select('*');
+				$this->db->from('patienthistory');
+				$this->db->order_by('patienthistory.checkupdate', 'DESC'); 
+				$this->db->join('patientrecord', 'patientrecord.clientnumber = patienthistory.clientnumber');
+				$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+				$query = $this->db->get();
+
+				$data = array('clients'=>$query);
+				$this->load->view('js');
+				$this->load->view('header');		
+				$this->load->view('reception/biling/dashboard',$data);
+				$this->load->view('footer');
+			}else{
+
+    $condition = array('patienthistory.clientnumber'=>$id,'patienthistory.checkupdate'=>$year."/".$month."/".$day);
+
+				$this->db->select('*');
+				$this->db->from('patienthistory');
+				$this->db->where($condition);
+				$this->db->join('patientrecord', 'patientrecord.clientnumber = patienthistory.clientnumber');
+				$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+				$query = $this->db->get();
+
+    $data = array('client'=>$query->row());
+				$this->load->view('js');
+				$this->load->view('header');		
+				$this->load->view('reception/biling/dashboard_bill',$data);
+				$this->load->view('footer');
+			}
+
+		}
+
+		public function printReciept($id=null,$year=null,$month=null,$day=null){
+			$condition = array('patienthistory.clientnumber'=>$id,'patienthistory.checkupdate'=>$year."/".$month."/".$day);
+
+				$this->db->select('*');
+				$this->db->from('patienthistory');
+				$this->db->where($condition);
+				$this->db->join('patientrecord', 'patientrecord.clientnumber = patienthistory.clientnumber');
+				$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+				$query = $this->db->get();
+
+    $data = array('client'=>$query->row());
+
+				// As PDF creation takes a bit of memory, we're saving the created file in /downloads/reports/
+		  $pdfFilePath = FCPATH."/downloads/reciepts/$id.pdf";
+ 
+			if (file_exists($pdfFilePath) == FALSE){
+			    ini_set('memory_limit','32M'); // boost the memory limit if it's low <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
+      $htmlIntro = $this->load->view('reception/biling/clientbill',$data,true);
+			   $this->load->library('pdf');
+			   $pdf = $this->pdf->load();
+			   $pdf->shrink_tables_to_fit=1;
+			   $pdf->SetHeader($data['pagetitle']);
+			   $pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
+      $pdf->WriteHTML($htmlIntro);
+			   //$pdf->WriteHTML($html); // write the HTML into the PDF
+			   $pdf->Output($pdfFilePath, 'F'); // save to file because we can
+			}
+ 
+			redirect("/downloads/reciepts/$id.pdf");
+		}
+
 	}

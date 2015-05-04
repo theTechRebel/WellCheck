@@ -22,7 +22,7 @@
                         <a href="#"><i class="fa fa-dollar fa-fw"></i>Billing<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $url?>dashboard/walkInClient/1">View Billing</a>   
+                                <a href="<?php echo $url?>dashboard/billing/">View Billing</a>   
                             </li>
                         </ul>
                         </li>
