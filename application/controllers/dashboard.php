@@ -1081,7 +1081,75 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 		   break;
 
 		  }
+		}
+
+		public function clearPatient(){
+			$state = "processed";
+			$query = $this->app_model->get_all_where("calendar",array('thedate'=>$_POST['date'],'clientnumber'=>$_POST['clientNumber']));
+   
+
+				$oldStatus = ($query->row()->status);
+
+				if($oldStatus != $state){
+					$data = array('status'=>$state);
+				$condition = array('clientnumber'=>$_POST['clientNumber'],'thedate'=>$_POST['date']);
+				$this->app_model->update("calendar", $data, $condition);
+
+				$query = $this->app_model->get_all_where("calendarcount",array('thedate'=>$_POST['date']));
+
+				if($query->num_rows() > 0){
+					//if there are other bookings already for that date
+						$oldVal = intval($query->row()->$oldStatus);
+						$oldVal --;
+						$status = intval($query->row()->$state);
+						$status ++;
+						$this->app_model->update("calendarcount", array($oldStatus=>$oldVal,$state => $status), array('thedate'=>$_POST['date']));
+						}
+
+						$condition = array('clientnumber'=>$_POST['clientNumber'],'checkupdate'=>$_POST['date']);
+						$data = array('timeout'=>date('H:i:s'));
+				  $this->app_model->update("patienthistory", $data, $condition);
+				}
+		}
 
 
+		public function printThis($filename,$id,$year,$month,$day){
+  $condition = array('patientresults.clientnumber'=>$id,
+		                  'patientresults.date'=>$year."/".$month."/".$day);
+
+ 	$this->db->select('*');
+		$this->db->from('patientresults');
+		$this->db->where($condition);
+		$this->db->join('patientrecord', 'patientrecord.clientnumber = patientresults.clientnumber');
+		$this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+		$query1 = $this->db->get();
+		$client = $query1->row();
+
+	$query = $this->app_model->get_all_where("patientresults", $condition, 1);
+	$row = $query->row();
+	$data = array('questionaire'=>$row->questionaire,
+		             'clinicianresults'=>$row->clinicianresults,
+		             'scientisttests'=>$row->results,
+		             'pagetitle' =>'Wellness Report',
+		             'comments'=>$row->comments,
+		             'client'=>$client); 
+
+		// As PDF creation takes a bit of memory, we're saving the created file in /downloads/reports/
+		$pdfFilePath = FCPATH."/downloads/reports/$filename.pdf";
+ 
+			if (file_exists($pdfFilePath) == FALSE){
+			    ini_set('memory_limit','32M'); // boost the memory limit if it's low <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
+      $htmlIntro = $this->load->view('reports/intro',$data,true);
+			   $this->load->library('pdf');
+			   $pdf = $this->pdf->load();
+			   $pdf->shrink_tables_to_fit=1;
+			   $pdf->SetHeader($data['pagetitle']);
+			   $pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
+      $pdf->WriteHTML($htmlIntro);
+			   //$pdf->WriteHTML($html); // write the HTML into the PDF
+			   $pdf->Output($pdfFilePath, 'F'); // save to file because we can
+			}
+ 
+			redirect("/downloads/reports/$filename.pdf");
 		}
 	}

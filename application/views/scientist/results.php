@@ -126,7 +126,7 @@
           <input type="hidden" value="<?php echo $client->date; ?>" name="date">
           <input type="hidden" value="<?php echo $client->clientnumber; ?>" name="id">
 					<input type="submit" name="save_comments" value="Save Comments" class="btn btn-lg btn-success"/>
-					<input type="submit" name="print" value="Print Out Report" class="btn btn-lg btn-success">
+          <a href="<?php echo base_url('dashboard/printThis/'.$client->names.'_'.$client->surname.'_'.$client->clientnumber.'/'.$client->clientnumber.'/'.$client->date);?>" class="btn btn-lg btn-success">Print Out Report</a>
         </form>
      </div>
    </div>

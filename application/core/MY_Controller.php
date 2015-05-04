@@ -637,6 +637,25 @@ public function javascript_functions(){
      });
    ";
 
+   $clearPatient = "
+   $('#clearPatient').on('click',function(e){
+     e.preventDefault();
+     var data = {'clientNumber' : $(this).attr('clientNumber'),'date':$(this).attr('date')};
+     $.ajax({
+        type:'POST',
+        url: 'http://localhost/wellness/dashboard/clearPatient/',
+        crossDomain:true,
+        data:data,
+        success:function(data){
+            console.log(data);
+        },
+        error:function(err){
+            console.log(err);
+        }
+     });
+   });
+   ";
+
             
 
             $this->javascript->output($hideForm);
@@ -650,6 +669,7 @@ public function javascript_functions(){
             $this->javascript->output($openFormForBooking);
             $this->javascript->output($staticFunctions);
             $this->javascript->output($submitDoctorsEvaluation);
+            $this->javascript->output($clearPatient);
             $this->javascript->click('.day',$getDay);
             $this->javascript->click('.day',$showClients);
             //$this->javascript->click('.clickBook',$bookRequest);  

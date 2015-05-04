@@ -19,6 +19,14 @@
                             <a href="<?php echo $url?>dashboard/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
+                        <a href="#"><i class="fa fa-dollar fa-fw"></i>Billing<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo $url?>dashboard/walkInClient/1">View Billing</a>   
+                            </li>
+                        </ul>
+                        </li>
+                        <li>
                         <a href="#"><i class="fa fa-calendar fa-fw"></i>Bookings<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
