@@ -48,7 +48,7 @@ public function javascript_functions(){
                         //request could get lost in space
                         $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/bookClient/',
+        url: 'http://192.168.100.2/wellness/dashboard/bookClient/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -82,7 +82,7 @@ public function javascript_functions(){
 
                             $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/getBookings/',
+        url: 'http://192.168.100.2/wellness/dashboard/getBookings/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -99,7 +99,7 @@ public function javascript_functions(){
                             setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/getIncomingClients/',
+        url: 'http://192.168.100.2/wellness/dashboard/getIncomingClients/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming').remove();
@@ -115,7 +115,7 @@ public function javascript_functions(){
                             setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/getIncomingTestClients/',
+        url: 'http://192.168.100.2/wellness/dashboard/getIncomingTestClients/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming-tests').remove();
@@ -130,7 +130,7 @@ public function javascript_functions(){
         setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/getIncomingBloodResults/',
+        url: 'http://192.168.100.2/wellness/dashboard/getIncomingBloodResults/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming-tests-bloods').remove();
@@ -153,7 +153,7 @@ public function javascript_functions(){
           $.ajax({
          type:'POST',
                                     data:data,
-                                    url:'http://localhost/wellness/dashboard/getSavedTests/',
+                                    url:'http://192.168.100.2/wellness/dashboard/getSavedTests/',
                                     dataType:'json',
                                     success: function(data){
                                         $('#client-name').empty();
@@ -203,7 +203,7 @@ public function javascript_functions(){
 
         $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/getClientDetails/',
+        url: 'http://192.168.100.2/wellness/dashboard/getClientDetails/',
         data : data,
         crossDomain: true,
         success: function (data) {
@@ -218,7 +218,7 @@ public function javascript_functions(){
         $('#tests-tab').addClass('disabled');
         $('#results-tab').addClass('disabled');
        */
-         window.location = 'http://localhost/wellness/dashboard/?&reload=true&clientNumber='+clientNumber+'&clientName='+clientName+'&timein='+timein;
+         window.location = 'http://192.168.100.2/wellness/dashboard/?&reload=true&clientNumber='+clientNumber+'&clientName='+clientName+'&timein='+timein;
         },
         error: function (err) {
             console.log(err);
@@ -235,7 +235,7 @@ public function javascript_functions(){
                                 console.log(data);
                              $.ajax({
                                 type:'POST',
-                                url:'http://localhost/wellness/dashboard/getClientDetails/',
+                                url:'http://192.168.100.2/wellness/dashboard/getClientDetails/',
                                 data:data,
                                 success: function(data){
                        $('#client-name').empty();
@@ -249,7 +249,7 @@ public function javascript_functions(){
                                                 $.ajax({
                                                     type:'POST',
                                                     dataType:'json',
-                                                    url:'http://localhost/wellness/dashboard/getClientTestDetails/',
+                                                    url:'http://192.168.100.2/wellness/dashboard/getClientTestDetails/',
                                                     data:data1,
                                                     success: function(data){
 
@@ -323,7 +323,7 @@ public function javascript_functions(){
 
                 $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/stage/',
+        url: 'http://192.168.100.2/wellness/dashboard/stage/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -341,7 +341,7 @@ public function javascript_functions(){
                                             
                                             $.ajax({
                                             type: 'POST',
-                                            url: 'http://localhost/wellness/dashboard/getTests/',
+                                            url: 'http://192.168.100.2/wellness/dashboard/getTests/',
                                             success: function(data){
                                                 $('#tests').html(data);
                         console.log(tests);
@@ -355,7 +355,7 @@ public function javascript_functions(){
                     $('#clinician-tabs li:eq(3) a').tab('show');
                     
                     //get the file and dump the content into our DIV tag
-                    $.get('http://localhost/wellness/application/views/clinician/tests/visual_screen.html', function(data){
+                    $.get('http://192.168.100.2/wellness/application/views/clinician/tests/visual_screen.html', function(data){
                         $('#tests').html(data);
                     });
 
@@ -369,7 +369,7 @@ public function javascript_functions(){
 
                     $.ajax({
                                             type: 'POST',
-                                            url: 'http://localhost/wellness/dashboard/getTests/',
+                                            url: 'http://192.168.100.2/wellness/dashboard/getTests/',
                                             success: function(data){
                                                 $('#tests').html(data);
                         console.log(tests);
@@ -397,7 +397,7 @@ public function javascript_functions(){
               $.ajax({
                 type:'POST',
                 data:data,
-                url: 'http://localhost/wellness/dashboard/saveTests/',
+                url: 'http://192.168.100.2/wellness/dashboard/saveTests/',
                 dataType:'json',
                 success: function(data){
                     alert('Test results saved successfully.');
@@ -433,7 +433,7 @@ public function javascript_functions(){
                       $.ajax({
             type:'POST',
                 data:data,
-                url: 'http://localhost/wellness/dashboard/saveQuestionaire/',
+                url: 'http://192.168.100.2/wellness/dashboard/saveQuestionaire/',
                 success: function(data){
                     alert(data);
 
@@ -452,7 +452,7 @@ public function javascript_functions(){
            $.ajax({
             type:'POST',
              data:data,
-             url: 'http://localhost/wellness/dashboard/saveClinicianTests/',
+             url: 'http://192.168.100.2/wellness/dashboard/saveClinicianTests/',
              success: function(data){
                     alert(data);
 
@@ -472,7 +472,7 @@ public function javascript_functions(){
            $.ajax({
             type:'POST',
              data:data,
-             url: 'http://localhost/wellness/dashboard/saveClinicianTests/',
+             url: 'http://192.168.100.2/wellness/dashboard/saveClinicianTests/',
              success: function(data){
                     alert(data);
 
@@ -518,7 +518,7 @@ public function javascript_functions(){
             if(selectedDay.length < 2){selectedDay = '0'+selectedDay;}
             date = date +'/'+ selectedDay;
 
-            $('#clendar-hide').html('<form action=http://localhost/wellness/dashboard/bookACertainDay/ name=date method=POST style=display:none;><input type=hidden name=date value='+date+' /></form>');
+            $('#clendar-hide').html('<form action=http://192.168.100.2/wellness/dashboard/bookACertainDay/ name=date method=POST style=display:none;><input type=hidden name=date value='+date+' /></form>');
 
             document.forms['date'].submit();
          });
@@ -542,7 +542,7 @@ public function javascript_functions(){
                         //request could get lost in space
                         $.ajax({
                         type: 'POST',
-                        url: 'http://localhost/wellness/dashboard/bookClient/',
+                        url: 'http://192.168.100.2/wellness/dashboard/bookClient/',
                         crossDomain: true,
                         data: data,
                         success: function (data) {
@@ -592,7 +592,7 @@ public function javascript_functions(){
        if(reload == 'true'){
         $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/getClientDetails/',
+        url: 'http://192.168.100.2/wellness/dashboard/getClientDetails/',
         data : data,
         crossDomain: true,
         success: function (data) {
@@ -607,7 +607,7 @@ public function javascript_functions(){
         $('#tests-tab').addClass('disabled');
         $('#results-tab').addClass('disabled');
 
-        //window.location = 'http://localhost/wellness/dashboard/#';
+        //window.location = 'http://192.168.100.2/wellness/dashboard/#';
         },
         error: function (err) {
             console.log(err);
@@ -624,7 +624,7 @@ public function javascript_functions(){
        
         $.ajax({
         type: 'POST',
-        url: 'http://localhost/wellness/dashboard/saveDrAssesment/',
+        url: 'http://192.168.100.2/wellness/dashboard/saveDrAssesment/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -643,7 +643,7 @@ public function javascript_functions(){
      var data = {'clientNumber' : $(this).attr('clientNumber'),'date':$(this).attr('date')};
      $.ajax({
         type:'POST',
-        url: 'http://localhost/wellness/dashboard/clearPatient/',
+        url: 'http://192.168.100.2/wellness/dashboard/clearPatient/',
         crossDomain:true,
         data:data,
         success:function(data){

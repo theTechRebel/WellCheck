@@ -167,7 +167,7 @@ class Dashboard extends MY_Controller {
 
 		public function calendar($year=null, $month=null){
 
-				$config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
+				$config['base_url'] = 'http://192.168.100.2/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 			$config['total_rows'] = $totalRows->num_rows();
 			$config['per_page'] = 10;
@@ -465,7 +465,7 @@ class Dashboard extends MY_Controller {
 
 		public function clients($offset=0,$report=null){
 
-			$config['base_url'] = 'http://localhost/wellness/dashboard/clients/';
+			$config['base_url'] = 'http://192.168.100.2/wellness/dashboard/clients/';
 			
 			$this->db->select('*');
 			$this->db->from('patientrecord');
@@ -514,7 +514,7 @@ class Dashboard extends MY_Controller {
 		}
 
 		public function getClients($offset=0){
-   $config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
+   $config['base_url'] = 'http://192.168.100.2/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 
 			$config['total_rows'] = $totalRows->num_rows();
@@ -533,7 +533,7 @@ class Dashboard extends MY_Controller {
 		  echo "<p align='center'>";
 		  echo $this->pagination->create_links();
 		  echo "</p>";
-		  echo "<p align='center'><a href='http://localhost/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
+		  echo "<p align='center'><a href='http://192.168.100.2/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
 		}
 
 
@@ -553,9 +553,9 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname [$row->status]</td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
+				echo "<td><a href='http://192.168.100.2/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
+				echo "<td><a href='http://192.168.100.2/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
+				echo "<td><a href='http://192.168.100.2/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
 
 				echo "</tr>";
 				}
@@ -650,7 +650,7 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname </td>";
-				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://localhost/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
+				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://192.168.100.2/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
 				echo "</tr>";
 				}
 				echo "</tbody>";
