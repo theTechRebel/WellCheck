@@ -5,7 +5,7 @@
     <!-- /.panel-heading -->
     <div class="panel-body">
 
-    <div class="table-responsive">
+    <p align="center">
     	<?php
     	if(isset($bookings)){
     		echo $this->calendar->generate($this->uri->segment(3), $this->uri->segment(4),$bookings);
@@ -14,7 +14,7 @@
     	}
 							
     	?>
-    </div>
+    </p>
     <label id="dates"><?php echo $dates;?></label>
     </div>
 <!-- /.panel -->

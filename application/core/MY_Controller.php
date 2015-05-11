@@ -48,7 +48,7 @@ public function javascript_functions(){
                         //request could get lost in space
                         $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/bookClient/',
+        url: 'http://192.168.100.4/wellness/dashboard/bookClient/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -82,7 +82,7 @@ public function javascript_functions(){
 
                             $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/getBookings/',
+        url: 'http://192.168.100.4/wellness/dashboard/getBookings/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -99,7 +99,7 @@ public function javascript_functions(){
                             setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/getIncomingClients/',
+        url: 'http://192.168.100.4/wellness/dashboard/getIncomingClients/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming').remove();
@@ -115,7 +115,7 @@ public function javascript_functions(){
                             setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/getIncomingTestClients/',
+        url: 'http://192.168.100.4/wellness/dashboard/getIncomingTestClients/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming-tests').remove();
@@ -130,7 +130,7 @@ public function javascript_functions(){
         setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/getIncomingBloodResults/',
+        url: 'http://192.168.100.4/wellness/dashboard/getIncomingBloodResults/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming-tests-bloods').remove();
@@ -153,7 +153,7 @@ public function javascript_functions(){
           $.ajax({
          type:'POST',
                                     data:data,
-                                    url:'http://192.168.100.2/wellness/dashboard/getSavedTests/',
+                                    url:'http://192.168.100.4/wellness/dashboard/getSavedTests/',
                                     dataType:'json',
                                     success: function(data){
                                         $('#client-name').empty();
@@ -203,7 +203,7 @@ public function javascript_functions(){
 
         $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/getClientDetails/',
+        url: 'http://192.168.100.4/wellness/dashboard/getClientDetails/',
         data : data,
         crossDomain: true,
         success: function (data) {
@@ -218,7 +218,7 @@ public function javascript_functions(){
         $('#tests-tab').addClass('disabled');
         $('#results-tab').addClass('disabled');
        */
-         window.location = 'http://192.168.100.2/wellness/dashboard/?&reload=true&clientNumber='+clientNumber+'&clientName='+clientName+'&timein='+timein;
+         window.location = 'http://192.168.100.4/wellness/dashboard/?&reload=true&clientNumber='+clientNumber+'&clientName='+clientName+'&timein='+timein;
         },
         error: function (err) {
             console.log(err);
@@ -235,7 +235,7 @@ public function javascript_functions(){
                                 console.log(data);
                              $.ajax({
                                 type:'POST',
-                                url:'http://192.168.100.2/wellness/dashboard/getClientDetails/',
+                                url:'http://192.168.100.4/wellness/dashboard/getClientDetails/',
                                 data:data,
                                 success: function(data){
                        $('#client-name').empty();
@@ -246,70 +246,101 @@ public function javascript_functions(){
                         $('#clinician-tabs  a:first').tab('show');
                         $('#results-tab').addClass('disabled');
 
-                                                $.ajax({
-                                                    type:'POST',
-                                                    dataType:'json',
-                                                    url:'http://192.168.100.2/wellness/dashboard/getClientTestDetails/',
-                                                    data:data1,
-                                                    success: function(data){
+                        $.ajax({
+                            type:'POST',
+                            dataType:'json',
+                            url:'http://192.168.100.4/wellness/dashboard/getClientTestDetails/',
+                            data:data1,
+                            success: function(data){
 
-                                                            switch(data['package']){
-                                                                case 'standard':
-                     $('#comprehensive-tab').removeClass('active').addClass('disabled');
-                     $('#comprehensive').removeClass('active');
-                     $('#standard-tab').addClass('active');
-                     $('#standard').addClass('active');
+                                switch(data['package']){
+                                    case 'basic':
+                                 $('#basic-tab').removeClass('disabled').addClass('active');
+                                 $('#basic').removeClass('disabled').addClass('active');
+                                 $('#comprehensive-tab').removeClass('active').addClass('disabled');
+                                 $('#comprehensive').removeClass('active');
+                                 $('#standard-tab').removeClass('active').addClass('disabled');
+                                 $('#standard').removeClass('active').addClass('disabled');
 
-                   var selected = [];
-                                                                for (var prop in data['tests']) {
-                                                                    selected.push(data['tests'][prop]);
-                                                                }
+                                var selected = [];
+                                for (var prop in data['tests']) {
+                                    selected.push(data['tests'][prop]);
+                                }       
 
-                                        var tests = ['hiv','hdltcholesterol','urine'];
-                   var notSelected =$(tests).not(selected).get();
+                                var tests = ['hemoglobin'];
+                                var notSelected =$(tests).not(selected).get();
                    
-                   tests.forEach(function(entry){
-                    $('#'+entry).removeProp('disabled');
-                   });
+                               tests.forEach(function(entry){
+                                $('#'+entry).removeProp('disabled');
+                               });
 
-                   if(notSelected.length > 0){
-                    notSelected.forEach(function(entry) {
-                                    $('#'+entry).attr('disabled', 'true');
-                                                                        });
+                               if(notSelected.length > 0){
+                                notSelected.forEach(function(entry) {
+                                                $('#'+entry).attr('disabled', 'true');
+                                                                                    });
+                                }
+                                    break;
+
+                                    case 'standard':
+                                 $('#basic-tab').removeClass('active').addClass('disabled');
+                                 $('#basic').removeClass('active').addClass('disabled');
+                                 $('#comprehensive-tab').removeClass('active').addClass('disabled');
+                                 $('#comprehensive').removeClass('active');
+                                 $('#standard-tab').addClass('active');
+                                 $('#standard').addClass('active');
+
+                                var selected = [];
+                                for (var prop in data['tests']) {
+                                    selected.push(data['tests'][prop]);
+                                }       
+
+                                var tests = ['hiv','hdltcholesterol','urine'];
+                                var notSelected =$(tests).not(selected).get();
+                   
+                               tests.forEach(function(entry){
+                                $('#'+entry).removeProp('disabled');
+                               });
+
+                               if(notSelected.length > 0){
+                                notSelected.forEach(function(entry) {
+                                                $('#'+entry).attr('disabled', 'true');
+                                                                                    });
+                                }
+
+                                break;
+
+                                case 'comprehensive':
+                             $('#basic-tab').removeClass('active').addClass('disabled');
+                             $('#basic').removeClass('active').addClass('disabled');
+                             $('#comprehensive-tab').removeClass('disabled').addClass('active');
+                             $('#standard-tab').removeClass('active').addClass('disabled');
+                             $('#standard').removeClass('active');
+                             $('#comprehensive').addClass('active');
+
+                                var selected = [];
+                                for (var prop in data['tests']) {
+                                    selected.push(data['tests'][prop]);
+                                }
+
+                             var tests = ['ldl','trigs','hba1c','ecg','hepatitisscreen','psaviac','bloodgroup'];
+                             var notSelected =$(tests).not(selected).get();
+
+                             tests.forEach(function(entry){
+                            $('#'+entry).removeProp('disabled');
+                           });
+
+                           if(notSelected.length > 0){
+                            notSelected.forEach(function(entry) {
+                                            $('#'+entry).attr('disabled', 'true');
+                                                                                });
+                            }
+                            break;
+                            }
+                        },
+                        error: function(err){
+                            console.log(err)
                     }
-
-                                                                break;
-
-                                                                case 'comprehensive':
-                     $('#comprehensive-tab').removeClass('disabled').addClass('active');
-                     $('#standard-tab').removeClass('active').addClass('disabled');
-                     $('#standard').removeClass('active');
-                     $('#comprehensive').addClass('active');
-
-                           var selected = [];
-                                                                        for (var prop in data['tests']) {
-                                                                            selected.push(data['tests'][prop]);
-                                                                        }
-
-                     var tests = ['ldl','trigs','hba1c','ecg','hepatitisscreen','psaviac','bloodgroup'];
-                     var notSelected =$(tests).not(selected).get();
-
-                     tests.forEach(function(entry){
-                    $('#'+entry).removeProp('disabled');
-                   });
-
-                   if(notSelected.length > 0){
-                    notSelected.forEach(function(entry) {
-                                    $('#'+entry).attr('disabled', 'true');
-                                                                        });
-                    }
-                                                                break;
-                                                            }
-                                                        },
-                                                        error: function(err){
-                                                            console.log(err)
-                                                    }
-                                                });
+                });
 
 
                       }
@@ -323,7 +354,7 @@ public function javascript_functions(){
 
                 $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/stage/',
+        url: 'http://192.168.100.4/wellness/dashboard/stage/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -341,7 +372,7 @@ public function javascript_functions(){
                                             
                                             $.ajax({
                                             type: 'POST',
-                                            url: 'http://192.168.100.2/wellness/dashboard/getTests/',
+                                            url: 'http://192.168.100.4/wellness/dashboard/getTests/',
                                             success: function(data){
                                                 $('#tests').html(data);
                         console.log(tests);
@@ -355,7 +386,7 @@ public function javascript_functions(){
                     $('#clinician-tabs li:eq(3) a').tab('show');
                     
                     //get the file and dump the content into our DIV tag
-                    $.get('http://192.168.100.2/wellness/application/views/clinician/tests/visual_screen.html', function(data){
+                    $.get('http://192.168.100.4/wellness/application/views/clinician/tests/visual_screen.html', function(data){
                         $('#tests').html(data);
                     });
 
@@ -369,7 +400,7 @@ public function javascript_functions(){
 
                     $.ajax({
                                             type: 'POST',
-                                            url: 'http://192.168.100.2/wellness/dashboard/getTests/',
+                                            url: 'http://192.168.100.4/wellness/dashboard/getTests/',
                                             success: function(data){
                                                 $('#tests').html(data);
                         console.log(tests);
@@ -397,26 +428,26 @@ public function javascript_functions(){
               $.ajax({
                 type:'POST',
                 data:data,
-                url: 'http://192.168.100.2/wellness/dashboard/saveTests/',
+                url: 'http://192.168.100.4/wellness/dashboard/saveTests/',
                 dataType:'json',
                 success: function(data){
                     alert('Test results saved successfully.');
 
-                    $('#tests-tab').removeClass('active').addClass('disabled');
-                    $('#tests').removeClass('active').addClass('disabled');
+                    $('#tests-tab').removeClass('active');
+                    $('#tests').removeClass('active');
                     $('#results-tab').removeClass('disabled').addClass('active');
                     $('#results').removeClass('disabled').addClass('active');
              
-             console.log(data)
+             //console.log(data)
               
 
-              
-                                            $.each(data, function(key,val){
-                                                  if(val!=''){
-                                               $('#items').append('<tr><td> '+key+' </td> <td> '+val+' </td></tr>');                                                    
-                                                  }
+              $('#items').empty();
+                $.each(data, function(key,val){
+                      if(val!=''){
+                   $('#items').append('<tr><td> '+key+' </td> <td> '+val+' </td></tr>');                                                    
+                      }
 
-                                            });
+                });
 
                 },error:function(err){
                     alert('Please attempt saving again.')
@@ -433,7 +464,7 @@ public function javascript_functions(){
                       $.ajax({
             type:'POST',
                 data:data,
-                url: 'http://192.168.100.2/wellness/dashboard/saveQuestionaire/',
+                url: 'http://192.168.100.4/wellness/dashboard/saveQuestionaire/',
                 success: function(data){
                     alert(data);
 
@@ -452,7 +483,7 @@ public function javascript_functions(){
            $.ajax({
             type:'POST',
              data:data,
-             url: 'http://192.168.100.2/wellness/dashboard/saveClinicianTests/',
+             url: 'http://192.168.100.4/wellness/dashboard/saveClinicianTests/',
              success: function(data){
                     alert(data);
 
@@ -472,7 +503,7 @@ public function javascript_functions(){
            $.ajax({
             type:'POST',
              data:data,
-             url: 'http://192.168.100.2/wellness/dashboard/saveClinicianTests/',
+             url: 'http://192.168.100.4/wellness/dashboard/saveClinicianTests/',
              success: function(data){
                     alert(data);
 
@@ -518,7 +549,7 @@ public function javascript_functions(){
             if(selectedDay.length < 2){selectedDay = '0'+selectedDay;}
             date = date +'/'+ selectedDay;
 
-            $('#clendar-hide').html('<form action=http://192.168.100.2/wellness/dashboard/bookACertainDay/ name=date method=POST style=display:none;><input type=hidden name=date value='+date+' /></form>');
+            $('#clendar-hide').html('<form action=http://192.168.100.4/wellness/dashboard/bookACertainDay/ name=date method=POST style=display:none;><input type=hidden name=date value='+date+' /></form>');
 
             document.forms['date'].submit();
          });
@@ -542,7 +573,7 @@ public function javascript_functions(){
                         //request could get lost in space
                         $.ajax({
                         type: 'POST',
-                        url: 'http://192.168.100.2/wellness/dashboard/bookClient/',
+                        url: 'http://192.168.100.4/wellness/dashboard/bookClient/',
                         crossDomain: true,
                         data: data,
                         success: function (data) {
@@ -592,7 +623,7 @@ public function javascript_functions(){
        if(reload == 'true'){
         $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/getClientDetails/',
+        url: 'http://192.168.100.4/wellness/dashboard/getClientDetails/',
         data : data,
         crossDomain: true,
         success: function (data) {
@@ -607,7 +638,7 @@ public function javascript_functions(){
         $('#tests-tab').addClass('disabled');
         $('#results-tab').addClass('disabled');
 
-        //window.location = 'http://192.168.100.2/wellness/dashboard/#';
+        //window.location = 'http://192.168.100.4/wellness/dashboard/#';
         },
         error: function (err) {
             console.log(err);
@@ -624,7 +655,7 @@ public function javascript_functions(){
        
         $.ajax({
         type: 'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/saveDrAssesment/',
+        url: 'http://192.168.100.4/wellness/dashboard/saveDrAssesment/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -643,7 +674,7 @@ public function javascript_functions(){
      var data = {'clientNumber' : $(this).attr('clientNumber'),'date':$(this).attr('date')};
      $.ajax({
         type:'POST',
-        url: 'http://192.168.100.2/wellness/dashboard/clearPatient/',
+        url: 'http://192.168.100.4/wellness/dashboard/clearPatient/',
         crossDomain:true,
         data:data,
         success:function(data){

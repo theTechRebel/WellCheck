@@ -29,13 +29,13 @@
 <!-- -->
 <!-- Middle Page Row -->
             <div class="row">
-                <div class="col-lg-9" id="clendar-hide">
+                <div class="col-lg-8" id="clendar-hide">
                 <?php include_once('results.php');?>                   
                 </div>
-                <div class="col-lg-9" id="attend">
+                <div class="col-lg-8" id="attend">
                 <?php include_once('attend.php');?>  
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                 <?php include_once('rightpatientstable.php');?>
                 </div>
             </div>

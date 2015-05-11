@@ -43,7 +43,7 @@
     <![endif]-->
     <style type="text/css">
 .calendar {
-  font-family: Arial, Verdana, Sans-serif;
+  font-family: Sans-serif;
   width: auto;
   border-collapse: collapse;
 }
@@ -63,7 +63,7 @@
 .calendar td {
   width: 14%; /* Force all cells to be about the same width regardless of content */
   border:1px solid #CCC;
-  height: 70px;
+  height: 100px;
   vertical-align: top;
   font-size: 10px;
   padding: 0;
@@ -81,7 +81,7 @@
 
 div.today {
   background: #E9EFF7;
-  height: 70%;
+  height: 100%;
 }
 
 .selected{
@@ -90,7 +90,7 @@ div.today {
 
 
 .this-day{
-  height: 90%;
+  height: 100%;
 }
 
 .disabled{
@@ -100,11 +100,11 @@ div.today {
     margin-bottom: 0px;
     }
 body{
-  font-size: 12px;
+  font-size: 10px;
   font-style: sans-serif;
 }
 .table{
-  font-size: 12px;
+  font-size: 10px;
   font-style: sans-serif;
 }
 .form-control{

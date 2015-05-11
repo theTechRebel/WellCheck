@@ -21,13 +21,13 @@
 								  </li>
 								  <?php endforeach; ?>
 								  		<p align="center"><?php echo $this->pagination->create_links(); ?></p>
-										  <p align="center"><a href="http://192.168.100.2/wellness/dashboard/walkInClient/1" id="bookNewClientToday"><b>+</b> Add As New Client</a></p>
+										  <p align="center"><a href="http://192.168.100.4/wellness/dashboard/walkInClient/1" id="bookNewClientToday"><b>+</b> Add As New Client</a></p>
 								  </ul>
 	</div>
 		    </form>
 				</div>
 
-    <div class="table-responsive">
+    <p align="center">
     	<?php
     	if(isset($bookings)){
     		echo $this->calendar->generate($this->uri->segment(3), $this->uri->segment(4),$bookings);
@@ -36,7 +36,7 @@
     	}
 							
     	?>
-    </div>
+    </p>
     <label id="dates"><?php echo $dates;?></label>
     </div>
 <!-- /.panel -->

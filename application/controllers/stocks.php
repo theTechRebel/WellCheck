@@ -13,7 +13,7 @@ class Stocks extends MY_Controller {
 		}
 
 		public function viewAllStocks($offset=0){
-  $config['base_url'] = 'http://192.168.100.2/wellness/stocks/';
+  $config['base_url'] = 'http://192.168.100.4/wellness/stocks/';
 			$totalRows = $this->app_model->get_all_where('stockstatus',array('user'=>$this->session->userdata('rights')));
 
 			$config['total_rows'] = $totalRows->num_rows();

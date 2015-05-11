@@ -1,5 +1,38 @@
-<?php
+<style>
+#body{
+  background-image: url("http://192.168.100.4/wellness/uiux/images/logo.png");
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1; 
+}
 
+#table{
+  border:solid;
+  width:100%;
+  vertical-align: middle;
+  text-align:center;
+  topntail:yes;
+  thead-underline:yes;
+}
+#table tr{
+  border:solid;
+}
+</style>
+
+<div id="body">
+
+<?php
+echo "<p align='center'> <img src='http://192.168.100.4/wellness/uiux/images/header.png'> </p>";
+echo "&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1st Floor, Joina City <br/>";
+echo "&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;Tel: 086 4413 1465 | Cell: +263 737 399 924 <br/>";
+echo "&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;Email: admin@wellnesscenter.co.zw | Website: www.wellnesscenter.co.zw <br/>";
+echo "<hr/>";
+echo "<br/>";
+?>
+<?php
 echo "Physical Address:	".$client->address;
 echo "<br/><br/>";
 echo "Tel: ".$client->phone;
@@ -18,16 +51,20 @@ Wish you a well life!<br/><br/>
 Yours faithfully,<br/><br/>
 Dr. C. Masiya <br/><br/>
 Chief Medical Officer <br/>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 ";
+
+
+
+
+ if($clinicianresults != ""){
+ 	$b = json_decode($clinicianresults, true);
+
+  echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Results from Clinician Tests. <br/>";
+  echo "<table id='table' border='solid'>";
+  echo "<thead><tr><th>Test</th><th>Result</th></tr></thead>";
 ?>
 
-
-
-<?php if($clinicianresults != ""){
- 	$b = json_decode($clinicianresults, true);?>
- <table class="table">
- 	<tr><th>Detail</th><th>Result</th></tr>
 	<?php foreach ($b as $key => $value) {
 		 if($value != ""){
 		?>
@@ -44,17 +81,24 @@ Chief Medical Officer <br/>
 
   ?>
    </td></tr>
- <?php }}?>
-</table>
- <?php }else{
+ <?php }}
+echo "</table>";
+  }else{
  }
 ?>
 
+<?php echo "<br/><br/><br/>";?>
+<?php echo "<hr/>";?>
+
 <?php
  if($scientisttests != ""){
- 	$c = json_decode($scientisttests, true);?>
- <table class="table">
- 	<tr><th>Detail</th><th>Result</th></tr>
+ 	$c = json_decode($scientisttests, true);
+
+  echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Results from Blood Tests. <br/>";
+
+ echo "<table id='table'>";
+ echo "<tr class='tr'><th>Test</th><th>Result</th></tr>";
+?>
 	<?php foreach ($c as $key => $value) {
 		 if($value != ""){
 		?>
@@ -73,10 +117,16 @@ Chief Medical Officer <br/>
  <?php }else{
    }?>
 
-<?php echo "<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>";?>
+<?php echo "<br/><br/><br/>";?>
+<?php echo "<hr/>";?>
 
 <?php
 if(isset($comments)){
+  echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clinician Comments. <br/><br/>";
 	echo $comments;
+
+  echo "<br/><br/><br/><br/>";
 }
 ?>
+
+</div>

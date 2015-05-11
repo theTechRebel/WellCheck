@@ -17,7 +17,7 @@
 						<td><?php echo $row->names;?></td>
 						<td><?php echo $row->surname;?></td>
 						<td><?php echo $row->checkupdate;?></td>
-						<td><a href="http://192.168.100.2/wellness/dashboard/billing/<?php echo $row->clientnumber;?>/<?php echo $row->checkupdate;?>">View Reciept</a></td>
+						<td><a href="http://192.168.100.4/wellness/dashboard/billing/<?php echo $row->clientnumber;?>/<?php echo $row->checkupdate;?>">View Reciept</a></td>
 					</tr>
 					<?php endforeach;?>
 				</tbody>

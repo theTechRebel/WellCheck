@@ -12,7 +12,7 @@
 						<td><?php echo $row->names;?></td>
 						<td><?php echo $row->surname;?></td>
 						<td><?php echo getCalendarDateTodayFull(); ?><br/><a href="<?php echo $url?>dashboard/booking/<?php echo $row->clientnumber;?>">Book today</a></td>
-						<td><a href="http://192.168.100.2/wellness/dashboard/editClient/">Edit Record</a></td>
+						<td><a href="http://192.168.100.4/wellness/dashboard/editClient/">Edit Record</a></td>
 					</tr>
 					<?php endforeach;?>
 				</tbody>

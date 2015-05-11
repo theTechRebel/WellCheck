@@ -167,7 +167,7 @@ class Dashboard extends MY_Controller {
 
 		public function calendar($year=null, $month=null){
 
-				$config['base_url'] = 'http://192.168.100.2/wellness/dashboard/getClients/';
+				$config['base_url'] = 'http://192.168.100.4/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 			$config['total_rows'] = $totalRows->num_rows();
 			$config['per_page'] = 10;
@@ -362,10 +362,6 @@ class Dashboard extends MY_Controller {
 			//just for reception
 		public function walkInClient($type=null){
 
-			if($this->session->userdata('rights') != 'reception'){
-				redirect('dashboard/');
-			}
-
 			$this->form_validation->set_rules(
 		 	'clientname',
 		 	'Client Name',
@@ -407,20 +403,48 @@ class Dashboard extends MY_Controller {
 		 	'trim|required');
 
 			if($this->form_validation->run()==FALSE){
+			    
+       switch($this->session->userdata('rights')){
+       	case "reception":
 								$this->load->view('js');
 			   	 $this->load->view('header');	
 								$this->load->view('reception/dashboard_walkinclient',array('type'=>$type));
 								$this->load->view('footer');
+       	break;
+
+       	case "clinician":
+								$this->load->view('js');
+			   	 $this->load->view('header');	
+								$this->load->view('clinician/dashboard_walkinclient',array('type'=>$type));
+								$this->load->view('footer');
+       	break;
+       }
+
+
         }else{
 
         	$query = $this->app_model->get_all_where("patientdetails", array('idnumber'=>$_POST['idnumber']));
 
         	if($query->num_rows() > 0){
         		//we already have the client
+
+
+        switch($this->session->userdata('rights')){
+       	case "reception":
 								  $this->load->view('js');
 			   	   $this->load->view('header');	
         		$this->load->view('dashboard_walkinclient',array('problem'=>"The Client is already in the system, please select the clients record from the clients tab and que them for check up.",'type'=>$type));
         		$this->load->view('footer');
+       	break;
+
+       	case "clinician":
+								  $this->load->view('js');
+			   	   $this->load->view('header');	
+        		$this->load->view('clinician/dashboard_walkinclient',array('problem'=>"The Client is already in the system, please select the clients record from the clients tab and que them for check up.",'type'=>$type));
+        		$this->load->view('footer');
+       	break;
+       }
+
         	}else{
         		//we dont have the client
         		$data = array(
@@ -465,7 +489,7 @@ class Dashboard extends MY_Controller {
 
 		public function clients($offset=0,$report=null){
 
-			$config['base_url'] = 'http://192.168.100.2/wellness/dashboard/clients/';
+			$config['base_url'] = 'http://192.168.100.4/wellness/dashboard/clients/';
 			
 			$this->db->select('*');
 			$this->db->from('patientrecord');
@@ -514,7 +538,7 @@ class Dashboard extends MY_Controller {
 		}
 
 		public function getClients($offset=0){
-   $config['base_url'] = 'http://192.168.100.2/wellness/dashboard/getClients/';
+   $config['base_url'] = 'http://192.168.100.4/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 
 			$config['total_rows'] = $totalRows->num_rows();
@@ -533,7 +557,7 @@ class Dashboard extends MY_Controller {
 		  echo "<p align='center'>";
 		  echo $this->pagination->create_links();
 		  echo "</p>";
-		  echo "<p align='center'><a href='http://192.168.100.2/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
+		  echo "<p align='center'><a href='http://192.168.100.4/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
 		}
 
 
@@ -553,9 +577,9 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname [$row->status]</td>";
-				echo "<td><a href='http://192.168.100.2/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
-				echo "<td><a href='http://192.168.100.2/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
-				echo "<td><a href='http://192.168.100.2/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
+				echo "<td><a href='http://192.168.100.4/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
+				echo "<td><a href='http://192.168.100.4/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
+				echo "<td><a href='http://192.168.100.4/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
 
 				echo "</tr>";
 				}
@@ -601,7 +625,7 @@ class Dashboard extends MY_Controller {
 			$this->db->order_by('patienthistory.timein', 'DESC'); 
 			$query = $this->db->get();
 
-			$needles = array('bp','weight','bmi','O2saturation','height','sugar','hemoglobin','visualscreen');
+			$needles = array('bp','weight','bmi','O2saturation','height','sugar','visualscreen');
 			$clients = array();
 			$counter = 0;
 				if($query->num_rows() > 0){
@@ -650,7 +674,7 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname </td>";
-				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://192.168.100.2/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
+				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://192.168.100.4/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
 				echo "</tr>";
 				}
 				echo "</tbody>";
@@ -718,7 +742,7 @@ class Dashboard extends MY_Controller {
 
 			$row = $query->row();
 
-			$needles = array('bp','weight','bmi','O2saturation','height','sugar','hemoglobin','visualscreen');
+			$needles = array('bp','weight','bmi','O2saturation','height','sugar','visualscreen','ecg');
 			$counter = 0;
 			$testsArray = explode(',', $row->test);
 			$tests = array_diff($testsArray, $needles);
@@ -881,18 +905,31 @@ public function getTests(){
 				$data = $query->row();
 				$arrayOfTests = explode(',', $data->test,5);
 
+				//die(var_dump($arrayOfTests[4]));
+
+			$pos = strpos(end($arrayOfTests),'ecg');
+
 				echo "<form class='form-clinician' name='form-clinician-tests' action='#'>";
 				echo "<table class='table table-striped table-bordered table-hover'>";
 				echo "<tr><th>Test</th><th>Results</th></tr>";
 
 				if(count($arrayOfTests)<4){
 						foreach ($arrayOfTests as $value) {
-						echo "<tr><td>$value</td><td><input type='text' class='form' name='$value'></td></tr>";
+							if($value != 'hemoglobin'){
+						  echo "<tr><td>$value</td><td><input type='text' class='form' name='$value'></td></tr>";
+							}
 						}
 				}else{
 						for ($i=0; $i < 4; $i++) { 
+							if($arrayOfTests[$i] != 'hemoglobin'){
 						echo "<tr><td>$arrayOfTests[$i]</td><td><input type='text' class='form' name='$arrayOfTests[$i]'></td></tr>";
+							}
 					}
+				}
+
+//ECG has been moved to clinician
+				if($pos !== true){
+						  echo "<tr><td>ECG</td><td><input type='text' class='form' name='ecg'></td></tr>";					
 				}
 				
 
@@ -1137,7 +1174,7 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 		// As PDF creation takes a bit of memory, we're saving the created file in /downloads/reports/
 		$pdfFilePath = FCPATH."/downloads/reports/$filename.pdf";
  
-			if (file_exists($pdfFilePath) == FALSE){
+			//if (file_exists($pdfFilePath) == FALSE){
 			    ini_set('memory_limit','32M'); // boost the memory limit if it's low <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
       $htmlIntro = $this->load->view('reports/intro',$data,true);
 			   $this->load->library('pdf');
@@ -1146,9 +1183,10 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 			   $pdf->SetHeader($data['pagetitle']);
 			   $pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
       $pdf->WriteHTML($htmlIntro);
+
 			   //$pdf->WriteHTML($html); // write the HTML into the PDF
 			   $pdf->Output($pdfFilePath, 'F'); // save to file because we can
-			}
+			//}
  
 			redirect("/downloads/reports/$filename.pdf");
 		}
