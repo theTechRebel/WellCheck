@@ -17,10 +17,10 @@ class Stocks extends MY_Controller {
 			$totalRows = $this->app_model->get_all_where('stockstatus',array('user'=>$this->session->userdata('rights')));
 
 			$config['total_rows'] = $totalRows->num_rows();
-			$config['per_page'] = 10;
+			$config['per_page'] = 100;
 			//$config['anchor_class'] = "class='dropDownMoreClients'";
 			$this->pagination->initialize($config);
-			$query = $this->app_model->get_all_where('stockstatus',array('user'=>$this->session->userdata('rights')),10,$offset);
+			$query = $this->app_model->get_all_where('stockstatus',array('user'=>$this->session->userdata('rights')),100,$offset);
 			$data = array('stocks'=>$query);
    $this->_views('dashboard',$data);
 		}
