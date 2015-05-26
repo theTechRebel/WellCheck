@@ -1,6 +1,6 @@
 <style>
 #body{
-  background-image: url("http://192.168.100.50/wellness/uiux/images/logo.png");
+  background-image: url("http://localhost/wellness/uiux/images/logo.png");
   opacity: 0.5;
   top: 0;
   left: 0;
@@ -25,7 +25,7 @@
 <div id="body">
 
 <?php
-echo "<p align='center'> <img src='http://192.168.100.50/wellness/uiux/images/header.png'> </p>";
+echo "<p align='center'> <img src='http://localhost/wellness/uiux/images/header.png'> </p>";
 echo "&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;1st Floor, Joina City <br/>";
 echo "&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;Tel: 086 4413 1465 | Cell: +263 737 399 924 <br/>";
 echo "&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;Email: admin@wellnesscenter.co.zw | Website: www.wellnesscenter.co.zw <br/>";

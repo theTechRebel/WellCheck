@@ -21,7 +21,7 @@
 										  </li>
 										  <?php endforeach; ?>
 										  <p align="center"><?php echo $this->pagination->create_links(); ?></p>
-										  <p align="center"><a href="http://192.168.100.50/wellness/dashboard/walkInClient/1" id="bookNewClientToday"><b>+</b> Add As New Client</a></p>
+										  <p align="center"><a href="http://localhost/wellness/dashboard/walkInClient/1" id="bookNewClientToday"><b>+</b> Add As New Client</a></p>
 										  </ul>
 	       </div>
 		    </form>
