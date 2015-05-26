@@ -1,6 +1,6 @@
 <style>
 #body{
-  background-image: url("http:// localhost/wellness/uiux/images/logo.png");
+  background-image: url("http://localhost//wellness/uiux/images/logo.png");
   opacity: 0.5;
   top: 0;
   left: 0;
