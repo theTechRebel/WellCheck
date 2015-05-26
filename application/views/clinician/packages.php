@@ -3,7 +3,8 @@
     <div id="tab-content-packages" class="tab-content">
         <div class="col-lg-3">
             <ul class="nav nav-pills nav-stacked" data-tabs="tabs" id="packages-tabs">
-                <li class="active" id="quick-tab"><a href="#quick" data-toggle="tab">Quick Check</a></li> 
+                <li class="active" id="once1-tab"><a href="#once" data-toggle="tab">Once Off Tests</a></li> 
+                <li id="quick-tab"><a href="#quick" data-toggle="tab">Quick Check</a></li> 
                 <li id="wellness-tab"><a href="#wellness" data-toggle="tab">Wellness Package</a></li>
                 <li id="infections-tab"><a href="#infections" data-toggle="tab">Infections Check Pack</a></li>
                 <li id="premarital-tab"><a href="#premarital" data-toggle="tab">Premarital Screen</a></li>
@@ -16,7 +17,73 @@
         </div>
         <div class="col-lg-9">
         <div id="tab-content-packages" class="tab-content">
-                <div class="tab-pane active" id="quick">
+                <div class="tab-pane active" id="once">
+                    <div class='table-responsive'>
+                    <form name='package' method='post' action='<?php echo $url?>dashboard/stage/' class='form-once'>
+                    <div class="col-lg-6">
+                    <table class='table small'>
+                    <td>Description</td><td>Amount</td>
+                    <tbody>
+                    <tr><td><input type='checkbox' name='once[]' value='hemoglobin_10'/>Hemoglobin</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='hiv_10'/>HIV/AIDS</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='lipidprofile_15'/>Lipid Profile</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='urine_5'/>Urine</td><td>$5.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='hba1c_20'/>HBA1c</td><td>$20.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='ecg_40'/>ECG</td><td>$40.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='hepatitis_15'/>Hepatitis Screen</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='psa_15'/>PSA</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='viac_15'/>VIAC</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='bloodgroup_10'/>Blood Group</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='syphilis_10'/>Syphilis</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='chlamydia_10'/>Chlamydia</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='gonorrhea_10'/>Gonorrhea</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='hsv_20'/>HSV</td><td>$20.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='typhoid_15'/>Typhoid</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='torch_30'/>Torch Screen</td><td>$30.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='pregnancy_5'/>Pregnancy Test</td><td>$5.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='ovulation_2'/>Ovulation Test Kit</td><td>$2.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='counselling_10'/>Counselling</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='menopause_'/>Menopause Test</td><td>TBA</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='premariatalindividual_60'/>Premarital Individual</td><td>$60.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='hpylori_'/>H.Pylori</td></tr>
+                    </tbody>
+                    </table>
+                    </div>
+                    <div class="col-lg-6">
+                                        <table class='table small'>
+                    <td>Description</td><td>Amount</td>
+                    <tbody>
+                    <tr><td><input type='checkbox' name='once[]' value='foodhandlers_50'/>Food Handlers Test</td><td>$50.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='pneumoconiosis_35'/>Pneumoconiosis Test</td><td>$35.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='drivers_30'/>Drivers VID medicals</td><td>$30.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='petrolhandlers_'/>Petrol Handlers Test</td><td>TBA</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='agrochem_35'/>Agrochem Tests</td><td>$35.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='visualscreen_15'/>Visual Screen</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='audiometry_15'/>Audiometry Test</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='spirometry_15'/>Spirometry Test</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='stress_'/>Stress Test</td><td>TBA</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='lead_30'/>Lead Test</td><td>$30.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacyellowfever_60'/>Yellow Fever Vaccine</td><td>$60.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vachepatitisa_40'/>Hepatitis A Vaccine</td><td>$40.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vachepatitisb_30'/>Hepatitis B Vaccine</td><td>$30.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vachepatitisc_30'/>Hepatitis C Vaccine</td><td>$30.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vactyphoid_40'/>Typhoid Vaccine</td><td>$40.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacmantoux_25'/>Mantoux Vaccine</td><td>$25.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vactetanus_15'/>Tetanus Vaccine</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacmeningitis_30'/>Meningitist Vaccine</td><td>$30.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacroatavirus_60'/>Roatavirus Vaccine</td><td>$60.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacflushot_15'/>Flu Shot</td><td>$15.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vaccervarix_50'/>Cervarix Vaccine</td><td>$50.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacrabis_35'/>Rabis Vaccine</td><td>$35.00</td></tr>
+                    </tbody>
+                    </table>
+                    </div>
+                    <input class="btn btn-success btn-lg" type='submit' name='submit' class='bill' value='Bill Tests and Or Vaccine'/>
+                    </form>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="quick">
                     <div class='table-responsive'>
                     <form name='package' method='post' action='<?php echo $url?>dashboard/stage/' class='form-packages'>
                     <table class='table small'>

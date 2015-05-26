@@ -12,6 +12,57 @@ class Dashboard extends MY_Controller {
 			$this->calendar();
 		}
 
+		public function onceOffTest(){
+			$keys = array_keys($_POST);
+
+		if(!isset($keys[0])){
+			echo "Please select packages to proceed. You have not selected anything yet.";
+		}else{
+			//die(var_dump($_POST));
+		}
+
+			$cost = 0;
+			$i = 0;
+			foreach ($_POST[$keys[0]] as $key => $value) {
+				$package = explode("_",$value);
+				$cost += (double)$package[1];
+				$test[$i] =$package[0];
+				$i++;
+			}
+
+			$tests = implode(',',$test);
+
+			//die(var_dump($tests));
+
+
+			$query = $this->app_model->get_all_where("patienthistory",array('checkupdate'=>getCalendarDateTodayFull(),'clientnumber'=>$this->session->userdata('attend')));
+
+			if($query->num_rows()>0){
+				$data = array('checkupdate'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'test'=>$tests,
+				         'package'=>"Once Off Test",
+				         'timeout'=>0,
+				         'timein'=>$this->session->userdata('time'),
+				         'charge'=>$cost);
+				$condition =  array('checkupdate'=>getCalendarDateTodayFull(),
+					                   'clientnumber'=>$this->session->userdata('attend'));
+					$this->app_model->update("patienthistory", $data, $condition);
+
+			}else{
+				$data = array('checkupdate'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'),
+				         'test'=>$tests,
+				         'timeout'=>0,
+				         'package'=>"Once Off Test",
+				         'timein'=>$this->session->userdata('time'),
+				         'charge'=>$cost);
+				$this->app_model->insert("patienthistory",$data);				
+			}
+
+			echo "tests";
+		}
+
 	public function bookACertainDay(){
 
 			$this->form_validation->set_rules(
@@ -167,7 +218,7 @@ class Dashboard extends MY_Controller {
 
 		public function calendar($year=null, $month=null){
 
-				$config['base_url'] = 'http://192.168.100.4/wellness/dashboard/getClients/';
+				$config['base_url'] = 'http://192.168.100.50/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 			$config['total_rows'] = $totalRows->num_rows();
 			$config['per_page'] = 10;
@@ -489,7 +540,7 @@ class Dashboard extends MY_Controller {
 
 		public function clients($offset=0,$report=null){
 
-			$config['base_url'] = 'http://192.168.100.4/wellness/dashboard/clients/';
+			$config['base_url'] = 'http://192.168.100.50/wellness/dashboard/clients/';
 			
 			$this->db->select('*');
 			$this->db->from('patientrecord');
@@ -538,7 +589,7 @@ class Dashboard extends MY_Controller {
 		}
 
 		public function getClients($offset=0){
-   $config['base_url'] = 'http://192.168.100.4/wellness/dashboard/getClients/';
+   $config['base_url'] = 'http://192.168.100.50/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 
 			$config['total_rows'] = $totalRows->num_rows();
@@ -557,7 +608,7 @@ class Dashboard extends MY_Controller {
 		  echo "<p align='center'>";
 		  echo $this->pagination->create_links();
 		  echo "</p>";
-		  echo "<p align='center'><a href='http://192.168.100.4/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
+		  echo "<p align='center'><a href='http://192.168.100.50/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
 		}
 
 
@@ -577,9 +628,9 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname [$row->status]</td>";
-				echo "<td><a href='http://192.168.100.4/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
-				echo "<td><a href='http://192.168.100.4/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
-				echo "<td><a href='http://192.168.100.4/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
+				echo "<td><a href='http://192.168.100.50/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
+				echo "<td><a href='http://192.168.100.50/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
+				echo "<td><a href='http://192.168.100.50/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
 
 				echo "</tr>";
 				}
@@ -674,7 +725,7 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname </td>";
-				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://192.168.100.4/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
+				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://192.168.100.50/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
 				echo "</tr>";
 				}
 				echo "</tbody>";
@@ -897,6 +948,41 @@ class Dashboard extends MY_Controller {
 		}
 	}
 
+public function getOnceOffClinicianTets(){
+				$condition = array('checkupdate'=>getCalendarDateTodayFull(),
+				         'clientnumber'=>$this->session->userdata('attend'));
+				$query = $this->app_model->get_all_where("patienthistory", $condition, $limit=1);
+				$data = $query->row();
+				$arrayOfTests = explode(',', $data->test);
+
+				echo "<form class='form-clinician' name='form-clinician-tests' action='#'>";
+				echo "<table class='table table-striped table-bordered table-hover'>";
+				echo "<tr><th>Test</th><th>Results</th></tr>";
+
+				foreach ($arrayOfTests as $key => $value) {
+					switch($value){
+						case "ecg":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "viac":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "counselling":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "menopause":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+					}
+				}
+
+				echo "</table>";
+				echo "<input type='submit' class='btn btn-success' value='Save Tets'>";
+				echo "</form>";
+}
 
 public function getTests(){
 				$condition = array('checkupdate'=>getCalendarDateTodayFull(),
@@ -1151,6 +1237,7 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 
 
 		public function printThis($filename,$id,$year,$month,$day){
+
   $condition = array('patientresults.clientnumber'=>$id,
 		                  'patientresults.date'=>$year."/".$month."/".$day);
 
@@ -1176,7 +1263,12 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
  
 			//if (file_exists($pdfFilePath) == FALSE){
 			    ini_set('memory_limit','32M'); // boost the memory limit if it's low <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
-      $htmlIntro = $this->load->view('reports/intro',$data,true);
+						if($this->session->userdata('rights') == 'scientist'){
+							$htmlIntro = $this->load->view('reports/body',$data,true);
+						}else{
+							$htmlIntro = $this->load->view('reports/intro',$data,true);
+						}
+      
 			   $this->load->library('pdf');
 			   $pdf = $this->pdf->load();
 			   $pdf->shrink_tables_to_fit=1;

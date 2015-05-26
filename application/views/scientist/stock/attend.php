@@ -19,10 +19,26 @@
     </div>
     <div class="tab-pane" id="tests">
         <ul class="nav nav-tabs" data-tabs="tabs" id="scientist-test-tabs">
+            <li id="basic-tab"><a href="#basic" data-toggle="tab">Basic</a></li>
             <li id="standard-tab"><a href="#standard" data-toggle="tab">Standard</a></li>
-            <li id="comprehensive-tab"><a href="#comprehensive" data-toggle="tab">Comprehensive</a></li>   
+            <li id="comprehensive-tab"><a href="#comprehensive" data-toggle="tab">Comprehensive</a></li>  
+            <li id="once-tab"><a href="#once" data-toggle="tab">Once Off Tests</a></li>   
         </ul>
         <div id="tab-content-tests" class="tab-content">
+            <div class="tab-pane" id="basic">
+              <form class="form-horizontal form-tests" role="form">
+                  <fieldset id="hemoglobin">
+                    <legend>Hemoglobin Test</legend>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Hemoglobin</label>
+                      <div class="col-sm-9">
+                      <input type="text" name="hemoglobin" value=""/>
+                      </div>
+                    </div>
+                   </fieldset>
+                <input type="submit" class="btn btn-success btn-lg col-sm-12" value="Save Test" name="save-basic">
+              </form>
+            </div>
             <div class="tab-pane" id="standard">
                   <form class="form-horizontal form-tests" role="form">
 
@@ -59,24 +75,19 @@
                     <fieldset id="urine">
                     <legend>Urine Test</legend>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">PH</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="ph">
-                      </div>
-
-                      <label class="col-sm-3 control-label">SG</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="sg">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Blood Sugar</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="bloodsugar">
-                      </div>
-
                       <label class="col-sm-3 control-label">Blood</label>
                       <div class="col-sm-3">
                         <input class="form-control" type="text" name="blood">
+                      </div>
+
+                      <label class="col-sm-3 control-label">Bilirubin</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="bilirubin">
+                      </div>
+
+                      <label class="col-sm-3 control-label">Urobilinogen</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="urobilinogen">
                       </div>
 
                       <label class="col-sm-3 control-label">Ketones</label>
@@ -84,30 +95,41 @@
                         <input class="form-control" type="text" name="ketones">
                       </div>
 
+                      <label class="col-sm-3 control-label">Glucose</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="glucose">
+                      </div>
+
                       <label class="col-sm-3 control-label">Protein</label>
                       <div class="col-sm-3">
                         <input class="form-control" type="text" name="protein">
                       </div>
                       
-                      <label class="col-sm-3 control-label">Sugar</label>
+                      <label class="col-sm-3 control-label">Nitrite</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="sugar">
+                        <input class="form-control" type="text" name="nitrite">
                       </div>
 
-                      <label class="col-sm-3 control-label">Blood Type</label>
+                      <label class="col-sm-3 control-label">Leukocytes</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="bloodtype">
+                        <input class="form-control" type="text" name="leukocytes">
                       </div>
 
-                      <label class="col-sm-3 control-label">Nitrates</label>
+                      <label class="col-sm-3 control-label">pH</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="nitrates">
+                        <input class="form-control" type="text" name="ph">
                       </div>
 
-                      <label class="col-sm-3 control-label">Leucos</label>
+                      <label class="col-sm-3 control-label">S.G</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="leucos">
+                        <input class="form-control" type="text" name="sg">
                       </div>
+
+                      <label class="col-sm-3 control-label">Ascorbic Acid</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="ascorbic_acid">
+                      </div>
+
                     </div>
                     </fieldset>
                     <input type="submit" class="btn btn-success btn-lg col-sm-12" value="Save Test" name="save-standard">
@@ -147,27 +169,22 @@
                     </div>
                     </fieldset>
 
-                    <fieldset id="urine">
+<fieldset id="urine">
                     <legend>Urine Test</legend>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">PH</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="ph">
-                      </div>
-
-                      <label class="col-sm-3 control-label">SG</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="sg">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Blood Sugar</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="bloodsugar">
-                      </div>
-
                       <label class="col-sm-3 control-label">Blood</label>
                       <div class="col-sm-3">
                         <input class="form-control" type="text" name="blood">
+                      </div>
+
+                      <label class="col-sm-3 control-label">Bilirubin</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="bilirubin">
+                      </div>
+
+                      <label class="col-sm-3 control-label">Urobilinogen</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="urobilinogen">
                       </div>
 
                       <label class="col-sm-3 control-label">Ketones</label>
@@ -175,30 +192,41 @@
                         <input class="form-control" type="text" name="ketones">
                       </div>
 
+                      <label class="col-sm-3 control-label">Glucose</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="glucose">
+                      </div>
+
                       <label class="col-sm-3 control-label">Protein</label>
                       <div class="col-sm-3">
                         <input class="form-control" type="text" name="protein">
                       </div>
                       
-                      <label class="col-sm-3 control-label">Sugar</label>
+                      <label class="col-sm-3 control-label">Nitrite</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="sugar">
+                        <input class="form-control" type="text" name="nitrite">
                       </div>
 
-                      <label class="col-sm-3 control-label">Blood Type</label>
+                      <label class="col-sm-3 control-label">Leukocytes</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="bloodtype">
+                        <input class="form-control" type="text" name="leukocytes">
                       </div>
 
-                      <label class="col-sm-3 control-label">Nitrates</label>
+                      <label class="col-sm-3 control-label">pH</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="nitrates">
+                        <input class="form-control" type="text" name="ph">
                       </div>
 
-                      <label class="col-sm-3 control-label">Leucos</label>
+                      <label class="col-sm-3 control-label">S.G</label>
                       <div class="col-sm-3">
-                        <input class="form-control" type="text" name="leucos">
+                        <input class="form-control" type="text" name="sg">
                       </div>
+
+                      <label class="col-sm-3 control-label">Ascorbic Acid</label>
+                      <div class="col-sm-3">
+                        <input class="form-control" type="text" name="ascorbic_acid">
+                      </div>
+
                     </div>
                     </fieldset>
 
@@ -232,22 +260,32 @@
                     </div>
                     </fieldset>    
 
-                    <fieldset id="ecg">
-                    <legend>ECG Test</legend>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">ECG</label>
-                      <div class="col-sm-9">
-                        <input class="form-control" name="ecg" type="text">
-                      </div>
-                    </div>
-                    </fieldset> 
-
                     <fieldset id="hepatitisscreen">
                     <legend>Hepatitis Screen</legend>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Hepatitis Scren</label>
+                      <label class="col-sm-3 control-label">Hepatitis A</label>
                       <div class="col-sm-9">
-                        <input class="form-control" name="hepatitisscreen" type="text">
+                        <select class="form-control" name="hepatitis_A">
+                         <option value="">Select Test Result</option>
+                          <option value="positive">Positive</option>
+                          <option value="negetive">Negative</option>
+                        </select>
+                      </div>
+                      <label class="col-sm-3 control-label">Hepatitis B</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="hepatitis_B">
+                         <option value="">Select Test Result</option>
+                          <option value="positive">Positive</option>
+                          <option value="negetive">Negative</option>
+                        </select>
+                      </div>
+                      <label class="col-sm-3 control-label">Hepatitis C</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" name="hepatitis_C">
+                         <option value="">Select Test Result</option>
+                          <option value="positive">Positive</option>
+                          <option value="negetive">Negative</option>
+                        </select>
                       </div>
                     </div>
                     </fieldset>  
@@ -267,13 +305,33 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Blood Group</label>
                       <div class="col-sm-9">
-                        <input class="form-control" name="bloodgroup" type="text">
+                        <select class="form-control" name="hepatitis_C">
+                         <option value="">Select A Blood Group</option>
+                          <option value="A_Positive">A Positive</option>
+                          <option value="B_Positive">B Positive</option>
+                          <option value="AB_Positive">AB Positive</option>
+                          <option value="O_Positive">O Positive</option>
+                          <option value="A_Negative">A Negative</option>
+                          <option value="B_Negative">B Negative</option>
+                          <option value="AB_Negative">AB Negative</option>
+                          <option value="O_Negative">O Negative</option>
+
+                        </select>
                       </div>
                     </div>
                     </fieldset>                                               
                     <input type="submit" class="btn btn-success btn-lg col-sm-12" value="Save Test" name="save-comprehensive">
                   </form>          
 
+            </div>
+            <div class="tab-pane" id="once">
+              <form class="form-horizontal form-tests" role="form">
+
+                <div id="once-off">
+                </div>
+                
+                <input type="submit" class="btn btn-success btn-lg col-sm-12" value="Save Tests" name="save-once-off">
+              </form>
             </div>
         </div>
     </div>

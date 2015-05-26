@@ -20,7 +20,7 @@
 |
 |
  */
-$config['base_url']	= 'http://192.168.100.4/wellness/';
+$config['base_url']	= 'http://192.168.100.50/wellness/';
 
 
 /*

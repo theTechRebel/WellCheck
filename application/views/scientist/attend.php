@@ -21,7 +21,8 @@
         <ul class="nav nav-tabs" data-tabs="tabs" id="scientist-test-tabs">
             <li id="basic-tab"><a href="#basic" data-toggle="tab">Basic</a></li>
             <li id="standard-tab"><a href="#standard" data-toggle="tab">Standard</a></li>
-            <li id="comprehensive-tab"><a href="#comprehensive" data-toggle="tab">Comprehensive</a></li>   
+            <li id="comprehensive-tab"><a href="#comprehensive" data-toggle="tab">Comprehensive</a></li>  
+            <li id="once-tab"><a href="#once" data-toggle="tab">Once Off Tests</a></li>   
         </ul>
         <div id="tab-content-tests" class="tab-content">
             <div class="tab-pane" id="basic">
@@ -322,6 +323,15 @@
                     <input type="submit" class="btn btn-success btn-lg col-sm-12" value="Save Test" name="save-comprehensive">
                   </form>          
 
+            </div>
+            <div class="tab-pane" id="once">
+              <form class="form-horizontal form-tests" role="form">
+
+                <div id="once-off">
+                </div>
+                
+                <input type="submit" class="btn btn-success btn-lg col-sm-12" value="Save Tests" name="save-once-off">
+              </form>
             </div>
         </div>
     </div>
