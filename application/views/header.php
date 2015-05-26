@@ -43,7 +43,7 @@
     <![endif]-->
     <style type="text/css">
 .calendar {
-  font-family: Sans-serif;
+  font-family: dotum;
   width: auto;
   border-collapse: collapse;
 }
@@ -57,7 +57,7 @@
   font-weight: normal;
   text-align: center;
   color: #757575;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .calendar td {
@@ -100,15 +100,23 @@ div.today {
     margin-bottom: 0px;
     }
 body{
-  font-size: 10px;
-  font-style: sans-serif;
+  font-size: 12px;
+  font-style: dotum;
 }
 .table{
-  font-size: 10px;
-  font-style: sans-serif;
+  font-size: 12px;
+  font-style: dotum;
 }
 .form-control{
   height:40px;
 }
+div#footer
+{
+clear: both;
+height: 20px;
+padding: .5em 1em;
+border-top: 1px solid #999;
+text-align: right;
+} 
 </style>
   </head>

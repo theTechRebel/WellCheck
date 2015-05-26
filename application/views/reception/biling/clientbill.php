@@ -19,6 +19,6 @@
     <p align="center">Total Cost of session:</p>
     <p align="center">$<?php echo $client->charge;?>.00</p>
     </div>
-    <p align="center"><a href="http://localhost/wellness/dashboard/printReciept/<?php echo $client->clientnumber;?>/<?php echo $client->checkupdate;?>" class="btn btn-lg btn-success">Print Reciept</a></p>
+    <p align="center"><a href="http:// localhost/wellness/dashboard/printReciept/<?php echo $client->clientnumber;?>/<?php echo $client->checkupdate;?>" class="btn btn-lg btn-success">Print Reciept</a></p>
     </div>
 <!-- /.panel -->

@@ -1,3 +1,8 @@
+<div class="footer">
+<h5><tt><a href="http://www.wellnesscenter.co.zw">Rapha Healthcare Systems: Wellness Application</a></tt></h5>
+    <h6><tt>Engineered with &hearts; by <a href="http://www.afrikaizen.co.zw/">AfriKaizen Inc.</a></tt></h6>
+</div>
+
 <?php
    $url = $this->config->item('base_url');
 ?>

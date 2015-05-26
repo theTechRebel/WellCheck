@@ -14,7 +14,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo $url?>">WellCheck App: <?php echo $this->session->userdata('rights');?> dashboard</a>
+                <a class="navbar-brand" href="<?php echo $url?>">Wellness Application: <?php echo $this->session->userdata('rights');?> dashboard</a>
             </div>
             <!-- /.navbar-header -->
 

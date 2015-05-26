@@ -24,9 +24,12 @@
                     <table class='table small'>
                     <td>Description</td><td>Amount</td>
                     <tbody>
-                    <tr><td><input type='checkbox' name='once[]' value='hemoglobin_10'/>Hemoglobin</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='haemoglobin_10'/>Haemoglobin</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='hiv_10'/>HIV/AIDS</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='lipidprofile_15'/>Lipid Profile</td><td>$15.00</td></tr>
+
+                    <tr><td><input type='checkbox' name='once[]' value='bloodsugar_5'/>Blood Glucose</td><td>$5.00</td></tr>
+
                     <tr><td><input type='checkbox' name='once[]' value='urine_5'/>Urine</td><td>$5.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='hba1c_20'/>HBA1c</td><td>$20.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='ecg_40'/>ECG</td><td>$40.00</td></tr>
@@ -34,6 +37,7 @@
                     <tr><td><input type='checkbox' name='once[]' value='psa_15'/>PSA</td><td>$15.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='viac_15'/>VIAC</td><td>$15.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='bloodgroup_10'/>Blood Group</td><td>$10.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='malaria_10'/>Malaria</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='syphilis_10'/>Syphilis</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='chlamydia_10'/>Chlamydia</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='gonorrhea_10'/>Gonorrhea</td><td>$10.00</td></tr>
@@ -45,7 +49,7 @@
                     <tr><td><input type='checkbox' name='once[]' value='counselling_10'/>Counselling</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='menopause_'/>Menopause Test</td><td>TBA</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='premariatalindividual_60'/>Premarital Individual</td><td>$60.00</td></tr>
-                    <tr><td><input type='checkbox' name='once[]' value='hpylori_'/>H.Pylori</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='hpylori_'/>H.Pylori</td><td>TBA</td></tr>
                     </tbody>
                     </table>
                     </div>

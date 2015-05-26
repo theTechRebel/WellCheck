@@ -218,7 +218,7 @@ class Dashboard extends MY_Controller {
 
 		public function calendar($year=null, $month=null){
 
-				$config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
+				$config['base_url'] = 'http:// localhost/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 			$config['total_rows'] = $totalRows->num_rows();
 			$config['per_page'] = 10;
@@ -540,7 +540,7 @@ class Dashboard extends MY_Controller {
 
 		public function clients($offset=0,$report=null){
 
-			$config['base_url'] = 'http://localhost/wellness/dashboard/clients/';
+			$config['base_url'] = 'http:// localhost/wellness/dashboard/clients/';
 			
 			$this->db->select('*');
 			$this->db->from('patientrecord');
@@ -589,7 +589,7 @@ class Dashboard extends MY_Controller {
 		}
 
 		public function getClients($offset=0){
-   $config['base_url'] = 'http://localhost/wellness/dashboard/getClients/';
+   $config['base_url'] = 'http:// localhost/wellness/dashboard/getClients/';
 			$totalRows = $this->app_model->get_all("patientdetails");
 
 			$config['total_rows'] = $totalRows->num_rows();
@@ -608,7 +608,7 @@ class Dashboard extends MY_Controller {
 		  echo "<p align='center'>";
 		  echo $this->pagination->create_links();
 		  echo "</p>";
-		  echo "<p align='center'><a href='http://localhost/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
+		  echo "<p align='center'><a href='http:// localhost/wellness/dashboard/walkInClient/1' id='bookNewClientToday'><b>+</b> Add As New Client</a></p>";
 		}
 
 
@@ -628,9 +628,9 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname [$row->status]</td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
-				echo "<td><a href='http://localhost/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
+				echo "<td><a href='http:// localhost/wellness/dashboard/change/cancelled/$row->clientnumber/$row->thedate'>Cancel</a></td>";
+				echo "<td><a href='http:// localhost/wellness/dashboard/change/processed/$row->clientnumber/$row->thedate'>Processed</a></td>";
+				echo "<td><a href='http:// localhost/wellness/dashboard/change/qued/$row->clientnumber/$row->thedate'>In Que</a></td>";
 
 				echo "</tr>";
 				}
@@ -725,7 +725,7 @@ class Dashboard extends MY_Controller {
 				foreach ($query->result() as $row){
 				echo "<tr>";
 				echo "<td>$row->clientnumber $row->names $row->surname </td>";
-				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http://localhost/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
+				echo "<td><a class='openResultsA' id='$row->clientnumber' href='http:// localhost/wellness/dashboard/testsResults/$row->clientnumber/$date' time='$row->timein' val='$row->names $row->surname'>View Results</a></td>";
 				echo "</tr>";
 				}
 				echo "</tbody>";
@@ -961,12 +961,145 @@ public function getOnceOffClinicianTets(){
 
 				foreach ($arrayOfTests as $key => $value) {
 					switch($value){
+						case "visualscreen":
+							readfile("http:// localhost/wellness/application/views/clinician/tests/visual_screen.html");
+						break;
+
+						case "stress":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "vacyellowfever":
+						echo "<tr><td>Yellow Fever Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vachepatitisa":
+												echo "<tr><td>Hepatitis A Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vachepatitisb":
+												echo "<tr><td>Hepatitis B Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vachepatitisc":
+												echo "<tr><td>Hepatitis C Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vactyphoid":
+												echo "<tr><td>Typhoid Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vacmantoux":
+												echo "<tr><td>Mantoux Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vactetanus":
+												echo "<tr><td>Tetanus Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vacmeningitis":
+												echo "<tr><td>Meningitis Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vacrabis":
+												echo "<tr><td>Rabis Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vaccervarix":
+												echo "<tr><td>Cervarix Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vacflushot":
+												echo "<tr><td>Flu Shot</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vacroatavirus":
+												echo "<tr><td>Roatavirus Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
 						case "ecg":
 						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
 						break;
 
 						case "viac":
-						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						echo "<tr><td>$value</td><td>
+								<select  name='$value'>
+   <option value=''>Select A result</option>
+    <option value='Positive'>Positive</option>
+    <option value='Negetive'>Negative</option>
+  </select></td></tr>";
 						break;
 
 						case "counselling":
@@ -980,7 +1113,7 @@ public function getOnceOffClinicianTets(){
 				}
 
 				echo "</table>";
-				echo "<input type='submit' class='btn btn-success' value='Save Tets'>";
+				echo "<input type='submit' class='btn btn-success' value='Save Tests'>";
 				echo "</form>";
 }
 
