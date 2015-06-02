@@ -1403,11 +1403,8 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
  
 			//if (file_exists($pdfFilePath) == FALSE){
 			    ini_set('memory_limit','32M'); // boost the memory limit if it's low <img src="https://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
-						if($this->session->userdata('rights') == 'scientist'){
-							$htmlIntro = $this->load->view('reports/body',$data,true);
-						}else{
-							$htmlIntro = $this->load->view('reports/intro',$data,true);
-						}
+						
+						$htmlIntro = $this->load->view('reports/intro',$data,true);
       
 			   $this->load->library('pdf');
 			   $pdf = $this->pdf->load();
