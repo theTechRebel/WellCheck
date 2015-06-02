@@ -1,6 +1,6 @@
 <style>
 #body{
-  background-image: url("http://localhost//wellness/uiux/images/logo.png");
+  background-image: url("http://localhost/wellness/uiux/images/logo.png");
   opacity: 0.5;
   top: 0;
   left: 0;
@@ -50,7 +50,7 @@ echo "
  if($clinicianresults != ""){
  	$b = json_decode($clinicianresults, true);
 
-  echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Results from Clinician Tests. <br/>";
+echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clinician Test Results. <br/>";
   echo "<table id='table' border='solid'>";
   echo "<thead><tr><th>Test</th><th>Result</th></tr></thead>";
 ?>
@@ -58,7 +58,7 @@ echo "
 	<?php foreach ($b as $key => $value) {
 		 if($value != ""){
 		?>
-	<tr><td><?php echo str_replace("_"," ",$key);?></td>
+	<tr><td><?php echo strtoupper(str_replace("_"," ",$key));?></td>
    <td>
   <?php if(!is_array($value)){
    echo str_replace("_"," ",$value);
@@ -82,17 +82,17 @@ echo "</table>";
 
 <?php
  if($scientisttests != ""){
- 	$c = json_decode($scientisttests, true);
+  $c = json_decode($scientisttests, true);
 
   echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blood Test Results. <br/>";
 
  echo "<table id='table'>";
  echo "<tr class='tr'><th>Test</th><th>Result</th><th>Normal Ranges</th></tr>";
 ?>
-	<?php foreach ($c as $key => $value) {
-		 if($value != ""){
-		?>
-	<tr><td><?php echo strtoupper(str_replace("_"," ",$key));?></td>
+  <?php foreach ($c as $key => $value) {
+     if($value != ""){
+    ?>
+  <tr><td><?php echo strtoupper(str_replace("_"," ",$key));?></td>
              <td>
   <?php if(!is_array($value)){
    echo str_replace("_"," ",$value);
@@ -140,7 +140,7 @@ echo "</table>";
       break;
 
       default:
-      echo "None";
+      echo "none";
       break;
     }
    ?></td>
@@ -156,7 +156,7 @@ echo "</table>";
 <?php
 if(isset($comments)){
   echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clinician Comments. <br/><br/>";
-	echo $comments;
+  echo $comments;
 
   echo "<br/><br/><br/><br/>";
 }

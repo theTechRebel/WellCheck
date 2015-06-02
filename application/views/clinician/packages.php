@@ -43,8 +43,8 @@
                     <tr><td><input type='checkbox' name='once[]' value='gonorrhea_10'/>Gonorrhea</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='hsv_20'/>HSV</td><td>$20.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='typhoid_15'/>Typhoid</td><td>$15.00</td></tr>
-                    <tr><td><input type='checkbox' name='once[]' value='torch_30'/>Torch Screen</td><td>$30.00</td></tr>
-                    <tr><td><input type='checkbox' name='once[]' value='pregnancy_5'/>Pregnancy Test</td><td>$5.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='torchscreen_30'/>Torch Screen</td><td>$30.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='pregnancytest_5'/>Pregnancy Test</td><td>$5.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='ovulation_2'/>Ovulation Test Kit</td><td>$2.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='counselling_10'/>Counselling</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='menopause_'/>Menopause Test</td><td>TBA</td></tr>

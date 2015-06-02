@@ -24,7 +24,7 @@ body {
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form id="loginform" class="form-horizontal" role="form" action="http://localhost//wellness/home/" method="post">  
+                        <form id="loginform" class="form-horizontal" role="form" action="http://localhost/wellness/home/" method="post">  
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                         <input type="text" class="form-control" name="userid" placeholder="User ID" autofocus value="<?php echo set_value('userid')?>">

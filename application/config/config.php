@@ -20,7 +20,7 @@
 |
 |
  */
-$config['base_url']	= 'http://localhost//wellness/';
+$config['base_url']	= 'http://localhost/wellness/';
 
 
 /*

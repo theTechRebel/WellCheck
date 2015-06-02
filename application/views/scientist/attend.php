@@ -155,90 +155,49 @@
                    </fieldset>
 
                     <fieldset id="hdltcholesterol">
-                    <legend>HDL & T-Cholesterol Test</legend>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">HDL Cholesterol</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" name="hdl" type="text">
-                      </div>
-
-                      <label class="col-sm-3 control-label">T-Cholesterol</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" name="tcholesterol" type="text">
-                      </div>
-                    </div>
+<legend>Lipid Profile</legend>
+<div class="form-group">
+<div class="col-lg-12">
+<table class="table">
+  <tr><th>Test</th><th>Result</th><th>Normal Ranges</th></tr>
+  <tr><td>T.Cholesterol</td><td><input class="" type="text" name="t_cholesterol"></td><td>2.5 - 5.2 mMol/L</td></tr>
+  <tr><td>Tryglycerides</td><td><input class="" type="text" name="triglycerides"></td><td>0.2 - 2.0 mMol/L</td></tr>
+  <tr><td>HDL Cholesterol</td><td><input class="" type="text" name="hdl_cholesterol"></td><td>1.0 - 1.6 mMol/L</td></tr>
+  <tr><td>LDL Cholesterol</td><td><input class="" type="text" name="ldl_cholesterol"></td><td>2.2 - 3.2 mMol/L</td></tr>
+  <tr><td>Non HDL</td><td><input class="" type="text" name="non_hdl"></td><td></td></tr>
+  <tr><td>TC/HDL ratio</td><td><input class="" type="text" name="tc_hdl_ratio"></td><td>< 0.87 mMol/L</td></tr>
+  <tr><td>Glucose</td><td><input class="" type="text" name="glucose"></td><td> 3.9 - 5.8 mMol/L</td></tr>
+</table>
+</div>
+</div>
                     </fieldset>
 
 <fieldset id="urine">
                     <legend>Urine Test</legend>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Blood</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="blood">
-                      </div>
 
-                      <label class="col-sm-3 control-label">Bilirubin</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="bilirubin">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Urobilinogen</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="urobilinogen">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Ketones</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="ketones">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Glucose</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="glucose">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Protein</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="protein">
-                      </div>
-                      
-                      <label class="col-sm-3 control-label">Nitrite</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="nitrite">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Leukocytes</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="leukocytes">
-                      </div>
-
-                      <label class="col-sm-3 control-label">pH</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="ph">
-                      </div>
-
-                      <label class="col-sm-3 control-label">S.G</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="sg">
-                      </div>
-
-                      <label class="col-sm-3 control-label">Ascorbic Acid</label>
-                      <div class="col-sm-3">
-                        <input class="form-control" type="text" name="ascorbic_acid">
-                      </div>
-
-                    </div>
+ <table class="table">
+  <tr><th>Test</th><th>Result</th></tr>
+  <tr><td> <label>Blood</label></td><td><input type="text" name="blood"></td></tr>
+  <tr><td><label>Bilirubin</label></td><td><input type="text" name="bilirubin"></td></tr>
+  <tr><td><label>Urobilinogen</label></td><td><input type="text" name="urobilinogen"></td></tr>
+  <tr><td><label>Ketones</label></td><td><input type="text" name="ketones"></td></tr>
+  <tr><td><label>Glucose</label></td><td>   
+  <select class="" name="urine_glucose">
+   <option value="">Select A result</option>
+    <option value="+">+</option>
+    <option value="++">++</option>
+    <option value="+++">+++</option>
+    <option value="++++">++++</option>
+  </select>
+  </td></tr>
+  <tr><td><label>Protein</label></td><td><input type="text" name="protein"></td></tr>
+  <tr><td><label>Nitrite</label></td><td><input type="text" name="nitrite"></td></tr>
+  <tr><td><label>Leukocytes</label></td><td><input type="text" name="leukocytes"></td></tr>
+  <tr><td><label>pH</label></td><td><input type="text" name="ph"></td></tr>
+  <tr><td><label>S.G</label></td><td><input type="text" name="sg"></td></tr>
+  <tr><td><label>Ascorbic Acid</label></td><td><input type="text" name="ascorbic_acid"></td></tr>
+ </table>
                     </fieldset>
-
-                    <fieldset id="ldl">
-                    <legend>LDL Cholesterol Test</legend>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">LDL Cholesterol</label>
-                      <div class="col-sm-9">
-                        <input class="form-control" name="ldl" type="text">
-                      </div>
-                    </div>
-                    </fieldset> 
 
                     <fieldset id="trigs">
                     <legend>TRIGS Test</legend>
@@ -249,6 +208,8 @@
                       </div>
                     </div>
                     </fieldset>  
+                    Negetive 
+                    
 
                     <fieldset id="hba1c">
                     <legend>HBA1c Test</legend>

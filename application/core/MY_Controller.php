@@ -48,7 +48,7 @@ public function javascript_functions(){
                         //request could get lost in space
                         $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/bookClient/',
+        url: 'http://localhost/wellness/dashboard/bookClient/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -82,7 +82,7 @@ public function javascript_functions(){
 
                             $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/getBookings/',
+        url: 'http://localhost/wellness/dashboard/getBookings/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -99,7 +99,7 @@ public function javascript_functions(){
                             setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/getIncomingClients/',
+        url: 'http://localhost/wellness/dashboard/getIncomingClients/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming').remove();
@@ -115,7 +115,7 @@ public function javascript_functions(){
                             setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/getIncomingTestClients/',
+        url: 'http://localhost/wellness/dashboard/getIncomingTestClients/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming-tests').remove();
@@ -130,7 +130,7 @@ public function javascript_functions(){
         setInterval(function(){
                                 $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/getIncomingBloodResults/',
+        url: 'http://localhost/wellness/dashboard/getIncomingBloodResults/',
         crossDomain: true,
         success: function (data) {
         $('#table-generated-incoming-tests-bloods').remove();
@@ -153,7 +153,7 @@ public function javascript_functions(){
           $.ajax({
          type:'POST',
                                     data:data,
-                                    url:'http://localhost//wellness/dashboard/getSavedTests/',
+                                    url:'http://localhost/wellness/dashboard/getSavedTests/',
                                     dataType:'json',
                                     success: function(data){
                                         $('#client-name').empty();
@@ -203,7 +203,7 @@ public function javascript_functions(){
 
         $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/getClientDetails/',
+        url: 'http://localhost/wellness/dashboard/getClientDetails/',
         data : data,
         crossDomain: true,
         success: function (data) {
@@ -218,7 +218,7 @@ public function javascript_functions(){
         $('#tests-tab').addClass('disabled');
         $('#results-tab').addClass('disabled');
        */
-         window.location = 'http://localhost//wellness/dashboard/?&reload=true&clientNumber='+clientNumber+'&clientName='+clientName+'&timein='+timein;
+         window.location = 'http://localhost/wellness/dashboard/?&reload=true&clientNumber='+clientNumber+'&clientName='+clientName+'&timein='+timein;
         },
         error: function (err) {
             console.log(err);
@@ -235,7 +235,7 @@ public function javascript_functions(){
                                 console.log(data);
                              $.ajax({
                                 type:'POST',
-                                url:'http://localhost//wellness/dashboard/getClientDetails/',
+                                url:'http://localhost/wellness/dashboard/getClientDetails/',
                                 data:data,
                                 success: function(data){
                        $('#client-name').empty();
@@ -249,7 +249,7 @@ public function javascript_functions(){
                         $.ajax({
                             type:'POST',
                             dataType:'json',
-                            url:'http://localhost//wellness/dashboard/getClientTestDetails/',
+                            url:'http://localhost/wellness/dashboard/getClientTestDetails/',
                             data:data1,
                             success: function(data){
 
@@ -277,7 +277,7 @@ public function javascript_functions(){
                                         case 'lipidprofile':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/lipidprofile.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/lipidprofile.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -287,7 +287,7 @@ public function javascript_functions(){
                                         case  'psa':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/psa.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/psa.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -297,7 +297,7 @@ public function javascript_functions(){
                                         case 'hpylori':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/hpylori.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/hpylori.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -307,7 +307,7 @@ public function javascript_functions(){
                                         case 'haemoglobin':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/haemoglobin.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/haemoglobin.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -317,7 +317,7 @@ public function javascript_functions(){
                                         case 'hiv':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/hiv.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/hiv.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -327,7 +327,7 @@ public function javascript_functions(){
                                         case 'bloodsugar':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/bloodsugar.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/bloodsugar.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -337,7 +337,7 @@ public function javascript_functions(){
                                         case 'urine':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/urine.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/urined.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -347,7 +347,7 @@ public function javascript_functions(){
                                         case 'hba1c':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/hba1c.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/hba1c.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -357,7 +357,7 @@ public function javascript_functions(){
                                         case 'hepatitis':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/hepatitis.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/hepatitis.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -367,7 +367,7 @@ public function javascript_functions(){
                                         case 'bloodgroup':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/bloodgroup.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/bloodgroup.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -377,7 +377,7 @@ public function javascript_functions(){
                                         case 'syphilis':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/syphilis.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/syphilis.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -387,7 +387,7 @@ public function javascript_functions(){
                                         case 'chlamydia':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/chlamydia.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/chlamydia.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -397,7 +397,7 @@ public function javascript_functions(){
                                         case 'gonorrhea':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/gonorrhea.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/gonorrhea.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -407,7 +407,7 @@ public function javascript_functions(){
                                         case 'hsv':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/hsv.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/hsv.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -417,7 +417,7 @@ public function javascript_functions(){
                                         case 'typhoid':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/typhoid.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/typhoid.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -427,7 +427,7 @@ public function javascript_functions(){
                                         case 'torch':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/torch.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/torch.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -437,7 +437,7 @@ public function javascript_functions(){
                                         case 'pregnancy':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/pregnancy.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/pregnancy.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -447,7 +447,7 @@ public function javascript_functions(){
                                         case 'malaria':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/malaria.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/malaria.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -457,7 +457,7 @@ public function javascript_functions(){
                                         case 'ovulation':
                                         $.ajax({
                                             type:'GET',
-                                            url:'http://localhost//wellness/application/views/scientist/tests/ovulation.html',
+                                            url:'http://localhost/wellness/application/views/scientist/tests/ovulation.html',
                                             success:function(data){
                                                 $('#once-off').append(data);
                                             }
@@ -568,7 +568,7 @@ public function javascript_functions(){
             var data = $(this).serialize();
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost//wellness/dashboard/onceOffTest',
+                url: 'http://localhost/wellness/dashboard/onceOffTest',
                 crossDomain: true,
                 data: data,
                 success: function(data){
@@ -585,7 +585,7 @@ public function javascript_functions(){
                                             
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost//wellness/dashboard/getOnceOffClinicianTets/',
+                        url: 'http://localhost/wellness/dashboard/getOnceOffClinicianTets/',
                         success: function(data){
                         $('#tests').html(data);}
                     });
@@ -606,7 +606,7 @@ public function javascript_functions(){
 
         $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/stage/',
+        url: 'http://localhost/wellness/dashboard/stage/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -624,7 +624,7 @@ public function javascript_functions(){
                                             
                                             $.ajax({
                                             type: 'POST',
-                                            url: 'http://localhost//wellness/dashboard/getTests/',
+                                            url: 'http://localhost/wellness/dashboard/getTests/',
                                             success: function(data){
                                                 $('#tests').html(data);
                         console.log(tests);
@@ -638,7 +638,7 @@ public function javascript_functions(){
                     $('#clinician-tabs li:eq(3) a').tab('show');
                     
                     //get the file and dump the content into our DIV tag
-                    $.get('http://localhost//wellness/application/views/clinician/tests/visual_screen.html', function(data){
+                    $.get('http://localhost/wellness/application/views/clinician/tests/visual_screen.html', function(data){
                         $('#tests').html(data);
                     });
 
@@ -652,7 +652,7 @@ public function javascript_functions(){
 
                     $.ajax({
                                             type: 'POST',
-                                            url: 'http://localhost//wellness/dashboard/getTests/',
+                                            url: 'http://localhost/wellness/dashboard/getTests/',
                                             success: function(data){
                                                 $('#tests').html(data);
                         console.log(tests);
@@ -680,7 +680,7 @@ public function javascript_functions(){
               $.ajax({
                 type:'POST',
                 data:data,
-                url: 'http://localhost//wellness/dashboard/saveTests/',
+                url: 'http://localhost/wellness/dashboard/saveTests/',
                 dataType:'json',
                 success: function(data){
                     alert('Test results saved successfully.');
@@ -716,7 +716,7 @@ public function javascript_functions(){
                       $.ajax({
             type:'POST',
                 data:data,
-                url: 'http://localhost//wellness/dashboard/saveQuestionaire/',
+                url: 'http://localhost/wellness/dashboard/saveQuestionaire/',
                 success: function(data){
                     alert(data);
 
@@ -735,7 +735,7 @@ public function javascript_functions(){
            $.ajax({
             type:'POST',
              data:data,
-             url: 'http://localhost//wellness/dashboard/saveClinicianTests/',
+             url: 'http://localhost/wellness/dashboard/saveClinicianTests/',
              success: function(data){
                     alert(data);
 
@@ -755,7 +755,7 @@ public function javascript_functions(){
            $.ajax({
             type:'POST',
              data:data,
-             url: 'http://localhost//wellness/dashboard/saveClinicianTests/',
+             url: 'http://localhost/wellness/dashboard/saveClinicianTests/',
              success: function(data){
                     alert(data);
 
@@ -801,7 +801,7 @@ public function javascript_functions(){
             if(selectedDay.length < 2){selectedDay = '0'+selectedDay;}
             date = date +'/'+ selectedDay;
 
-            $('#clendar-hide').html('<form action=http://localhost//wellness/dashboard/bookACertainDay/ name=date method=POST style=display:none;><input type=hidden name=date value='+date+' /></form>');
+            $('#clendar-hide').html('<form action=http://localhost/wellness/dashboard/bookACertainDay/ name=date method=POST style=display:none;><input type=hidden name=date value='+date+' /></form>');
 
             document.forms['date'].submit();
          });
@@ -825,7 +825,7 @@ public function javascript_functions(){
                         //request could get lost in space
                         $.ajax({
                         type: 'POST',
-                        url: 'http://localhost//wellness/dashboard/bookClient/',
+                        url: 'http://localhost/wellness/dashboard/bookClient/',
                         crossDomain: true,
                         data: data,
                         success: function (data) {
@@ -875,7 +875,7 @@ public function javascript_functions(){
        if(reload == 'true'){
         $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/getClientDetails/',
+        url: 'http://localhost/wellness/dashboard/getClientDetails/',
         data : data,
         crossDomain: true,
         success: function (data) {
@@ -890,7 +890,7 @@ public function javascript_functions(){
         $('#tests-tab').addClass('disabled');
         $('#results-tab').addClass('disabled');
 
-        //window.location = 'http://localhost//wellness/dashboard/#';
+        //window.location = 'http://localhost/wellness/dashboard/#';
         },
         error: function (err) {
             console.log(err);
@@ -907,7 +907,7 @@ public function javascript_functions(){
        
         $.ajax({
         type: 'POST',
-        url: 'http://localhost//wellness/dashboard/saveDrAssesment/',
+        url: 'http://localhost/wellness/dashboard/saveDrAssesment/',
         crossDomain: true,
         data: data,
         success: function (data) {
@@ -926,7 +926,7 @@ public function javascript_functions(){
      var data = {'clientNumber' : $(this).attr('clientNumber'),'date':$(this).attr('date')};
      $.ajax({
         type:'POST',
-        url: 'http://localhost//wellness/dashboard/clearPatient/',
+        url: 'http://localhost/wellness/dashboard/clearPatient/',
         crossDomain:true,
         data:data,
         success:function(data){

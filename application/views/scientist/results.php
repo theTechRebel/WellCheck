@@ -122,7 +122,7 @@
      </div>
      <div class="tab-pane" id="comments">
       <form id="drAssesment" name="comments">
-					<textarea name="clinician_comments" rows="25" cols="100"><?php if(isset($comments)){echo $comments;}?></textarea><br/><br/>
+					<textarea name="clinician_comments" rows="25" cols="80"><?php if(isset($comments)){echo $comments;}?></textarea><br/><br/>
           <input type="hidden" value="<?php echo $client->date; ?>" name="date">
           <input type="hidden" value="<?php echo $client->clientnumber; ?>" name="id">
 					<input type="submit" name="save_comments" value="Save Comments" class="btn btn-lg btn-success"/>
