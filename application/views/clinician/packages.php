@@ -24,6 +24,14 @@
                     <table class='table small'>
                     <td>Description</td><td>Amount</td>
                     <tbody>
+
+                    <tr><td><input type='checkbox' name='once[]' value='bloodpressure_1'/>Blood Pressure</td><td>$1.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='weight_1'/>Weight</td><td>$1.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='bmi_1'/>Body Mass Index</td><td>$1.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='02saturation_1'/>O2 Saturation</td><td>$1.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='height_1'/>Height</td><td>$1.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='sugar_1'/>Sugar Test</td><td>$1.00</td></tr>
+
                     <tr><td><input type='checkbox' name='once[]' value='haemoglobin_10'/>Haemoglobin</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='hiv_10'/>HIV/AIDS</td><td>$10.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='lipidprofile_15'/>Lipid Profile</td><td>$15.00</td></tr>

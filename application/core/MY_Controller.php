@@ -434,7 +434,7 @@ public function javascript_functions(){
                                         });
                                         break;
 
-                                        case 'pregnancy':
+                                        case 'pregnancytest':
                                         $.ajax({
                                             type:'GET',
                                             url:'http://localhost/wellness/application/views/scientist/tests/pregnancy.html',

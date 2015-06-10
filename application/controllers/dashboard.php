@@ -1109,6 +1109,30 @@ public function getOnceOffClinicianTets(){
 						case "menopause":
 						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
 						break;
+
+						case "bloodpressure":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "weight":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "bmi":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "02saturation":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case"height":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
+
+						case "sugar":
+						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
+						break;
 					}
 				}
 

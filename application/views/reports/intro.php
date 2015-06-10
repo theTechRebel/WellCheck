@@ -44,6 +44,8 @@ echo "Date of Birth: ".$client->dob;
 echo "<br/><br/>";
 echo "Type of test: ".$details->package."(s)";
 echo "<br/><br/>";
+echo "Date: ".getCalendarDateTodayFull();
+echo  "<br/><br/>";
 ?>
 <?php
  if($clinicianresults != ""){
@@ -88,35 +90,39 @@ if($scientisttests != ""){
     echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     switch($test){
       case "lipidprofile":
-      echo "<h4>Lipid Profile</h4>";
+      echo "<h4>LIPID PROFILE</h4>";
+      break;
+
+      case "pregnancytest":
+      echo "<h4>PREGNANCY TEST</h4>";
       break;
 
       case "urine":
-      echo "<h4>Urine Test</h4>";
+      echo "<h4>RINE TEST</h4>";
       break;
 
       case "bloodgroup":
-      echo "<h4>Blood Group</h4>";
+      echo "<h4>BLOOD GROUP</h4>";
       break;
 
       case "bloodsugar":
-      echo "<h4>Blood Sugar</h4>";
+      echo "<h4>BLOOD SUGAR</h4>";
       break;
 
       case "hiv":
-      echo "<h4>HIV/AIDS</h4>";
+      echo "<h4>HIV</h4>";
       break;
 
       case "hpylori":
-      echo "<h4>Anti-H.Pylori</h4>";
+      echo "<h4>ANTI-H.PYLORI</h4>";
       break;
 
       case "torchscreen":
-      echo "<h4>Torches Screen</h4>";
+      echo "<h4>TORCHES SCREEN</h4>";
       break;
 
       default:
-      echo "<h4>".$test."</h4>";
+      echo "<h4>".strtoupper($test)."</h4>";
       break;
 
     }
