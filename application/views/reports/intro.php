@@ -1,6 +1,6 @@
 <style>
 #body{
-  background-image: url("http://localhost/wellness/uiux/images/logo.png");
+  background-image: url("http://localhost/wellness/uiux/images/logo.png"); 
   opacity: 0.5;
   top: 0;
   left: 0;
@@ -88,6 +88,7 @@ if($scientisttests != ""){
   $tests = explode(",",$details->test);
   foreach($tests as $test){
     echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
     switch($test){
       case "lipidprofile":
       echo "<h4>LIPID PROFILE</h4>";
@@ -98,7 +99,7 @@ if($scientisttests != ""){
       break;
 
       case "urine":
-      echo "<h4>RINE TEST</h4>";
+      echo "<h4>URINE TEST</h4>";
       break;
 
       case "bloodgroup":
@@ -121,6 +122,14 @@ if($scientisttests != ""){
       echo "<h4>TORCHES SCREEN</h4>";
       break;
 
+      case "bloodpressure":
+      echo "<h4>BLOOD PRESSURE</h4>";
+      break;
+
+      case "premaritalindividual":
+      echo "PREMARITAL TEST INDIVIDUAL";
+      break;
+
       default:
       echo "<h4>".strtoupper($test)."</h4>";
       break;
@@ -129,6 +138,18 @@ if($scientisttests != ""){
     echo "<table id='table'>";
     switch($test){
       case "lipidprofile":
+      echo "<tr class='tr'><th>Test</th><th>Result</th><th>Normal Ranges</th></tr>";
+      break;
+
+      case "haemoglobin":
+      echo "<tr class='tr'><th>Test</th><th>Result</th><th>Normal Ranges</th></tr>";
+      break;
+
+      case "bloodsugar":
+      echo "<tr class='tr'><th>Test</th><th>Result</th><th>Normal Ranges</th></tr>";
+      break;
+
+      case "hba1c":
       echo "<tr class='tr'><th>Test</th><th>Result</th><th>Normal Ranges</th></tr>";
       break;
 
@@ -146,6 +167,38 @@ if($scientisttests != ""){
           if(!is_array($result)){echo str_replace("_"," ",$result);}else{var_dump($result);}
           echo "</td>";
     switch($test){
+
+      case "haemoglobin":
+      echo "<td>";
+        switch($categoryAndTest[1]){
+              case 'haemoglobin':
+              echo "12.0 - 16.0 mg/dL";
+              break;
+            }
+      echo "</td>";
+      break;
+
+      case "bloodsugar":
+            echo "<td>";
+        switch($categoryAndTest[1]){
+              case 'blood_glucose':
+               echo "3.9 - 5.8 mMol/L";
+              break;
+            }
+      echo "</td>";
+      break;
+
+      case "hba1c":
+            echo "<td>";
+        switch($categoryAndTest[1]){
+              case 'hba1c':
+              echo "4.5 % - 6.5 %";
+              break;
+            }
+      echo "</td>";
+      break;
+
+
       case "lipidprofile":
         echo "<td>";
           switch($categoryAndTest[1]){
@@ -166,10 +219,10 @@ if($scientisttests != ""){
             break;
 
             case 'non_hdl':
-            echo "< 0.87 mMol/L";
             break;
 
             case 'tc_hdl_ratio':
+            echo "=< 4.5";
             break;
 
             case 'glucose':
