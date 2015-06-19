@@ -641,6 +641,7 @@ public function javascript_functions(){
                     $.get('http://localhost/wellness/application/views/clinician/tests/visual_screen.html', function(data){
                         $('#tests').html(data);
                     });
+            
 
                 //wellcheck tests with questionaire
             }else if(data=='questionaire'){

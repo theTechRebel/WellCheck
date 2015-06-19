@@ -965,6 +965,10 @@ public function getOnceOffClinicianTets(){
 							readfile("http://localhost/wellness/application/views/clinician/tests/visual_screen.html");
 						break;
 
+						case "spirometry":
+								readfile("http://localhost/wellness/application/views/clinician/tests/spirometry.html");
+						break;
+
 						case "stress":
 						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
 						break;

@@ -32,26 +32,45 @@
 echo "<br/><br/><br/><br/><br/><br/><br/><br/>";
 ?>
 <?php
-echo strtoupper($client->salutation." ".$client->names." ".$client->surname);
-echo "<br/>";
-echo $client->address;
-echo "<br/>";
-echo "Tel: ".$client->phone;
-echo "<br/>";
-echo "E-mail: ".$client->email;
-echo "<br/>";
-echo "Date of Birth: ".$client->dob;
-echo "<br/><br/>";
-echo "Type of test: ".$details->package."(s)";
-echo "<br/><br/>";
-echo "Date: ".getCalendarDateTodayFull();
-echo  "<br/><br/>";
+if($details->test == "spirometry"){
+  echo strtoupper($client->salutation." ".$client->names." ".$client->surname);
+  echo "<br/>";
+  echo strtoupper($client->gender);
+  echo "<br/>";
+  echo "E-mail: ".$client->email;
+  echo "<br/>";
+  echo "Date of Birth: ".$client->dob;
+  echo "<br/>";
+  echo "Date: ".getCalendarDateTodayFull();
+  echo  "<br/><br/>"; 
+}else{
+  echo strtoupper($client->salutation." ".$client->names." ".$client->surname);
+  echo "<br/>";
+  echo $client->address;
+  echo "<br/>";
+  echo "Tel: ".$client->phone;
+  echo "<br/>";
+  echo "E-mail: ".$client->email;
+  echo "<br/>";
+  echo "Date of Birth: ".$client->dob;
+  echo "<br/><br/>";
+  echo "Type of test: ".$details->package."(s)";
+  echo "<br/><br/>";
+  echo "Date: ".getCalendarDateTodayFull();
+  echo  "<br/><br/>";  
+}
+
 ?>
 <?php
  if($clinicianresults != ""){
   $b = json_decode($clinicianresults, true);
 
-echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clinician Test Results. <br/>";
+if($details->test == "spirometry"){
+echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>SPIROMETRY TEST RESULT</b> <br/>";
+}else{
+  echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clinician Test Results. <br/>";  
+}
+
   echo "<table id='table' border='solid'>";
   echo "<thead><tr><th>Test</th><th>Result</th></tr></thead>";
 ?>
