@@ -108,6 +108,7 @@ if($scientisttests != ""){
   foreach($tests as $test){
     echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
+
     switch($test){
       case "lipidprofile":
       echo "<h4>LIPID PROFILE</h4>";
@@ -149,6 +150,10 @@ if($scientisttests != ""){
       echo "PREMARITAL TEST INDIVIDUAL";
       break;
 
+      case "eAG":
+      echo "eAG";
+      break;
+
       default:
       echo "<h4>".strtoupper($test)."</h4>";
       break;
@@ -185,6 +190,8 @@ if($scientisttests != ""){
           echo "<td>";
           if(!is_array($result)){echo str_replace("_"," ",$result);}else{var_dump($result);}
           echo "</td>";
+
+
     switch($test){
 
       case "haemoglobin":
@@ -192,6 +199,16 @@ if($scientisttests != ""){
         switch($categoryAndTest[1]){
               case 'haemoglobin':
               echo "12.0 - 16.0 mg/dL";
+              break;
+            }
+      echo "</td>";
+      break;
+
+      case "eAG":
+            echo "<td>";
+        switch($categoryAndTest[1]){
+              case 'eAG':
+               echo "39mg/dL - 384mg/dL";
               break;
             }
       echo "</td>";
@@ -212,6 +229,10 @@ if($scientisttests != ""){
         switch($categoryAndTest[1]){
               case 'hba1c':
               echo "4.5 % - 6.5 %";
+              break;
+
+              case "eAG":
+              echo "39mg/dL - 384mg/dL";
               break;
             }
       echo "</td>";
