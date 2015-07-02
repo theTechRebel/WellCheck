@@ -1093,6 +1093,16 @@ public function getOnceOffClinicianTets(){
   				</td></tr>";
 						break;
 
+							case "vacpolio":
+							echo "<tr><td>Polio Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
 						case "ecg":
 						echo "<tr><td>$value</td><td><textarea class='form' name='$value'></textarea></td></tr>";
 						break;
@@ -1320,7 +1330,10 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 }
 
 
-		public function testHistory($year=null,$month=null){
+		public function testHistory($year=null,$month=null,$offset=0){
+
+			$config['base_url'] = 'http://localhost/wellness/dashboard/testHistory/'.$year.'/'.$month.'/';
+
 			if($year != null && $month != null){
 				$date = $year.'/'.$month;
 			}else{
@@ -1336,11 +1349,20 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 			(strlen($prev)<2) ? $prev = '0'.$prev: $prev = $prev;
 
 			$this->db->like($like_condition);
-   $this->db->order_by("patientresults.date", "asc");
+   $this->db->order_by("patientresults.date", "desc");
    //$this->db->where(array('stocktransactions.user' => $this->session->userdata('rights')));
    $this->db->join('patientrecord', 'patientrecord.clientnumber = patientresults.clientnumber');
    $this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
+			$this->db->limit(5, $offset);
    $query = $this->db->get("patientresults");
+
+   $this->db->like($like_condition);
+   $totalRows = $this->app_model->get_all("patientresults");
+
+   $config['total_rows'] = $totalRows->num_rows();
+			$config['per_page'] = 5;
+
+			$this->pagination->initialize($config);
 
    $data = array('records' => $query,
    														'year' => $month[0], 

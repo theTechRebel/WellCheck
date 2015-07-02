@@ -87,6 +87,7 @@
                     <tr><td><input type='checkbox' name='once[]' value='vacflushot_15'/>Flu Shot</td><td>$15.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='vaccervarix_50'/>Cervarix Vaccine</td><td>$50.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='vacrabis_35'/>Rabis Vaccine</td><td>$35.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacpolio_10'/>Poliio Vaccine</td><td>$10.00</td></tr>
                     </tbody>
                     </table>
                     </div>
