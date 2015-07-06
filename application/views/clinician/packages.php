@@ -24,6 +24,8 @@
                     <table class='table small'>
                     <td>Description</td><td>Amount</td>
                     <tbody>
+                    <tr><td><input type='checkbox' name='once[]' value='papsmear_20'/>Papsmear</td><td>$20.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='papsmear-collection_25'/>Papsmear COllection</td><td>$25.00</td></tr>
 
                     <tr><td><input type='checkbox' name='once[]' value='bloodpressure_1'/>Blood Pressure</td><td>$1.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='weight_1'/>Weight</td><td>$1.00</td></tr>
@@ -88,6 +90,9 @@
                     <tr><td><input type='checkbox' name='once[]' value='vaccervarix_50'/>Cervarix Vaccine</td><td>$50.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='vacrabis_35'/>Rabis Vaccine</td><td>$35.00</td></tr>
                     <tr><td><input type='checkbox' name='once[]' value='vacpolio_10'/>Poliio Vaccine</td><td>$10.00</td></tr>
+
+                    <tr><td><input type='checkbox' name='once[]' value='vacmmr_50'/>MMR Vaccine</td><td>$50.00</td></tr>
+                    <tr><td><input type='checkbox' name='once[]' value='vacdpt_45'/>DPP Vaccine</td><td>$45.00</td></tr>
                     </tbody>
                     </table>
                     </div>

@@ -983,6 +983,26 @@ public function getOnceOffClinicianTets(){
   				</td></tr>";
 						break;
 
+						case "papsmear":
+						echo "<tr><td>Papsmear</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Positive'>Positive</option>
+							<option value='Negative'>Negative</option>
+							</select>
+  				</td></tr>";							
+						break;
+
+						case "papsmear-collection":
+						echo "<tr><td>Papsmear Collection</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Collected</option>
+							<option value='Not_Done'>Not Collected</option>
+							</select>
+  				</td></tr>";							
+						break;
+
 						case "vachepatitisa":
 												echo "<tr><td>Hepatitis A Vaccination</td><td>		
 							<select class='' name='$value'>
@@ -1052,6 +1072,29 @@ public function getOnceOffClinicianTets(){
 							</select>
   				</td></tr>";
 						break;
+
+						case "vacmmr":
+									echo "<tr><td>Mumps Measles & Rubella Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						case "vacdpt":
+												echo "<tr><td>Diptheria, Pertusis & Tetenus Vaccination</td><td>		
+							<select class='' name='$value'>
+							<option value=''>Select A result</option>
+							<option value='Done'>Done</option>
+							<option value='Not_Done'>Not Done</option>
+							</select>
+  				</td></tr>";
+						break;
+
+						
+
 
 						case "vacrabis":
 												echo "<tr><td>Rabis Vaccination</td><td>		
