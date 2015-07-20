@@ -1375,8 +1375,6 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 
 		public function testHistory($year=null,$month=null,$offset=0){
 
-			$config['base_url'] = 'http://localhost/wellness/dashboard/testHistory/'.$year.'/'.$month.'/';
-
 			if($year != null && $month != null){
 				$date = $year.'/'.$month;
 			}else{
@@ -1384,6 +1382,10 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 			}
 
 			$month = explode('/', $date);
+
+			//create base url
+			$config['base_url'] = 'http://localhost/wellness/dashboard/testHistory/'.$month[0].'/'.$month[1].'/';
+
 			$like_condition = array('date'=>$month[0].'/'.$month[1]);
 
 			$next = (int)$month[1] +1;
@@ -1392,18 +1394,22 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
 			(strlen($prev)<2) ? $prev = '0'.$prev: $prev = $prev;
 
 			$this->db->like($like_condition);
-   $this->db->order_by("patientresults.date", "desc");
+   $this->db->order_by("patientresults.date", "asc");
    //$this->db->where(array('stocktransactions.user' => $this->session->userdata('rights')));
    $this->db->join('patientrecord', 'patientrecord.clientnumber = patientresults.clientnumber');
    $this->db->join('patientdetails', 'patientdetails.idnumber = patientrecord.idnumber');
-			$this->db->limit(5, $offset);
+
+			$this->db->limit(10, $offset);
    $query = $this->db->get("patientresults");
 
-   $this->db->like($like_condition);
-   $totalRows = $this->app_model->get_all("patientresults");
+			$this->db->like($like_condition);
+   $totalRows = $this->db->get("patientresults");
 
-   $config['total_rows'] = $totalRows->num_rows();
-			$config['per_page'] = 5;
+   $totalRows = $totalRows->num_rows();
+			$perPage = 10;
+
+			$recordsPerPage = ceil($totalRows /$perPage) * $perPage;
+			$actualTotal = ($totalRows /$perPage) * $perPage;
 
 			$this->pagination->initialize($config);
 
@@ -1411,7 +1417,12 @@ public function testsResults($clientID,$year=null,$month=null,$day=null){
    														'year' => $month[0], 
    	             'month'=>$month[1], 
    	             'next'=> $next,
-   	             'prev'=> $prev);
+   	             'prev'=> $prev,
+   	             'paginationURL' => $config['base_url'],
+   	             'perPage' => $perPage,
+   	             'actualTotal' => $actualTotal,
+   	             'currentOffset' => $offset,
+   	             'recordsPerPage' => $recordsPerPage);
 
    switch($this->session->userdata('rights')){
 
