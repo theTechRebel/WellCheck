@@ -62,6 +62,9 @@ if($details->test == "spirometry"){
 
 ?>
 <?php
+
+  $intNumberOfResults = 0;
+
  if($clinicianresults != ""){
   $b = json_decode($clinicianresults, true);
 
@@ -76,6 +79,7 @@ echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n
 ?>
 
   <?php foreach ($b as $key => $value) {
+  $intNumberOfResults ++;
      if($value != ""){
     ?>
   <tr><td><?php echo strtoupper(str_replace("_"," ",$key));?></td>
@@ -105,7 +109,45 @@ echo "</table>";
 if($scientisttests != ""){
   $c = json_decode($scientisttests, true);
   $tests = explode(",",$details->test);
+  
+  $cieling = 4;
   foreach($tests as $test){
+    $intNumberOfResults ++;
+
+    if($intNumberOfResults == $cieling){
+  
+    echo "<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>";
+
+    $cieling = $cieling * 2;
+
+      if($details->test == "spirometry"){
+        echo strtoupper($client->salutation." ".$client->names." ".$client->surname);
+        echo "<br/>";
+        echo strtoupper($client->gender);
+        echo "<br/>";
+        echo "E-mail: ".$client->email;
+        echo "<br/>";
+        echo "Date of Birth: ".$client->dob;
+        echo "<br/>";
+        echo "Date: ".getCalendarDateTodayFull();
+        echo  "<br/><br/>"; 
+      }else{
+        echo strtoupper($client->salutation." ".$client->names." ".$client->surname);
+        echo "<br/>";
+        echo $client->address;
+        echo "<br/>";
+        echo "Tel: ".$client->phone;
+        echo "<br/>";
+        echo "E-mail: ".$client->email;
+        echo "<br/>";
+        echo "Date of Birth: ".$client->dob;
+        echo "<br/><br/>";
+        echo "Type of test: ".$details->package."(s)";
+        echo "<br/><br/>";
+        echo "Date: ".getCalendarDateTodayFull();
+        echo  "<br/><br/>";  
+      }
+    }
     echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
 
@@ -283,7 +325,7 @@ if($scientisttests != ""){
       }
     }
     echo "</table><hr><br/>";
-  }
+  } //closed here
 }
 ?>
 

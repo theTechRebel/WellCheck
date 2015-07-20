@@ -30,9 +30,9 @@
                                 <li>
                                     <a href="<?php echo $url?>dashboard/walkInClient/2">Add New Client</a>
                                 </li>
-                                <li>
+                            <!--    <li>
                                     <a href="<?php echo $url?>dashboard/clients/">View All Clients</a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a href="<?php echo $url?>dashboard/editClient/">Edit All Clients</a>
                                 </li>
